@@ -50,9 +50,25 @@ public final class ResourceHelper {
 	@SuppressWarnings("unchecked")
 	public static <T extends EObject> T getElementFromResource(String absoluteFileName, Class<T> type,
 		Map<?, ?> options, int index) throws IOException {
+		return getElementFromResource(URI.createFileURI(absoluteFileName), type, options, index);
+	}
+
+	/**
+	 * Gets an element from a resource.
+	 * 
+	 * @param <T> type of element
+	 * @param uri URI of the resource
+	 * @param type .class from type
+	 * @param options resource options
+	 * @param index index of element in resource
+	 * @return selected element
+	 * @throws IOException in case of failure
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends EObject> T getElementFromResource(URI uri, Class<T> type, Map<?, ?> options, int index)
+		throws IOException {
 		ResourceSetImpl resourceSet = new ResourceSetImpl();
-		// Resource resource = resourceSet.getResource(URI.createFileURI(absoluteFileName), false);
-		Resource resource = resourceSet.createResource(URI.createFileURI(absoluteFileName));
+		Resource resource = resourceSet.createResource(uri);
 		if (options != null) {
 			resource.load(options);
 		} else {
