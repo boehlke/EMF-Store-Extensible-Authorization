@@ -23,6 +23,7 @@ import org.eclipse.emf.emfstore.client.model.accesscontrol.AccessControlHelper;
 import org.eclipse.emf.emfstore.common.model.EMFStoreProperty;
 import org.eclipse.emf.emfstore.common.model.EMFStorePropertyType;
 import org.eclipse.emf.emfstore.common.model.PropertyStringValue;
+import org.eclipse.emf.emfstore.server.connection.xmlrpc.util.StaticOperationFactory;
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 
@@ -201,7 +202,8 @@ public final class PropertyManager {
 	public void transmit() throws EmfStoreException {
 
 		try {
-			new AccessControlHelper(projectSpace.getUsersession()).checkWriteAccess(projectSpace.getProjectId());
+			new AccessControlHelper(projectSpace.getUsersession()).hasPermission(StaticOperationFactory
+				.createWritePropertiesOperation(projectSpace.getProjectId(), null));
 		} catch (AccessControlException e) {
 			// do not transmit properties if user is a reader
 			return;

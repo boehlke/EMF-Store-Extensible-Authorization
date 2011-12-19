@@ -27,10 +27,10 @@ import org.eclipse.emf.emfstore.server.model.SessionId;
 import org.eclipse.emf.emfstore.server.model.VersionInfo;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.impl.AccesscontrolPackageImpl;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.roles.RolesPackage;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.roles.impl.RolesPackageImpl;
 import org.eclipse.emf.emfstore.server.model.notification.NotificationPackage;
 import org.eclipse.emf.emfstore.server.model.notification.impl.NotificationPackageImpl;
+import org.eclipse.emf.emfstore.server.model.operation.OperationPackage;
+import org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl;
 import org.eclipse.emf.emfstore.server.model.url.UrlPackage;
 import org.eclipse.emf.emfstore.server.model.url.impl.UrlPackageImpl;
 import org.eclipse.emf.emfstore.server.model.versioning.VersioningPackage;
@@ -150,9 +150,9 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		EventsPackageImpl theEventsPackage = (EventsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EventsPackage.eNS_URI) instanceof EventsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EventsPackage.eNS_URI) : EventsPackage.eINSTANCE);
 		ServerPackageImpl theServerPackage = (ServerPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ServerPackage.eNS_URI) instanceof ServerPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ServerPackage.eNS_URI) : ServerPackage.eINSTANCE);
 		AccesscontrolPackageImpl theAccesscontrolPackage = (AccesscontrolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(AccesscontrolPackage.eNS_URI) instanceof AccesscontrolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(AccesscontrolPackage.eNS_URI) : AccesscontrolPackage.eINSTANCE);
-		RolesPackageImpl theRolesPackage = (RolesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RolesPackage.eNS_URI) instanceof RolesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RolesPackage.eNS_URI) : RolesPackage.eINSTANCE);
 		NotificationPackageImpl theNotificationPackage = (NotificationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI) instanceof NotificationPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI) : NotificationPackage.eINSTANCE);
 		UrlPackageImpl theUrlPackage = (UrlPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UrlPackage.eNS_URI) instanceof UrlPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UrlPackage.eNS_URI) : UrlPackage.eINSTANCE);
+		OperationPackageImpl theOperationPackage = (OperationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(OperationPackage.eNS_URI) instanceof OperationPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(OperationPackage.eNS_URI) : OperationPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theModelPackage.createPackageContents();
@@ -162,9 +162,9 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		theEventsPackage.createPackageContents();
 		theServerPackage.createPackageContents();
 		theAccesscontrolPackage.createPackageContents();
-		theRolesPackage.createPackageContents();
 		theNotificationPackage.createPackageContents();
 		theUrlPackage.createPackageContents();
+		theOperationPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theModelPackage.initializePackageContents();
@@ -174,9 +174,9 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		theEventsPackage.initializePackageContents();
 		theServerPackage.initializePackageContents();
 		theAccesscontrolPackage.initializePackageContents();
-		theRolesPackage.initializePackageContents();
 		theNotificationPackage.initializePackageContents();
 		theUrlPackage.initializePackageContents();
+		theOperationPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theModelPackage.freeze();
@@ -325,6 +325,15 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getServerSpace_PermissionSet() {
+		return (EReference)serverSpaceEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -425,6 +434,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		createEReference(serverSpaceEClass, SERVER_SPACE__PROJECTS);
 		createEReference(serverSpaceEClass, SERVER_SPACE__OPEN_SESSIONS);
 		createEReference(serverSpaceEClass, SERVER_SPACE__USERS);
+		createEReference(serverSpaceEClass, SERVER_SPACE__PERMISSION_SET);
 
 		projectIdEClass = createEClass(PROJECT_ID);
 
@@ -464,6 +474,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		AccesscontrolPackage theAccesscontrolPackage = (AccesscontrolPackage)EPackage.Registry.INSTANCE.getEPackage(AccesscontrolPackage.eNS_URI);
 		NotificationPackage theNotificationPackage = (NotificationPackage)EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI);
 		UrlPackage theUrlPackage = (UrlPackage)EPackage.Registry.INSTANCE.getEPackage(UrlPackage.eNS_URI);
+		OperationPackage theOperationPackage = (OperationPackage)EPackage.Registry.INSTANCE.getEPackage(OperationPackage.eNS_URI);
 		org.eclipse.emf.emfstore.common.model.ModelPackage theModelPackage_1 = (org.eclipse.emf.emfstore.common.model.ModelPackage)EPackage.Registry.INSTANCE.getEPackage(org.eclipse.emf.emfstore.common.model.ModelPackage.eNS_URI);
 
 		// Add subpackages
@@ -471,6 +482,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		getESubpackages().add(theAccesscontrolPackage);
 		getESubpackages().add(theNotificationPackage);
 		getESubpackages().add(theUrlPackage);
+		getESubpackages().add(theOperationPackage);
 
 		// Create type parameters
 
@@ -498,10 +510,11 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		initEClass(sessionIdEClass, SessionId.class, "SessionId", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(serverSpaceEClass, ServerSpace.class, "ServerSpace", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getServerSpace_Groups(), theAccesscontrolPackage.getACGroup(), null, "groups", null, 0, -1, ServerSpace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getServerSpace_Groups(), theAccesscontrolPackage.getACGroup(), null, "groups", null, 0, -1, ServerSpace.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getServerSpace_Projects(), this.getProjectHistory(), null, "projects", null, 0, -1, ServerSpace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getServerSpace_OpenSessions(), this.getSessionId(), null, "openSessions", null, 0, -1, ServerSpace.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getServerSpace_Users(), theAccesscontrolPackage.getACUser(), null, "users", null, 0, -1, ServerSpace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getServerSpace_Users(), theAccesscontrolPackage.getACUser(), null, "users", null, 0, -1, ServerSpace.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getServerSpace_PermissionSet(), theAccesscontrolPackage.getPermissionSet(), null, "permissionSet", null, 0, 1, ServerSpace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(projectIdEClass, ProjectId.class, "ProjectId", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

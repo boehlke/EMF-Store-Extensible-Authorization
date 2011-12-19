@@ -23,11 +23,15 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.OrgUnitProperty;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.roles.RolesPackage;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.roles.impl.RolesPackageImpl;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.emf.emfstore.server.model.impl.ModelPackageImpl;
 import org.eclipse.emf.emfstore.server.model.notification.NotificationPackage;
 import org.eclipse.emf.emfstore.server.model.notification.impl.NotificationPackageImpl;
+import org.eclipse.emf.emfstore.server.model.operation.OperationPackage;
+import org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl;
 import org.eclipse.emf.emfstore.server.model.url.UrlPackage;
 import org.eclipse.emf.emfstore.server.model.url.impl.UrlPackageImpl;
 import org.eclipse.emf.emfstore.server.model.versioning.VersioningPackage;
@@ -75,6 +79,34 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 	 * @generated
 	 */
 	private EClass orgUnitPropertyEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass roleAssignmentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass roleEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass permissionTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass permissionSetEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -129,9 +161,9 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		SemanticPackageImpl theSemanticPackage = (SemanticPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SemanticPackage.eNS_URI) instanceof SemanticPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SemanticPackage.eNS_URI) : SemanticPackage.eINSTANCE);
 		EventsPackageImpl theEventsPackage = (EventsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EventsPackage.eNS_URI) instanceof EventsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EventsPackage.eNS_URI) : EventsPackage.eINSTANCE);
 		ServerPackageImpl theServerPackage = (ServerPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ServerPackage.eNS_URI) instanceof ServerPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ServerPackage.eNS_URI) : ServerPackage.eINSTANCE);
-		RolesPackageImpl theRolesPackage = (RolesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RolesPackage.eNS_URI) instanceof RolesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RolesPackage.eNS_URI) : RolesPackage.eINSTANCE);
 		NotificationPackageImpl theNotificationPackage = (NotificationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI) instanceof NotificationPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI) : NotificationPackage.eINSTANCE);
 		UrlPackageImpl theUrlPackage = (UrlPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UrlPackage.eNS_URI) instanceof UrlPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UrlPackage.eNS_URI) : UrlPackage.eINSTANCE);
+		OperationPackageImpl theOperationPackage = (OperationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(OperationPackage.eNS_URI) instanceof OperationPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(OperationPackage.eNS_URI) : OperationPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theAccesscontrolPackage.createPackageContents();
@@ -141,9 +173,9 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		theSemanticPackage.createPackageContents();
 		theEventsPackage.createPackageContents();
 		theServerPackage.createPackageContents();
-		theRolesPackage.createPackageContents();
 		theNotificationPackage.createPackageContents();
 		theUrlPackage.createPackageContents();
+		theOperationPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theAccesscontrolPackage.initializePackageContents();
@@ -153,9 +185,9 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		theSemanticPackage.initializePackageContents();
 		theEventsPackage.initializePackageContents();
 		theServerPackage.initializePackageContents();
-		theRolesPackage.initializePackageContents();
 		theNotificationPackage.initializePackageContents();
 		theUrlPackage.initializePackageContents();
+		theOperationPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theAccesscontrolPackage.freeze();
@@ -191,15 +223,6 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getACUser_EffectiveGroups() {
-		return (EReference)acUserEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -220,7 +243,16 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 	 * @generated
 	 */
 	public EReference getACOrgUnit_Roles() {
-		return (EReference)acOrgUnitEClass.getEStructuralFeatures().get(1);
+		return (EReference)acOrgUnitEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getACOrgUnit_Groups() {
+		return (EReference)acOrgUnitEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -228,7 +260,7 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 	 * @generated
 	 */
 	public EAttribute getACOrgUnit_Description() {
-		return (EAttribute)acOrgUnitEClass.getEStructuralFeatures().get(2);
+		return (EAttribute)acOrgUnitEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -236,7 +268,7 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 	 * @generated
 	 */
 	public EReference getACOrgUnit_Properties() {
-		return (EReference)acOrgUnitEClass.getEStructuralFeatures().get(3);
+		return (EReference)acOrgUnitEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -296,6 +328,168 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getRoleAssignment() {
+		return roleAssignmentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRoleAssignment_Role() {
+		return (EReference)roleAssignmentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRoleAssignment_ProjectId() {
+		return (EReference)roleAssignmentEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getRole() {
+		return roleEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRole_PermissionTypes() {
+		return (EReference)roleEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRole_UsingAssignments() {
+		return (EReference)roleEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRole_Description() {
+		return (EAttribute)roleEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRole_Id() {
+		return (EAttribute)roleEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRole_Name() {
+		return (EAttribute)roleEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRole_SystemRole() {
+		return (EAttribute)roleEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getPermissionType() {
+		return permissionTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPermissionType_Id() {
+		return (EAttribute)permissionTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPermissionType_ReferingRoles() {
+		return (EReference)permissionTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getPermissionSet() {
+		return permissionSetEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPermissionSet_PermissionTypes() {
+		return (EReference)permissionSetEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPermissionSet_Roles() {
+		return (EReference)permissionSetEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPermissionSet_Groups() {
+		return (EReference)permissionSetEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPermissionSet_Users() {
+		return (EReference)permissionSetEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -323,13 +517,13 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		acUserEClass = createEClass(AC_USER);
 		createEAttribute(acUserEClass, AC_USER__FIRST_NAME);
 		createEAttribute(acUserEClass, AC_USER__LAST_NAME);
-		createEReference(acUserEClass, AC_USER__EFFECTIVE_GROUPS);
 
 		acOrgUnitEClass = createEClass(AC_ORG_UNIT);
 		createEAttribute(acOrgUnitEClass, AC_ORG_UNIT__NAME);
-		createEReference(acOrgUnitEClass, AC_ORG_UNIT__ROLES);
 		createEAttribute(acOrgUnitEClass, AC_ORG_UNIT__DESCRIPTION);
 		createEReference(acOrgUnitEClass, AC_ORG_UNIT__PROPERTIES);
+		createEReference(acOrgUnitEClass, AC_ORG_UNIT__ROLES);
+		createEReference(acOrgUnitEClass, AC_ORG_UNIT__GROUPS);
 
 		acGroupEClass = createEClass(AC_GROUP);
 		createEReference(acGroupEClass, AC_GROUP__MEMBERS);
@@ -340,6 +534,28 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		createEAttribute(orgUnitPropertyEClass, ORG_UNIT_PROPERTY__NAME);
 		createEAttribute(orgUnitPropertyEClass, ORG_UNIT_PROPERTY__VALUE);
 		createEReference(orgUnitPropertyEClass, ORG_UNIT_PROPERTY__PROJECT);
+
+		roleAssignmentEClass = createEClass(ROLE_ASSIGNMENT);
+		createEReference(roleAssignmentEClass, ROLE_ASSIGNMENT__ROLE);
+		createEReference(roleAssignmentEClass, ROLE_ASSIGNMENT__PROJECT_ID);
+
+		roleEClass = createEClass(ROLE);
+		createEReference(roleEClass, ROLE__PERMISSION_TYPES);
+		createEReference(roleEClass, ROLE__USING_ASSIGNMENTS);
+		createEAttribute(roleEClass, ROLE__DESCRIPTION);
+		createEAttribute(roleEClass, ROLE__ID);
+		createEAttribute(roleEClass, ROLE__NAME);
+		createEAttribute(roleEClass, ROLE__SYSTEM_ROLE);
+
+		permissionTypeEClass = createEClass(PERMISSION_TYPE);
+		createEAttribute(permissionTypeEClass, PERMISSION_TYPE__ID);
+		createEReference(permissionTypeEClass, PERMISSION_TYPE__REFERING_ROLES);
+
+		permissionSetEClass = createEClass(PERMISSION_SET);
+		createEReference(permissionSetEClass, PERMISSION_SET__PERMISSION_TYPES);
+		createEReference(permissionSetEClass, PERMISSION_SET__ROLES);
+		createEReference(permissionSetEClass, PERMISSION_SET__GROUPS);
+		createEReference(permissionSetEClass, PERMISSION_SET__USERS);
 	}
 
 	/**
@@ -364,12 +580,8 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		RolesPackage theRolesPackage = (RolesPackage)EPackage.Registry.INSTANCE.getEPackage(RolesPackage.eNS_URI);
 		ModelPackage theModelPackage = (ModelPackage)EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI);
 		org.eclipse.emf.emfstore.server.model.ModelPackage theModelPackage_1 = (org.eclipse.emf.emfstore.server.model.ModelPackage)EPackage.Registry.INSTANCE.getEPackage(org.eclipse.emf.emfstore.server.model.ModelPackage.eNS_URI);
-
-		// Add subpackages
-		getESubpackages().add(theRolesPackage);
 
 		// Create type parameters
 
@@ -380,18 +592,21 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		acOrgUnitEClass.getESuperTypes().add(theModelPackage.getIdentifiableElement());
 		acGroupEClass.getESuperTypes().add(this.getACOrgUnit());
 		acOrgUnitIdEClass.getESuperTypes().add(theModelPackage.getUniqueIdentifier());
+		roleAssignmentEClass.getESuperTypes().add(theModelPackage.getIdentifiableElement());
+		roleEClass.getESuperTypes().add(theModelPackage.getIdentifiableElement());
+		permissionTypeEClass.getESuperTypes().add(theModelPackage.getIdentifiableElement());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(acUserEClass, ACUser.class, "ACUser", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getACUser_FirstName(), ecorePackage.getEString(), "firstName", null, 0, 1, ACUser.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getACUser_LastName(), ecorePackage.getEString(), "lastName", null, 0, 1, ACUser.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getACUser_EffectiveGroups(), this.getACGroup(), null, "effectiveGroups", null, 0, -1, ACUser.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(acOrgUnitEClass, ACOrgUnit.class, "ACOrgUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getACOrgUnit_Name(), ecorePackage.getEString(), "name", null, 1, 1, ACOrgUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getACOrgUnit_Roles(), theRolesPackage.getRole(), null, "roles", null, 0, -1, ACOrgUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getACOrgUnit_Description(), ecorePackage.getEString(), "description", null, 0, 1, ACOrgUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getACOrgUnit_Properties(), this.getOrgUnitProperty(), null, "properties", null, 0, -1, ACOrgUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getACOrgUnit_Roles(), this.getRoleAssignment(), null, "roles", null, 0, -1, ACOrgUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getACOrgUnit_Groups(), this.getACGroup(), null, "groups", null, 0, -1, ACOrgUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(acOrgUnitEClass, this.getACOrgUnitId(), "getId", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -406,6 +621,28 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		initEAttribute(getOrgUnitProperty_Value(), ecorePackage.getEString(), "value", null, 0, 1, OrgUnitProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getOrgUnitProperty_Project(), theModelPackage_1.getProjectId(), null, "project", null, 0, 1, OrgUnitProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getOrgUnitProperty_Project().getEKeys().add(theModelPackage.getUniqueIdentifier_Id());
+
+		initEClass(roleAssignmentEClass, RoleAssignment.class, "RoleAssignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getRoleAssignment_Role(), this.getRole(), this.getRole_UsingAssignments(), "role", null, 1, 1, RoleAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRoleAssignment_ProjectId(), theModelPackage_1.getProjectId(), null, "projectId", null, 0, 1, RoleAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(roleEClass, Role.class, "Role", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getRole_PermissionTypes(), this.getPermissionType(), this.getPermissionType_ReferingRoles(), "permissionTypes", null, 0, -1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRole_UsingAssignments(), this.getRoleAssignment(), this.getRoleAssignment_Role(), "usingAssignments", null, 0, -1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRole_Description(), ecorePackage.getEString(), "description", null, 0, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRole_Id(), ecorePackage.getEString(), "id", null, 1, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRole_Name(), ecorePackage.getEString(), "name", null, 1, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRole_SystemRole(), ecorePackage.getEBoolean(), "systemRole", null, 0, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(permissionTypeEClass, PermissionType.class, "PermissionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getPermissionType_Id(), ecorePackage.getEString(), "id", null, 1, 1, PermissionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPermissionType_ReferingRoles(), this.getRole(), this.getRole_PermissionTypes(), "referingRoles", null, 0, -1, PermissionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(permissionSetEClass, PermissionSet.class, "PermissionSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getPermissionSet_PermissionTypes(), this.getPermissionType(), null, "permissionTypes", null, 0, -1, PermissionSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPermissionSet_Roles(), this.getRole(), null, "roles", null, 0, -1, PermissionSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPermissionSet_Groups(), this.getACGroup(), null, "groups", null, 0, -1, PermissionSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPermissionSet_Users(), this.getACUser(), null, "users", null, 0, -1, PermissionSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } // AccesscontrolPackageImpl

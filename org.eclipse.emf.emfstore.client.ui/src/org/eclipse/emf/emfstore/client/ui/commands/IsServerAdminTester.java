@@ -15,7 +15,6 @@ import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.model.Usersession;
 import org.eclipse.emf.emfstore.client.model.accesscontrol.AccessControlHelper;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreCommandWithResult;
-import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.jface.viewers.TreeNode;
 
@@ -52,11 +51,7 @@ public class IsServerAdminTester extends PropertyTester {
 					boolean isAdmin = false;
 					if (usersession != null && usersession.getACUser() != null) {
 						AccessControlHelper accessControlHelper = new AccessControlHelper(usersession);
-						try {
-							accessControlHelper.checkServerAdminAccess();
-							isAdmin = true;
-						} catch (AccessControlException e) {
-						}
+						isAdmin = accessControlHelper.isServerAdmin();
 					}
 
 					return new Boolean(isAdmin).equals(expectedValue);

@@ -93,21 +93,12 @@ public interface AccesscontrolPackage extends EPackage {
 	int AC_ORG_UNIT__NAME = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Roles</b></em>' containment reference list.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AC_ORG_UNIT__ROLES = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int AC_ORG_UNIT__DESCRIPTION = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
+	int AC_ORG_UNIT__DESCRIPTION = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
@@ -116,7 +107,25 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int AC_ORG_UNIT__PROPERTIES = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
+	int AC_ORG_UNIT__PROPERTIES = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Roles</b></em>' containment reference list.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AC_ORG_UNIT__ROLES = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Groups</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AC_ORG_UNIT__GROUPS = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>AC Org Unit</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
@@ -125,7 +134,7 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int AC_ORG_UNIT_FEATURE_COUNT = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
+	int AC_ORG_UNIT_FEATURE_COUNT = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
@@ -142,15 +151,6 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @ordered
 	 */
 	int AC_USER__NAME = AC_ORG_UNIT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Roles</b></em>' containment reference list.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AC_USER__ROLES = AC_ORG_UNIT__ROLES;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -170,6 +170,24 @@ public interface AccesscontrolPackage extends EPackage {
 	int AC_USER__PROPERTIES = AC_ORG_UNIT__PROPERTIES;
 
 	/**
+	 * The feature id for the '<em><b>Roles</b></em>' containment reference list.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AC_USER__ROLES = AC_ORG_UNIT__ROLES;
+
+	/**
+	 * The feature id for the '<em><b>Groups</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AC_USER__GROUPS = AC_ORG_UNIT__GROUPS;
+
+	/**
 	 * The feature id for the '<em><b>First Name</b></em>' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -186,21 +204,12 @@ public interface AccesscontrolPackage extends EPackage {
 	int AC_USER__LAST_NAME = AC_ORG_UNIT_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Effective Groups</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AC_USER__EFFECTIVE_GROUPS = AC_ORG_UNIT_FEATURE_COUNT + 2;
-
-	/**
 	 * The number of structural features of the '<em>AC User</em>' class.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int AC_USER_FEATURE_COUNT = AC_ORG_UNIT_FEATURE_COUNT + 3;
+	int AC_USER_FEATURE_COUNT = AC_ORG_UNIT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.ACGroupImpl <em>AC Group</em>}' class.
@@ -228,15 +237,6 @@ public interface AccesscontrolPackage extends EPackage {
 	int AC_GROUP__NAME = AC_ORG_UNIT__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Roles</b></em>' containment reference list.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int AC_GROUP__ROLES = AC_ORG_UNIT__ROLES;
-
-	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -252,6 +252,24 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @ordered
 	 */
 	int AC_GROUP__PROPERTIES = AC_ORG_UNIT__PROPERTIES;
+
+	/**
+	 * The feature id for the '<em><b>Roles</b></em>' containment reference list.
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AC_GROUP__ROLES = AC_ORG_UNIT__ROLES;
+
+	/**
+	 * The feature id for the '<em><b>Groups</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int AC_GROUP__GROUPS = AC_ORG_UNIT__GROUPS;
 
 	/**
 	 * The feature id for the '<em><b>Members</b></em>' reference list.
@@ -339,6 +357,235 @@ public interface AccesscontrolPackage extends EPackage {
 	int ORG_UNIT_PROPERTY_FEATURE_COUNT = 3;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleAssignmentImpl <em>Role Assignment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleAssignmentImpl
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.AccesscontrolPackageImpl#getRoleAssignment()
+	 * @generated
+	 */
+	int ROLE_ASSIGNMENT = 5;
+
+	/**
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_ASSIGNMENT__IDENTIFIER = ModelPackage.IDENTIFIABLE_ELEMENT__IDENTIFIER;
+
+	/**
+	 * The feature id for the '<em><b>Role</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_ASSIGNMENT__ROLE = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Project Id</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_ASSIGNMENT__PROJECT_ID = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Role Assignment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_ASSIGNMENT_FEATURE_COUNT = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl <em>Role</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.AccesscontrolPackageImpl#getRole()
+	 * @generated
+	 */
+	int ROLE = 6;
+
+	/**
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE__IDENTIFIER = ModelPackage.IDENTIFIABLE_ELEMENT__IDENTIFIER;
+
+	/**
+	 * The feature id for the '<em><b>Permission Types</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE__PERMISSION_TYPES = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Using Assignments</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE__USING_ASSIGNMENTS = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE__DESCRIPTION = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE__ID = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE__NAME = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>System Role</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE__SYSTEM_ROLE = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
+	 * The number of structural features of the '<em>Role</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_FEATURE_COUNT = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 6;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionTypeImpl <em>Permission Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionTypeImpl
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.AccesscontrolPackageImpl#getPermissionType()
+	 * @generated
+	 */
+	int PERMISSION_TYPE = 7;
+
+	/**
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PERMISSION_TYPE__IDENTIFIER = ModelPackage.IDENTIFIABLE_ELEMENT__IDENTIFIER;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PERMISSION_TYPE__ID = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Refering Roles</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PERMISSION_TYPE__REFERING_ROLES = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Permission Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PERMISSION_TYPE_FEATURE_COUNT = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl <em>Permission Set</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.AccesscontrolPackageImpl#getPermissionSet()
+	 * @generated
+	 */
+	int PERMISSION_SET = 8;
+
+	/**
+	 * The feature id for the '<em><b>Permission Types</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PERMISSION_SET__PERMISSION_TYPES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Roles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PERMISSION_SET__ROLES = 1;
+
+	/**
+	 * The feature id for the '<em><b>Groups</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PERMISSION_SET__GROUPS = 2;
+
+	/**
+	 * The feature id for the '<em><b>Users</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PERMISSION_SET__USERS = 3;
+
+	/**
+	 * The number of structural features of the '<em>Permission Set</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PERMISSION_SET_FEATURE_COUNT = 4;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser <em>AC User</em>}'.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>AC User</em>'.
@@ -366,17 +613,6 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getACUser_LastName();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser#getEffectiveGroups <em>Effective Groups</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Effective Groups</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser#getEffectiveGroups()
-	 * @see #getACUser()
-	 * @generated
-	 */
-	EReference getACUser_EffectiveGroups();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit <em>AC Org Unit</em>}'.
@@ -407,6 +643,17 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getACOrgUnit_Roles();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit#getGroups <em>Groups</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Groups</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit#getGroups()
+	 * @see #getACOrgUnit()
+	 * @generated
+	 */
+	EReference getACOrgUnit_Groups();
 
 	/**
 	 * Returns the meta object for the attribute '
@@ -505,6 +752,200 @@ public interface AccesscontrolPackage extends EPackage {
 	EReference getOrgUnitProperty_Project();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment <em>Role Assignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Role Assignment</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment
+	 * @generated
+	 */
+	EClass getRoleAssignment();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment#getRole <em>Role</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Role</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment#getRole()
+	 * @see #getRoleAssignment()
+	 * @generated
+	 */
+	EReference getRoleAssignment_Role();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment#getProjectId <em>Project Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Project Id</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment#getProjectId()
+	 * @see #getRoleAssignment()
+	 * @generated
+	 */
+	EReference getRoleAssignment_ProjectId();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role <em>Role</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Role</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.Role
+	 * @generated
+	 */
+	EClass getRole();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getPermissionTypes <em>Permission Types</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Permission Types</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getPermissionTypes()
+	 * @see #getRole()
+	 * @generated
+	 */
+	EReference getRole_PermissionTypes();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getUsingAssignments <em>Using Assignments</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Using Assignments</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getUsingAssignments()
+	 * @see #getRole()
+	 * @generated
+	 */
+	EReference getRole_UsingAssignments();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getDescription()
+	 * @see #getRole()
+	 * @generated
+	 */
+	EAttribute getRole_Description();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getId()
+	 * @see #getRole()
+	 * @generated
+	 */
+	EAttribute getRole_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getName()
+	 * @see #getRole()
+	 * @generated
+	 */
+	EAttribute getRole_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#isSystemRole <em>System Role</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>System Role</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.Role#isSystemRole()
+	 * @see #getRole()
+	 * @generated
+	 */
+	EAttribute getRole_SystemRole();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType <em>Permission Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Permission Type</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType
+	 * @generated
+	 */
+	EClass getPermissionType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType#getId()
+	 * @see #getPermissionType()
+	 * @generated
+	 */
+	EAttribute getPermissionType_Id();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType#getReferingRoles <em>Refering Roles</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Refering Roles</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType#getReferingRoles()
+	 * @see #getPermissionType()
+	 * @generated
+	 */
+	EReference getPermissionType_ReferingRoles();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet <em>Permission Set</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Permission Set</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet
+	 * @generated
+	 */
+	EClass getPermissionSet();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getPermissionTypes <em>Permission Types</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Permission Types</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getPermissionTypes()
+	 * @see #getPermissionSet()
+	 * @generated
+	 */
+	EReference getPermissionSet_PermissionTypes();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getRoles <em>Roles</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Roles</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getRoles()
+	 * @see #getPermissionSet()
+	 * @generated
+	 */
+	EReference getPermissionSet_Roles();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getGroups <em>Groups</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Groups</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getGroups()
+	 * @see #getPermissionSet()
+	 * @generated
+	 */
+	EReference getPermissionSet_Groups();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getUsers <em>Users</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Users</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getUsers()
+	 * @see #getPermissionSet()
+	 * @generated
+	 */
+	EReference getPermissionSet_Users();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the factory that creates the instances of the model.
@@ -550,14 +991,6 @@ public interface AccesscontrolPackage extends EPackage {
 		EAttribute AC_USER__LAST_NAME = eINSTANCE.getACUser_LastName();
 
 		/**
-		 * The meta object literal for the '<em><b>Effective Groups</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference AC_USER__EFFECTIVE_GROUPS = eINSTANCE.getACUser_EffectiveGroups();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.ACOrgUnitImpl <em>AC Org Unit</em>}' class.
 		 * <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.ACOrgUnitImpl
@@ -581,6 +1014,14 @@ public interface AccesscontrolPackage extends EPackage {
 		 * @generated
 		 */
 		EReference AC_ORG_UNIT__ROLES = eINSTANCE.getACOrgUnit_Roles();
+
+		/**
+		 * The meta object literal for the '<em><b>Groups</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference AC_ORG_UNIT__GROUPS = eINSTANCE.getACOrgUnit_Groups();
 
 		/**
 		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
@@ -656,6 +1097,158 @@ public interface AccesscontrolPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ORG_UNIT_PROPERTY__PROJECT = eINSTANCE.getOrgUnitProperty_Project();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleAssignmentImpl <em>Role Assignment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleAssignmentImpl
+		 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.AccesscontrolPackageImpl#getRoleAssignment()
+		 * @generated
+		 */
+		EClass ROLE_ASSIGNMENT = eINSTANCE.getRoleAssignment();
+
+		/**
+		 * The meta object literal for the '<em><b>Role</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ROLE_ASSIGNMENT__ROLE = eINSTANCE.getRoleAssignment_Role();
+
+		/**
+		 * The meta object literal for the '<em><b>Project Id</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ROLE_ASSIGNMENT__PROJECT_ID = eINSTANCE.getRoleAssignment_ProjectId();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl <em>Role</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl
+		 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.AccesscontrolPackageImpl#getRole()
+		 * @generated
+		 */
+		EClass ROLE = eINSTANCE.getRole();
+
+		/**
+		 * The meta object literal for the '<em><b>Permission Types</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ROLE__PERMISSION_TYPES = eINSTANCE.getRole_PermissionTypes();
+
+		/**
+		 * The meta object literal for the '<em><b>Using Assignments</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ROLE__USING_ASSIGNMENTS = eINSTANCE.getRole_UsingAssignments();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ROLE__DESCRIPTION = eINSTANCE.getRole_Description();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ROLE__ID = eINSTANCE.getRole_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ROLE__NAME = eINSTANCE.getRole_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>System Role</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ROLE__SYSTEM_ROLE = eINSTANCE.getRole_SystemRole();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionTypeImpl <em>Permission Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionTypeImpl
+		 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.AccesscontrolPackageImpl#getPermissionType()
+		 * @generated
+		 */
+		EClass PERMISSION_TYPE = eINSTANCE.getPermissionType();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PERMISSION_TYPE__ID = eINSTANCE.getPermissionType_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Refering Roles</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PERMISSION_TYPE__REFERING_ROLES = eINSTANCE.getPermissionType_ReferingRoles();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl <em>Permission Set</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl
+		 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.impl.AccesscontrolPackageImpl#getPermissionSet()
+		 * @generated
+		 */
+		EClass PERMISSION_SET = eINSTANCE.getPermissionSet();
+
+		/**
+		 * The meta object literal for the '<em><b>Permission Types</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PERMISSION_SET__PERMISSION_TYPES = eINSTANCE.getPermissionSet_PermissionTypes();
+
+		/**
+		 * The meta object literal for the '<em><b>Roles</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PERMISSION_SET__ROLES = eINSTANCE.getPermissionSet_Roles();
+
+		/**
+		 * The meta object literal for the '<em><b>Groups</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PERMISSION_SET__GROUPS = eINSTANCE.getPermissionSet_Groups();
+
+		/**
+		 * The meta object literal for the '<em><b>Users</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PERMISSION_SET__USERS = eINSTANCE.getPermissionSet_Users();
 
 	}
 

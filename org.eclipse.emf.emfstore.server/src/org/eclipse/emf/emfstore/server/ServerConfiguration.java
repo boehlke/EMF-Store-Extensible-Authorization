@@ -18,6 +18,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
+import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider;
+import org.eclipse.emf.emfstore.server.core.helper.PermissionSetConfiguration;
+import org.eclipse.emf.emfstore.server.exceptions.FatalEmfStoreException;
 import org.osgi.framework.Bundle;
 
 /**
@@ -412,6 +415,7 @@ public final class ServerConfiguration {
 	}
 
 	private static LocationProvider locationProvider;
+	private static PermissionSetConfiguration permissionSetConfiguration;
 
 	/**
 	 * Return the server home directory location.
@@ -458,6 +462,31 @@ public final class ServerConfiguration {
 		}
 
 		return locationProvider;
+	}
+
+	/**
+	 * Returns a {@link PermissionProvider} or fails if no such provider is registered
+	 * 
+	 * @return
+	 * @throws FatalEmfStoreException
+	 */
+	public static PermissionSetConfiguration getPermissionSetConfiguration() throws FatalEmfStoreException {
+		if (permissionSetConfiguration == null) {
+			try {
+				permissionSetConfiguration = new PermissionSetConfiguration(Platform.getExtensionRegistry()
+					.getConfigurationElementsFor("org.eclipse.emf.emfstore.server.accesscontrol"));
+			} catch (CoreException e) {
+				String message = "Error while instantiating permission provider!";
+				throw new FatalEmfStoreException(message);
+			}
+
+			if (permissionSetConfiguration == null) {
+				String message = "No permission provider found!";
+				throw new FatalEmfStoreException(message);
+			}
+		}
+
+		return permissionSetConfiguration;
 	}
 
 	/**
@@ -571,8 +600,7 @@ public final class ServerConfiguration {
 	public static String getServerVersion() {
 
 		Bundle emfStoreBundle = Platform.getBundle("org.eclipse.emf.emfstore.server");
-		String emfStoreVersionString = (String) emfStoreBundle.getHeaders().get(
-			org.osgi.framework.Constants.BUNDLE_VERSION);
+		String emfStoreVersionString = emfStoreBundle.getHeaders().get(org.osgi.framework.Constants.BUNDLE_VERSION);
 		return emfStoreVersionString;
 	}
 

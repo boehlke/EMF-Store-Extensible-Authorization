@@ -13,11 +13,11 @@ package org.eclipse.emf.emfstore.client.model.filetransfer;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.emfstore.common.filetransfer.FileChunk;
+import org.eclipse.emf.emfstore.common.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.FileTransferException;
-import org.eclipse.emf.emfstore.server.filetransfer.FileChunk;
 import org.eclipse.emf.emfstore.server.filetransfer.FilePartitionerUtil;
-import org.eclipse.emf.emfstore.server.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.server.model.FileIdentifier;
 
 /**
@@ -37,7 +37,7 @@ public class FileUploadJob extends FileTransferJob {
 	 */
 	public FileUploadJob(FileTransferManager transferManager, FileIdentifier fileId, boolean transferVisibleToUser)
 		throws FileTransferException {
-		super(transferManager, new FileTransferInformation(fileId, (int) transferManager.getCache()
+		super(transferManager, new FileTransferInformation(fileId.getIdentifier(), (int) transferManager.getCache()
 			.getCachedFile(fileId).length()), "File Upload");
 		setUser(transferVisibleToUser);
 		setFile(getCache().getCachedFile(fileId));

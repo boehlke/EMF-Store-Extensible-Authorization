@@ -11,16 +11,11 @@
 package org.eclipse.emf.emfstore.server.core;
 
 import java.util.HashMap;
-import java.util.Set;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.emfstore.server.accesscontrol.AuthorizationControl;
-import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.FatalEmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.InvalidInputException;
-import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ServerSpace;
-import org.eclipse.emf.emfstore.server.model.SessionId;
 
 /**
  * Super class of all EmfstoreInterfaces. Emfstore interfaces performs sanity checks, runs accesscontrol and then
@@ -126,70 +121,6 @@ public abstract class AbstractEmfstoreInterface {
 	 */
 	protected AuthorizationControl getAuthorizationControl() {
 		return authorizationControl;
-	}
-
-	/**
-	 * Checks read access.
-	 * 
-	 * @see AuthorizationControl#checkReadAccess(SessionId, ProjectId, Set)
-	 * @param sessionId sessionid
-	 * @param projectId project id
-	 * @param modelElements modelelemnts
-	 * @throws AccessControlException access exception
-	 */
-	protected synchronized void checkReadAccess(SessionId sessionId, ProjectId projectId, Set<EObject> modelElements)
-		throws AccessControlException {
-		if (accessControlDisabled) {
-			return;
-		}
-		getAuthorizationControl().checkReadAccess(sessionId, projectId, modelElements);
-	}
-
-	/**
-	 * Checks write access.
-	 * 
-	 * @see AuthorizationControl#checkWriteAccess(SessionId, ProjectId, Set)
-	 * @param sessionId sessionid
-	 * @param projectId project id
-	 * @param modelElements modelelemnts
-	 * @throws AccessControlException access exception
-	 */
-	protected synchronized void checkWriteAccess(SessionId sessionId, ProjectId projectId, Set<EObject> modelElements)
-		throws AccessControlException {
-		if (accessControlDisabled) {
-			return;
-		}
-		getAuthorizationControl().checkWriteAccess(sessionId, projectId, modelElements);
-	}
-
-	/**
-	 * Checks project admin access.
-	 * 
-	 * @see AuthorizationControl#checkProjectAdminAccess(SessionId, ProjectId)
-	 * @param sessionId sessionid
-	 * @param projectId project id
-	 * @throws AccessControlException access exception
-	 */
-	protected synchronized void checkProjectAdminAccess(SessionId sessionId, ProjectId projectId)
-		throws AccessControlException {
-		if (accessControlDisabled) {
-			return;
-		}
-		getAuthorizationControl().checkProjectAdminAccess(sessionId, projectId);
-	}
-
-	/**
-	 * Checks server admin access.
-	 * 
-	 * @see AuthorizationControl#checkServerAdminAccess(SessionId)
-	 * @param sessionId sessionid
-	 * @throws AccessControlException access exception
-	 */
-	protected synchronized void checkServerAdminAccess(SessionId sessionId) throws AccessControlException {
-		if (accessControlDisabled) {
-			return;
-		}
-		getAuthorizationControl().checkServerAdminAccess(sessionId);
 	}
 
 	/**

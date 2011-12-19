@@ -19,14 +19,16 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.emfstore.common.model.impl.IdentifiableElementImpl;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.ACGroup;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.OrgUnitProperty;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.roles.Role;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object ' <em><b>AC Org Unit</b></em>'. <!-- end-user-doc -->
@@ -34,9 +36,10 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.roles.Role;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.ACOrgUnitImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.ACOrgUnitImpl#getRoles <em>Roles</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.ACOrgUnitImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.ACOrgUnitImpl#getProperties <em>Properties</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.ACOrgUnitImpl#getRoles <em>Roles</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.ACOrgUnitImpl#getGroups <em>Groups</em>}</li>
  * </ul>
  * </p>
  *
@@ -63,16 +66,6 @@ public class ACOrgUnitImpl extends IdentifiableElementImpl implements ACOrgUnit 
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getRoles() <em>Roles</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRoles()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Role> roles;
 
 	/**
 	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
@@ -103,6 +96,26 @@ public class ACOrgUnitImpl extends IdentifiableElementImpl implements ACOrgUnit 
 	 * @ordered
 	 */
 	protected EList<OrgUnitProperty> properties;
+
+	/**
+	 * The cached value of the '{@link #getRoles() <em>Roles</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRoles()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<RoleAssignment> roles;
+
+	/**
+	 * The cached value of the '{@link #getGroups() <em>Groups</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGroups()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ACGroup> groups;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -144,11 +157,23 @@ public class ACOrgUnitImpl extends IdentifiableElementImpl implements ACOrgUnit 
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Role> getRoles() {
+	public EList<RoleAssignment> getRoles() {
 		if (roles == null) {
-			roles = new EObjectContainmentEList.Resolving<Role>(Role.class, this, AccesscontrolPackage.AC_ORG_UNIT__ROLES);
+			roles = new EObjectContainmentEList.Resolving<RoleAssignment>(RoleAssignment.class, this, AccesscontrolPackage.AC_ORG_UNIT__ROLES);
 		}
 		return roles;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<ACGroup> getGroups() {
+		if (groups == null) {
+			groups = new EObjectResolvingEList<ACGroup>(ACGroup.class, this, AccesscontrolPackage.AC_ORG_UNIT__GROUPS);
+		}
+		return groups;
 	}
 
 	// begin of custom code
@@ -202,10 +227,10 @@ public class ACOrgUnitImpl extends IdentifiableElementImpl implements ACOrgUnit 
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case AccesscontrolPackage.AC_ORG_UNIT__ROLES:
-				return ((InternalEList<?>)getRoles()).basicRemove(otherEnd, msgs);
 			case AccesscontrolPackage.AC_ORG_UNIT__PROPERTIES:
 				return ((InternalEList<?>)getProperties()).basicRemove(otherEnd, msgs);
+			case AccesscontrolPackage.AC_ORG_UNIT__ROLES:
+				return ((InternalEList<?>)getRoles()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -249,12 +274,14 @@ public class ACOrgUnitImpl extends IdentifiableElementImpl implements ACOrgUnit 
 		switch (featureID) {
 			case AccesscontrolPackage.AC_ORG_UNIT__NAME:
 				return getName();
-			case AccesscontrolPackage.AC_ORG_UNIT__ROLES:
-				return getRoles();
 			case AccesscontrolPackage.AC_ORG_UNIT__DESCRIPTION:
 				return getDescription();
 			case AccesscontrolPackage.AC_ORG_UNIT__PROPERTIES:
 				return getProperties();
+			case AccesscontrolPackage.AC_ORG_UNIT__ROLES:
+				return getRoles();
+			case AccesscontrolPackage.AC_ORG_UNIT__GROUPS:
+				return getGroups();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -270,16 +297,20 @@ public class ACOrgUnitImpl extends IdentifiableElementImpl implements ACOrgUnit 
 			case AccesscontrolPackage.AC_ORG_UNIT__NAME:
 				setName((String)newValue);
 				return;
-			case AccesscontrolPackage.AC_ORG_UNIT__ROLES:
-				getRoles().clear();
-				getRoles().addAll((Collection<? extends Role>)newValue);
-				return;
 			case AccesscontrolPackage.AC_ORG_UNIT__DESCRIPTION:
 				setDescription((String)newValue);
 				return;
 			case AccesscontrolPackage.AC_ORG_UNIT__PROPERTIES:
 				getProperties().clear();
 				getProperties().addAll((Collection<? extends OrgUnitProperty>)newValue);
+				return;
+			case AccesscontrolPackage.AC_ORG_UNIT__ROLES:
+				getRoles().clear();
+				getRoles().addAll((Collection<? extends RoleAssignment>)newValue);
+				return;
+			case AccesscontrolPackage.AC_ORG_UNIT__GROUPS:
+				getGroups().clear();
+				getGroups().addAll((Collection<? extends ACGroup>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -295,14 +326,17 @@ public class ACOrgUnitImpl extends IdentifiableElementImpl implements ACOrgUnit 
 			case AccesscontrolPackage.AC_ORG_UNIT__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case AccesscontrolPackage.AC_ORG_UNIT__ROLES:
-				getRoles().clear();
-				return;
 			case AccesscontrolPackage.AC_ORG_UNIT__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
 			case AccesscontrolPackage.AC_ORG_UNIT__PROPERTIES:
 				getProperties().clear();
+				return;
+			case AccesscontrolPackage.AC_ORG_UNIT__ROLES:
+				getRoles().clear();
+				return;
+			case AccesscontrolPackage.AC_ORG_UNIT__GROUPS:
+				getGroups().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -317,12 +351,14 @@ public class ACOrgUnitImpl extends IdentifiableElementImpl implements ACOrgUnit 
 		switch (featureID) {
 			case AccesscontrolPackage.AC_ORG_UNIT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case AccesscontrolPackage.AC_ORG_UNIT__ROLES:
-				return roles != null && !roles.isEmpty();
 			case AccesscontrolPackage.AC_ORG_UNIT__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case AccesscontrolPackage.AC_ORG_UNIT__PROPERTIES:
 				return properties != null && !properties.isEmpty();
+			case AccesscontrolPackage.AC_ORG_UNIT__ROLES:
+				return roles != null && !roles.isEmpty();
+			case AccesscontrolPackage.AC_ORG_UNIT__GROUPS:
+				return groups != null && !groups.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -188,6 +188,98 @@ public class AccesscontrolItemProviderAdapterFactory extends AccesscontrolAdapte
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RoleAssignmentItemProvider roleAssignmentItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRoleAssignmentAdapter() {
+		if (roleAssignmentItemProvider == null) {
+			roleAssignmentItemProvider = new RoleAssignmentItemProvider(this);
+		}
+
+		return roleAssignmentItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RoleItemProvider roleItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRoleAdapter() {
+		if (roleItemProvider == null) {
+			roleItemProvider = new RoleItemProvider(this);
+		}
+
+		return roleItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected PermissionTypeItemProvider permissionTypeItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createPermissionTypeAdapter() {
+		if (permissionTypeItemProvider == null) {
+			permissionTypeItemProvider = new PermissionTypeItemProvider(this);
+		}
+
+		return permissionTypeItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected PermissionSetItemProvider permissionSetItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createPermissionSetAdapter() {
+		if (permissionSetItemProvider == null) {
+			permissionSetItemProvider = new PermissionSetItemProvider(this);
+		}
+
+		return permissionSetItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
@@ -284,6 +376,10 @@ public class AccesscontrolItemProviderAdapterFactory extends AccesscontrolAdapte
 		if (acGroupItemProvider != null) acGroupItemProvider.dispose();
 		if (acOrgUnitIdItemProvider != null) acOrgUnitIdItemProvider.dispose();
 		if (orgUnitPropertyItemProvider != null) orgUnitPropertyItemProvider.dispose();
+		if (roleAssignmentItemProvider != null) roleAssignmentItemProvider.dispose();
+		if (roleItemProvider != null) roleItemProvider.dispose();
+		if (permissionTypeItemProvider != null) permissionTypeItemProvider.dispose();
+		if (permissionSetItemProvider != null) permissionSetItemProvider.dispose();
 	}
 
 }

@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACGroup;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object ' <em><b>Server Space</b></em>'. <!-- end-user-doc -->
@@ -28,6 +29,7 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
  *   <li>{@link org.eclipse.emf.emfstore.server.model.ServerSpace#getProjects <em>Projects</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.ServerSpace#getOpenSessions <em>Open Sessions</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.ServerSpace#getUsers <em>Users</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.ServerSpace#getPermissionSet <em>Permission Set</em>}</li>
  * </ul>
  * </p>
  *
@@ -37,7 +39,7 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
  */
 public interface ServerSpace extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Groups</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Groups</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.emf.emfstore.server.model.accesscontrol.ACGroup}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -45,9 +47,9 @@ public interface ServerSpace extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Groups</em>' containment reference list.
+	 * @return the value of the '<em>Groups</em>' reference list.
 	 * @see org.eclipse.emf.emfstore.server.model.ModelPackage#getServerSpace_Groups()
-	 * @model containment="true" resolveProxies="true"
+	 * @model transient="true" volatile="true" derived="true"
 	 * @generated
 	 */
 	EList<ACGroup> getGroups();
@@ -85,7 +87,7 @@ public interface ServerSpace extends EObject {
 	EList<SessionId> getOpenSessions();
 
 	/**
-	 * Returns the value of the '<em><b>Users</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Users</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -93,12 +95,38 @@ public interface ServerSpace extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Users</em>' containment reference list.
+	 * @return the value of the '<em>Users</em>' reference list.
 	 * @see org.eclipse.emf.emfstore.server.model.ModelPackage#getServerSpace_Users()
-	 * @model containment="true" resolveProxies="true"
+	 * @model transient="true" volatile="true" derived="true"
 	 * @generated
 	 */
 	EList<ACUser> getUsers();
+
+	/**
+	 * Returns the value of the '<em><b>Permission Set</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Permission Set</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Permission Set</em>' containment reference.
+	 * @see #setPermissionSet(PermissionSet)
+	 * @see org.eclipse.emf.emfstore.server.model.ModelPackage#getServerSpace_PermissionSet()
+	 * @model containment="true" resolveProxies="true"
+	 * @generated
+	 */
+	PermissionSet getPermissionSet();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.emfstore.server.model.ServerSpace#getPermissionSet <em>Permission Set</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Permission Set</em>' containment reference.
+	 * @see #getPermissionSet()
+	 * @generated
+	 */
+	void setPermissionSet(PermissionSet value);
 
 	/**
 	 * Make the current ServerSpace state persistent. <!-- begin-user-doc --> <!-- end-user-doc -->

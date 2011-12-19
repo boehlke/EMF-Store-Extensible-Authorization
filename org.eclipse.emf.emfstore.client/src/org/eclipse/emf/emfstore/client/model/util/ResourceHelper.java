@@ -91,6 +91,20 @@ public final class ResourceHelper {
 	 * Gets an element from a resource.
 	 * 
 	 * @param <T> type of element
+	 * @param uri uri of the resource
+	 * @param type .class from type
+	 * @param index index of element in resource
+	 * @return selected element
+	 * @throws IOException in case of failure
+	 */
+	public static <T extends EObject> T getElementFromResource(URI uri, Class<T> type, int index) throws IOException {
+		return getElementFromResource(uri, type, null, index);
+	}
+
+	/**
+	 * Gets an element from a resource.
+	 * 
+	 * @param <T> type of element
 	 * @param absoluteFileName filepath of resource
 	 * @param type .class from type
 	 * @param index index of element in resource

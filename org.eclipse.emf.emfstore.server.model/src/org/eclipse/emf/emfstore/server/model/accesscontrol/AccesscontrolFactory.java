@@ -67,6 +67,42 @@ public interface AccesscontrolFactory extends EFactory {
 	OrgUnitProperty createOrgUnitProperty();
 
 	/**
+	 * Returns a new object of class '<em>Role Assignment</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Role Assignment</em>'.
+	 * @generated
+	 */
+	RoleAssignment createRoleAssignment();
+
+	/**
+	 * Returns a new object of class '<em>Role</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Role</em>'.
+	 * @generated
+	 */
+	Role createRole();
+
+	/**
+	 * Returns a new object of class '<em>Permission Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Permission Type</em>'.
+	 * @generated
+	 */
+	PermissionType createPermissionType();
+
+	/**
+	 * Returns a new object of class '<em>Permission Set</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Permission Set</em>'.
+	 * @generated
+	 */
+	PermissionSet createPermissionSet();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the package supported by this factory.

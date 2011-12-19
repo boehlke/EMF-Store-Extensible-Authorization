@@ -15,13 +15,13 @@ import java.util.List;
 import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.AbstractConnectionManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.ConnectionManager;
+import org.eclipse.emf.emfstore.common.filetransfer.FileChunk;
+import org.eclipse.emf.emfstore.common.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.common.model.EMFStoreProperty;
 import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.server.connection.xmlrpc.XmlRpcConnectionHandler;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.InvalidVersionSpecException;
-import org.eclipse.emf.emfstore.server.filetransfer.FileChunk;
-import org.eclipse.emf.emfstore.server.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.server.model.ClientVersionInfo;
 import org.eclipse.emf.emfstore.server.model.ProjectHistory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
@@ -30,6 +30,7 @@ import org.eclipse.emf.emfstore.server.model.SessionId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.OrgUnitProperty;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.versioning.ChangePackage;
 import org.eclipse.emf.emfstore.server.model.versioning.HistoryInfo;
 import org.eclipse.emf.emfstore.server.model.versioning.HistoryQuery;
@@ -225,5 +226,9 @@ public class XmlRpcConnectionManager extends AbstractConnectionManager<XmlRpcCli
 	public List<EMFStoreProperty> getEMFProperties(SessionId sessionId, ProjectId projectId) throws EmfStoreException {
 		return getConnectionProxy(sessionId).callWithListResult("getEMFProperties", EMFStoreProperty.class, sessionId,
 			projectId);
+	}
+
+	public PermissionSet getPermissionSet(SessionId sessionId) throws EmfStoreException {
+		return getConnectionProxy(sessionId).callWithResult("getPermissionSet", PermissionSet.class, sessionId);
 	}
 }

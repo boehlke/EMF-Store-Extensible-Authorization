@@ -12,6 +12,8 @@ package org.eclipse.emf.emfstore.server.connection.xmlrpc;
 
 import java.util.List;
 
+import org.eclipse.emf.emfstore.common.filetransfer.FileChunk;
+import org.eclipse.emf.emfstore.common.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.common.model.EMFStoreProperty;
 import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.server.EmfStore;
@@ -19,8 +21,6 @@ import org.eclipse.emf.emfstore.server.accesscontrol.AuthenticationControl;
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.InvalidVersionSpecException;
-import org.eclipse.emf.emfstore.server.filetransfer.FileChunk;
-import org.eclipse.emf.emfstore.server.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.server.model.ClientVersionInfo;
 import org.eclipse.emf.emfstore.server.model.ProjectHistory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
@@ -29,6 +29,7 @@ import org.eclipse.emf.emfstore.server.model.SessionId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.OrgUnitProperty;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.versioning.ChangePackage;
 import org.eclipse.emf.emfstore.server.model.versioning.HistoryInfo;
 import org.eclipse.emf.emfstore.server.model.versioning.HistoryQuery;
@@ -217,5 +218,9 @@ public class XmlRpcEmfStoreImpl implements EmfStore, AuthenticationControl {
 	 */
 	public List<EMFStoreProperty> getEMFProperties(SessionId sessionId, ProjectId projectId) throws EmfStoreException {
 		return getEmfStore().getEMFProperties(sessionId, projectId);
+	}
+
+	public PermissionSet getPermissionSet(SessionId sessionId) throws EmfStoreException {
+		return getEmfStore().getPermissionSet(sessionId);
 	}
 }

@@ -21,13 +21,12 @@ import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
 import org.eclipse.emf.emfstore.common.model.util.SerializationException;
 import org.eclipse.emf.emfstore.server.ServerConfiguration;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
-import org.eclipse.emf.emfstore.server.exceptions.InvalidInputException;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.SessionId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.roles.RolesPackage;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.versioning.ChangePackage;
 import org.eclipse.emf.emfstore.server.model.versioning.HistoryQuery;
 import org.eclipse.emf.emfstore.server.model.versioning.LogMessage;
@@ -47,6 +46,10 @@ import org.junit.BeforeClass;
  */
 
 public class ServerTests {
+
+	private static final String ROLE_READER = "reader";
+	private static final String ROLE_WRITER = "writer";
+	private static final String ROLE_ADMIN = "admin";
 
 	/**
 	 * @return the sessionId
@@ -129,25 +132,25 @@ public class ServerTests {
 	 * @throws EmfStoreException in case of failure
 	 */
 
-	public static void setupUsers() throws EmfStoreException {
-		try {
+	public static void setupUsersAndRoles() throws EmfStoreException {
+		PermissionSet set = SetupHelper.updatePermissionSet(getSessionId());
+		if (set.getRole(ROLE_READER) == null) {
+			SetupHelper.addRole(getSessionId(), ROLE_WRITER, "projectwrite", "projectread");
+			SetupHelper.addRole(getSessionId(), ROLE_READER, "projectread");
+			SetupHelper.addRole(getSessionId(), ROLE_ADMIN, "projectwrite", "projectread", "projectadmin");
+		}
+		if (set.getOrgUnit("reader") == null) {
 			ACOrgUnitId orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "reader");
-			SetupHelper.setUsersRole(getSessionId(), orgUnitId, RolesPackage.eINSTANCE.getReaderRole(),
-				getGeneratedProjectId());
+			SetupHelper.setUsersRole(getSessionId(), orgUnitId.getId(), ROLE_READER, getGeneratedProjectId());
 
 			orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "writer1");
-			SetupHelper.setUsersRole(getSessionId(), orgUnitId, RolesPackage.eINSTANCE.getWriterRole(),
-				getGeneratedProjectId());
+			SetupHelper.setUsersRole(getSessionId(), orgUnitId.getId(), ROLE_WRITER, getGeneratedProjectId());
 
 			orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "writer2");
-			SetupHelper.setUsersRole(getSessionId(), orgUnitId, RolesPackage.eINSTANCE.getWriterRole(),
-				getGeneratedProjectId());
+			SetupHelper.setUsersRole(getSessionId(), orgUnitId.getId(), ROLE_WRITER, getGeneratedProjectId());
 
 			orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "projectadmin");
-			SetupHelper.setUsersRole(getSessionId(), orgUnitId, RolesPackage.eINSTANCE.getProjectAdminRole(),
-				getGeneratedProjectId());
-		} catch (InvalidInputException e) {
-			// do nothing, user already exists.
+			SetupHelper.setUsersRole(getSessionId(), orgUnitId.getId(), ROLE_ADMIN, getGeneratedProjectId());
 		}
 	}
 
@@ -217,7 +220,7 @@ public class ServerTests {
 			SetupHelper.createLogMessage("super", "a logmessage"), generatedProject);
 		generatedProjectId = projectInfo.getProjectId();
 		generatedProjectVersion = projectInfo.getVersion();
-		setupUsers();
+		setupUsersAndRoles();
 	}
 
 	/**

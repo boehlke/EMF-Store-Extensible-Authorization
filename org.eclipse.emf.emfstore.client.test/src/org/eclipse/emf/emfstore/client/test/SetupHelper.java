@@ -9,6 +9,7 @@ package org.eclipse.emf.emfstore.client.test;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.AccessControlException;
 import java.util.Calendar;
 import java.util.Properties;
@@ -16,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.emfstore.client.model.Configuration;
 import org.eclipse.emf.emfstore.client.model.ModelFactory;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
@@ -34,12 +35,17 @@ import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.common.model.util.FileUtil;
 import org.eclipse.emf.emfstore.server.EmfStoreController;
 import org.eclipse.emf.emfstore.server.ServerConfiguration;
+import org.eclipse.emf.emfstore.server.connection.xmlrpc.util.StaticOperationFactory;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.FatalEmfStoreException;
+import org.eclipse.emf.emfstore.server.exceptions.InvalidInputException;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.SessionId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
+import org.eclipse.emf.emfstore.server.model.operation.OperationFactory;
+import org.eclipse.emf.emfstore.server.model.operation.RoleData;
 import org.eclipse.emf.emfstore.server.model.versioning.LogMessage;
 import org.eclipse.emf.emfstore.server.model.versioning.PrimaryVersionSpec;
 import org.eclipse.emf.emfstore.server.model.versioning.VersioningFactory;
@@ -140,20 +146,23 @@ public class SetupHelper {
 	 */
 	public static ACOrgUnitId createUserOnServer(SessionId sessionId, String username) throws EmfStoreException {
 		AdminConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getAdminConnectionManager();
-		return adminConnectionManager.createUser(sessionId, username);
+		adminConnectionManager.executeOperation(sessionId, StaticOperationFactory.createCreateUserOperation(username));
+		PermissionSet set = updatePermissionSet(sessionId);
+		return set.getOrgUnit(username).getId();
 	}
 
 	/**
 	 * @param sessionId sessionid
 	 * @param orgUnitId orgunitid
-	 * @param role role
+	 * @param string role
 	 * @param projectId projectid, can be null, if role is serveradmin
 	 * @throws EmfStoreException in case of failure
 	 */
-	public static void setUsersRole(SessionId sessionId, ACOrgUnitId orgUnitId, EClass role, ProjectId projectId)
+	public static void setUsersRole(SessionId sessionId, String orgUnitId, String roleId, ProjectId projectId)
 		throws EmfStoreException {
 		AdminConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getAdminConnectionManager();
-		adminConnectionManager.changeRole(sessionId, projectId, orgUnitId, role);
+		adminConnectionManager.executeOperation(sessionId,
+			StaticOperationFactory.createAssignRoleOperation(orgUnitId, roleId, projectId.getId()));
 	}
 
 	/**
@@ -301,16 +310,13 @@ public class SetupHelper {
 
 			@Override
 			protected void doRun() {
-				String uriString = Activator.getDefault().getBundle().getLocation() + path;
-				if (File.separator.equals("/")) {
-					uriString = uriString.replace("reference:file:", "");
-
-				} else {
-					uriString = uriString.replace("reference:file:/", "");
-					uriString = uriString.replace("/", File.separator);
+				URI uri = null;
+				try {
+					uri = URI.createURI(Activator.getDefault().getBundle().getEntry(path).toURI().toString());
+				} catch (URISyntaxException e1) {
 				}
 				try {
-					testProjectSpace = importProject(uriString);
+					testProjectSpace = importProject(uri);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -439,6 +445,10 @@ public class SetupHelper {
 	 */
 	public ProjectSpace importProject(String absolutePath) throws IOException {
 		return workSpace.importProject(absolutePath);
+	}
+
+	public ProjectSpace importProject(URI uri) throws IOException {
+		return workSpace.importProject(uri);
 	}
 
 	/**
@@ -658,4 +668,21 @@ public class SetupHelper {
 
 	}
 
+	public static void addRole(SessionId sessionId, String name, String... permissionTypes)
+		throws InvalidInputException, EmfStoreException {
+		RoleData role = OperationFactory.eINSTANCE.createRoleData();
+		role.setDescription(name + " role");
+		role.setName(name);
+		for (String pType : permissionTypes) {
+			role.getPermissionTypeIds().add("org.eclipse.emf.emfstore.server.simple." + pType);
+		}
+		role.setId(name);
+		AdminConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getAdminConnectionManager();
+		adminConnectionManager.executeOperation(sessionId,
+			StaticOperationFactory.createCreateOrUpdateRoleOperation(role));
+	}
+
+	public static PermissionSet updatePermissionSet(SessionId sessionId) throws EmfStoreException {
+		return WorkspaceManager.getInstance().getConnectionManager().getPermissionSet(sessionId);
+	}
 }

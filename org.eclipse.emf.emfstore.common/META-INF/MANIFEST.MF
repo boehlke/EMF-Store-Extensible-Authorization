@@ -9,6 +9,7 @@ Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.eclipse.core.resources;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.emfstore.common,
+ org.eclipse.emf.emfstore.common.filetransfer,
  org.eclipse.emf.emfstore.common.observer
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

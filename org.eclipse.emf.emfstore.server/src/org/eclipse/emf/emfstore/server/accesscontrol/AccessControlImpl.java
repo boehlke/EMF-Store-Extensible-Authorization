@@ -11,25 +11,29 @@
 package org.eclipse.emf.emfstore.server.accesscontrol;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.emfstore.server.ServerConfiguration;
+import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider.InternalPermission;
+import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider.PermissionContext;
 import org.eclipse.emf.emfstore.server.accesscontrol.authentication.AbstractAuthenticationControl;
 import org.eclipse.emf.emfstore.server.accesscontrol.authentication.factory.AuthenticationControlFactory;
 import org.eclipse.emf.emfstore.server.accesscontrol.authentication.factory.AuthenticationControlFactoryImpl;
 import org.eclipse.emf.emfstore.server.core.MonitorProvider;
+import org.eclipse.emf.emfstore.server.core.helper.Util;
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.FatalEmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.SessionTimedOutException;
 import org.eclipse.emf.emfstore.server.model.ClientVersionInfo;
+import org.eclipse.emf.emfstore.server.model.ProjectHistory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ServerSpace;
 import org.eclipse.emf.emfstore.server.model.SessionId;
@@ -37,8 +41,10 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.ACGroup;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.roles.Role;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.roles.ServerAdmin;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
+import org.eclipse.emf.emfstore.server.model.operation.Operation;
 
 /**
  * A simple implementation of Authentication and Authorization Control.
@@ -51,6 +57,8 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 	private Map<SessionId, ACUserContainer> sessionUserMap;
 	private ServerSpace serverSpace;
 	private AbstractAuthenticationControl authenticationControl;
+	private PermissionProvider permissionProvider;
+	private PermissionSet PermissionSet;
 
 	/**
 	 * Default constructor.
@@ -60,9 +68,12 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 	 * @throws FatalEmfStoreException
 	 *             an exception
 	 */
-	public AccessControlImpl(ServerSpace serverSpace) throws FatalEmfStoreException {
+	public AccessControlImpl(ServerSpace serverSpace, PermissionProvider permissionProvider)
+		throws FatalEmfStoreException {
 		this.sessionUserMap = new HashMap<SessionId, ACUserContainer>();
 		this.serverSpace = serverSpace;
+		this.PermissionSet = serverSpace.getPermissionSet();
+		this.permissionProvider = permissionProvider;
 
 		authenticationControl = getAuthenticationFactory().createAuthenticationControl();
 	}
@@ -146,100 +157,7 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 		if (!sessionUserMap.containsKey(sessionId)) {
 			throw new SessionTimedOutException("Session ID unkown.");
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.emfstore.server.accesscontrol.AuthorizationControl#checkWriteAccess(org.eclipse.emf.emfstore.server.model.SessionId,
-	 *      org.eclipse.emf.emfstore.server.model.ProjectId, java.util.Set)
-	 */
-	public void checkWriteAccess(SessionId sessionId, ProjectId projectId, Set<EObject> modelElements)
-		throws AccessControlException {
-		checkSession(sessionId);
-		ACUser user = getUser(sessionId);
-		List<Role> roles = new ArrayList<Role>();
-		roles.addAll(user.getRoles());
-		roles.addAll(getRolesFromGroups(user));
-		// MK: remove access control simplification
-		if (!canWrite(roles, projectId, null)) {
-			throw new AccessControlException();
-			// for (ModelElement modelElement : modelElements) {
-			// if (!canWrite(roles, projectId, modelElement)) {
-			// throw new AccessControlException();
-			// }
-		}
-	}
-
-	/**
-	 * Check if the given list of roles can write to the model element in the
-	 * project.
-	 * 
-	 * @param roles
-	 *            a list of roles
-	 * @param projectId
-	 *            a project id
-	 * @param modelElement
-	 *            a model element
-	 * @return true if one of the roles can write
-	 * @throws AccessControlException
-	 */
-	private boolean canWrite(List<Role> roles, ProjectId projectId, EObject modelElement) throws AccessControlException {
-		for (Role role : roles) {
-			if (role.canModify(projectId, modelElement) || role.canCreate(projectId, modelElement)
-				|| role.canDelete(projectId, modelElement)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Check if the given list of roles can read the model element in the
-	 * project.
-	 * 
-	 * @param roles
-	 *            a list of roles
-	 * @param projectId
-	 *            a project id
-	 * @param modelElement
-	 *            a model element
-	 * @return true if one of the roles can read
-	 * @throws AccessControlException
-	 */
-	private boolean canRead(List<Role> roles, ProjectId projectId, EObject modelElement) throws AccessControlException {
-		for (Role role : roles) {
-			if (role.canRead(projectId, modelElement)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private List<Role> getRolesFromGroups(ACOrgUnit orgUnit) {
-		ArrayList<Role> roles = new ArrayList<Role>();
-		for (ACGroup group : getGroups(orgUnit)) {
-			roles.addAll(group.getRoles());
-		}
-		return roles;
-	}
-
-	private List<ACGroup> getGroups(ACOrgUnit orgUnit) {
-		synchronized (MonitorProvider.getInstance().getMonitor()) {
-			ArrayList<ACGroup> groups = new ArrayList<ACGroup>();
-			for (ACGroup group : serverSpace.getGroups()) {
-				if (group.getMembers().contains(orgUnit)) {
-					groups.add(group);
-					for (ACGroup g : getGroups(group)) {
-						if (groups.contains(g)) {
-							continue;
-						}
-						groups.add(g);
-					}
-				}
-			}
-			return groups;
-		}
+		sessionUserMap.get(sessionId).checkLastActive();
 	}
 
 	private ACUser getUser(ACOrgUnitId orgUnitId) throws AccessControlException {
@@ -253,67 +171,8 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.emfstore.server.accesscontrol.AuthorizationControl#checkReadAccess(org.eclipse.emf.emfstore.server.model.SessionId,
-	 *      org.eclipse.emf.emfstore.server.model.ProjectId, java.util.Set)
-	 */
-	public void checkReadAccess(SessionId sessionId, ProjectId projectId, Set<EObject> modelElements)
-		throws AccessControlException {
-		checkSession(sessionId);
-		ACUser user = getUser(sessionId);
-		List<Role> roles = new ArrayList<Role>();
-		roles.addAll(user.getRoles());
-		roles.addAll(getRolesFromGroups(user));
-		// MK: remove access control simplification
-		if (!canRead(roles, projectId, null)) {
-			throw new AccessControlException();
-			// for (ModelElement modelElement : modelElements) {
-			// if (!canRead(roles, projectId, modelElement)) {
-			// throw new AccessControlException();
-			// }
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.emfstore.server.accesscontrol.AuthorizationControl#checkProjectAdminAccess(org.eclipse.emf.emfstore.server.model.SessionId,
-	 *      org.eclipse.emf.emfstore.server.model.ProjectId)
-	 */
-	public void checkProjectAdminAccess(SessionId sessionId, ProjectId projectId) throws AccessControlException {
-		checkSession(sessionId);
-		ACUser user = getUser(sessionId);
-		List<Role> roles = new ArrayList<Role>();
-		roles.addAll(user.getRoles());
-		roles.addAll(getRolesFromGroups(user));
-		for (Role role : roles) {
-			if (role.canAdministrate(projectId)) {
-				return;
-			}
-		}
-		throw new AccessControlException();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.emfstore.server.accesscontrol.AuthorizationControl#checkServerAdminAccess(org.eclipse.emf.emfstore.server.model.SessionId)
-	 */
-	public void checkServerAdminAccess(SessionId sessionId) throws AccessControlException {
-		checkSession(sessionId);
-		ACUser user = getUser(sessionId);
-		List<Role> roles = new ArrayList<Role>();
-		roles.addAll(user.getRoles());
-		roles.addAll(getRolesFromGroups(user));
-		for (Role role : roles) {
-			if (role instanceof ServerAdmin) {
-				return;
-			}
-		}
-		throw new AccessControlException();
-
+	public PermissionProvider getPermissionProvider() {
+		return permissionProvider;
 	}
 
 	/**
@@ -321,41 +180,14 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 	 */
 	public ACUser resolveUser(SessionId sessionId) throws AccessControlException {
 		checkSession(sessionId);
-		ACUser tmpUser = sessionUserMap.get(sessionId).getRawUser();
-		return copyAndResolveUser(tmpUser);
+		return sessionUserMap.get(sessionId).getRawUser();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public ACUser resolveUser(ACOrgUnitId id) throws AccessControlException {
-		ACUser tmpUser = getUser(id);
-		return copyAndResolveUser(tmpUser);
-	}
-
-	private ACUser copyAndResolveUser(ACUser tmpUser) {
-		ACUser user = EcoreUtil.copy(tmpUser);
-		for (Role role : getRolesFromGroups(tmpUser)) {
-			user.getRoles().add(EcoreUtil.copy(role));
-		}
-
-		for (ACGroup group : getGroups(tmpUser)) {
-			if (user.getEffectiveGroups().contains(group)) {
-				continue;
-			}
-			user.getEffectiveGroups().add(EcoreUtil.copy(group));
-		}
-
-		return user;
-	}
-
-	private ACUser getUser(SessionId sessionId) throws AccessControlException {
-		try {
-			return sessionUserMap.get(sessionId).getUser();
-		} catch (AccessControlException e) {
-			sessionUserMap.remove(sessionId);
-			throw e;
-		}
+		return getUser(id);
 	}
 
 	// extract to normal class
@@ -379,9 +211,7 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 		 * @return
 		 * @throws AccessControlException
 		 */
-		public ACUser getUser() throws AccessControlException {
-			// OW: timeout behaviour does not work as expected
-			checkLastActive();
+		public ACUser getUser() {
 			active();
 			return getRawUser();
 		}
@@ -407,5 +237,110 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 		private void active() {
 			lastActive = System.currentTimeMillis();
 		}
+	}
+
+	public void checkPermission(SessionId sessionId, InternalPermission permission) throws AccessControlException {
+		Collection<InternalPermission> permissions = new ArrayList<InternalPermission>();
+		permissions.add(permission);
+		checkPermissions(sessionId, permissions);
+	}
+
+	public void checkPermissions(SessionId sessionId, Collection<InternalPermission> permissions)
+		throws AccessControlException {
+		if (!hasPermissions(sessionId, permissions)) {
+			throw new AccessControlException();
+		}
+	}
+
+	public boolean hasPermissions(SessionId sessionId, Collection<InternalPermission> permissions) {
+		ACUserContainer userContainer = sessionUserMap.get(sessionId);
+		if (userContainer == null) {
+			return false;
+		}
+		ACUser user = userContainer.getUser();
+
+		Set<InternalPermission> requiredPermissions = new HashSet<PermissionProvider.InternalPermission>();
+		requiredPermissions.addAll(permissions);
+
+		for (InternalPermission permission : getPermissions(user)) {
+			ProjectId projectId = permission.getProjectId();
+			Iterator<InternalPermission> iterator = requiredPermissions.iterator();
+			while (iterator.hasNext()) {
+				InternalPermission requiredPermission = iterator.next();
+				if (requiredPermission.getType().getId().equals(permission.getType().getId())
+					&& (projectId == null || projectId.getId().equals(requiredPermission.getProjectId().getId()))) {
+					iterator.remove();
+				}
+			}
+
+			if (requiredPermissions.size() == 0) {
+				break;
+			}
+		}
+
+		if (requiredPermissions.size() == 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private Set<InternalPermission> getPermissions(ACOrgUnit orgUnit) {
+		Set<InternalPermission> permissions = new HashSet<InternalPermission>();
+
+		for (RoleAssignment assignment : orgUnit.getRoles()) {
+			for (PermissionType permissionType : assignment.getRole().getPermissionTypes()) {
+				permissions.add(new InternalPermission(permissionType, assignment.getProjectId()));
+			}
+		}
+
+		for (ACGroup group : orgUnit.getGroups()) {
+			permissions.addAll(getPermissions(group));
+		}
+
+		return permissions;
+	}
+
+	public boolean hasPermissions(SessionId sessionId, Operation<?> operation) {
+		return hasPermissions(sessionId, getPermissions(sessionId, operation));
+	}
+
+	private PermissionContext getPermissionTypeResolver() {
+		return new PermissionContext() {
+
+			public PermissionType resolvePermissionType(String typeId) {
+				for (PermissionType type : PermissionSet.getPermissionTypes()) {
+					if (type.getId().equals(typeId)) {
+						return type;
+					}
+				}
+				return null;
+			}
+
+			public ProjectHistory resolveProjectHistory(String projectId) {
+				return Util.getProjectHistoryOrNull(projectId, serverSpace);
+			}
+
+			public ProjectId resolveProjectId(String projectId) {
+				ProjectHistory projectHistoryOrNull = Util.getProjectHistoryOrNull(projectId, serverSpace);
+				if (projectHistoryOrNull == null) {
+					return null;
+				}
+				return projectHistoryOrNull.getProjectId();
+			}
+		};
+	}
+
+	public Collection<InternalPermission> getPermissions(SessionId sessionId, Operation<?> op) {
+		ACUserContainer userContainer = sessionUserMap.get(sessionId);
+		if (userContainer == null) {
+			throw new RuntimeException();
+		}
+		ACUser user = userContainer.getUser();
+		return getPermissionProvider().getPermissions(op, user, getPermissionTypeResolver());
+	}
+
+	public void checkPermissions(SessionId sessionId, Operation<?> op) throws AccessControlException {
+		checkPermissions(sessionId, getPermissions(sessionId, op));
 	}
 }

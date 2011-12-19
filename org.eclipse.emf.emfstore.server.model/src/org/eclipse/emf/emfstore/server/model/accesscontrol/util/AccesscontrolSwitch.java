@@ -111,6 +111,33 @@ public class AccesscontrolSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case AccesscontrolPackage.ROLE_ASSIGNMENT: {
+				RoleAssignment roleAssignment = (RoleAssignment)theEObject;
+				T result = caseRoleAssignment(roleAssignment);
+				if (result == null) result = caseIdentifiableElement(roleAssignment);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case AccesscontrolPackage.ROLE: {
+				Role role = (Role)theEObject;
+				T result = caseRole(role);
+				if (result == null) result = caseIdentifiableElement(role);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case AccesscontrolPackage.PERMISSION_TYPE: {
+				PermissionType permissionType = (PermissionType)theEObject;
+				T result = casePermissionType(permissionType);
+				if (result == null) result = caseIdentifiableElement(permissionType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case AccesscontrolPackage.PERMISSION_SET: {
+				PermissionSet permissionSet = (PermissionSet)theEObject;
+				T result = casePermissionSet(permissionSet);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -179,6 +206,66 @@ public class AccesscontrolSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseOrgUnitProperty(OrgUnitProperty object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Role Assignment</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Role Assignment</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRoleAssignment(RoleAssignment object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Role</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Role</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRole(Role object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Permission Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Permission Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePermissionType(PermissionType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Permission Set</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Permission Set</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePermissionSet(PermissionSet object) {
 		return null;
 	}
 

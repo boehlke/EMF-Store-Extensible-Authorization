@@ -18,10 +18,9 @@ import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.ConnectionManager;
 import org.eclipse.emf.emfstore.client.model.impl.ProjectSpaceImpl;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreCommand;
+import org.eclipse.emf.emfstore.common.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.server.exceptions.FileTransferException;
 import org.eclipse.emf.emfstore.server.filetransfer.FilePartitionerUtil;
-import org.eclipse.emf.emfstore.server.filetransfer.FileTransferInformation;
-import org.eclipse.emf.emfstore.server.model.FileIdentifier;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.SessionId;
 
@@ -43,7 +42,7 @@ public abstract class FileTransferJob extends Job {
 	private final FileTransferManager transferManager;
 	private final FileTransferCacheManager cache;
 	private final FileTransferInformation fileInformation;
-	private final FileIdentifier fileId;
+	private final String fileId;
 
 	/**
 	 * Constructor to be called by subclasses.
@@ -217,7 +216,7 @@ public abstract class FileTransferJob extends Job {
 	 * 
 	 * @return the file identifier
 	 */
-	protected FileIdentifier getFileId() {
+	protected String getFileId() {
 		return fileId;
 	}
 

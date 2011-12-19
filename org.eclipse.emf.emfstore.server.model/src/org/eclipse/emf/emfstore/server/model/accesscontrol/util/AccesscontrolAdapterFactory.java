@@ -95,6 +95,22 @@ public class AccesscontrolAdapterFactory extends AdapterFactoryImpl {
 				return createOrgUnitPropertyAdapter();
 			}
 			@Override
+			public Adapter caseRoleAssignment(RoleAssignment object) {
+				return createRoleAssignmentAdapter();
+			}
+			@Override
+			public Adapter caseRole(Role object) {
+				return createRoleAdapter();
+			}
+			@Override
+			public Adapter casePermissionType(PermissionType object) {
+				return createPermissionTypeAdapter();
+			}
+			@Override
+			public Adapter casePermissionSet(PermissionSet object) {
+				return createPermissionSetAdapter();
+			}
+			@Override
 			public Adapter caseIdentifiableElement(IdentifiableElement object) {
 				return createIdentifiableElementAdapter();
 			}
@@ -187,6 +203,62 @@ public class AccesscontrolAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOrgUnitPropertyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment <em>Role Assignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment
+	 * @generated
+	 */
+	public Adapter createRoleAssignmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role <em>Role</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.Role
+	 * @generated
+	 */
+	public Adapter createRoleAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType <em>Permission Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType
+	 * @generated
+	 */
+	public Adapter createPermissionTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet <em>Permission Set</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet
+	 * @generated
+	 */
+	public Adapter createPermissionSetAdapter() {
 		return null;
 	}
 

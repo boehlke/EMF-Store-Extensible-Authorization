@@ -226,7 +226,7 @@ public class FileTransferManager {
 	 *            the index to be looked up in the queue
 	 * @return the index in the queue or -1
 	 */
-	private int getWaitingUploadIndex(FileIdentifier fileId) {
+	private int getWaitingUploadIndex(String fileId) {
 		if (fileId == null) {
 			return -1;
 		}
@@ -240,7 +240,7 @@ public class FileTransferManager {
 		 */
 		for (FileIdentifier upload : projectSpace.getWaitingUploads()) {
 			// This is our equals: Compare the strings!
-			if (upload.getIdentifier().equals(fileId.getIdentifier())) {
+			if (upload.getIdentifier().equals(fileId)) {
 				return i;
 			}
 			i++;
@@ -257,7 +257,7 @@ public class FileTransferManager {
 	 * @throws FileTransferException
 	 *             if the file is not in the queue
 	 */
-	void removeWaitingUpload(FileIdentifier fileId) throws FileTransferException {
+	void removeWaitingUpload(String fileId) throws FileTransferException {
 		int index = getWaitingUploadIndex(fileId);
 		if (index != -1) {
 			projectSpace.getWaitingUploads().remove(index);
@@ -278,7 +278,7 @@ public class FileTransferManager {
 	 * @return true, iff the file is in the queue
 	 */
 	public boolean hasWaitingUpload(FileIdentifier fileIdentifier) {
-		return getWaitingUploadIndex(fileIdentifier) != -1;
+		return getWaitingUploadIndex(fileIdentifier.getIdentifier()) != -1;
 	}
 
 	/**
@@ -293,7 +293,7 @@ public class FileTransferManager {
 	public void cancelPendingUpload(FileIdentifier fileIdentifier) {
 		// Remove from the waiting queue
 		try {
-			removeWaitingUpload(fileIdentifier);
+			removeWaitingUpload(fileIdentifier.getIdentifier());
 		} catch (FileTransferException e) {
 			return;
 		}

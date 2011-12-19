@@ -61,8 +61,9 @@ public class ACOrgUnitItemProvider extends IdentifiableElementItemProvider imple
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
-			addRolesPropertyDescriptor(object);
 			addDescriptionPropertyDescriptor(object);
+			addRolesPropertyDescriptor(object);
+			addGroupsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -101,6 +102,28 @@ public class ACOrgUnitItemProvider extends IdentifiableElementItemProvider imple
 				 getString("_UI_ACOrgUnit_roles_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_ACOrgUnit_roles_feature", "_UI_ACOrgUnit_type"),
 				 AccesscontrolPackage.Literals.AC_ORG_UNIT__ROLES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Groups feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addGroupsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ACOrgUnit_groups_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ACOrgUnit_groups_feature", "_UI_ACOrgUnit_type"),
+				 AccesscontrolPackage.Literals.AC_ORG_UNIT__GROUPS,
 				 true,
 				 false,
 				 true,

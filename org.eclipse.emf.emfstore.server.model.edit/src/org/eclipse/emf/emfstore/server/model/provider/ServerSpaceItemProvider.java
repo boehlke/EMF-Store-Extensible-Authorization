@@ -77,6 +77,7 @@ public class ServerSpaceItemProvider extends ItemProviderAdapter implements IEdi
 			childrenFeatures.add(ModelPackage.Literals.SERVER_SPACE__PROJECTS);
 			childrenFeatures.add(ModelPackage.Literals.SERVER_SPACE__OPEN_SESSIONS);
 			childrenFeatures.add(ModelPackage.Literals.SERVER_SPACE__USERS);
+			childrenFeatures.add(ModelPackage.Literals.SERVER_SPACE__PERMISSION_SET);
 		}
 		return childrenFeatures;
 	}
@@ -129,6 +130,7 @@ public class ServerSpaceItemProvider extends ItemProviderAdapter implements IEdi
 			case ModelPackage.SERVER_SPACE__PROJECTS:
 			case ModelPackage.SERVER_SPACE__OPEN_SESSIONS:
 			case ModelPackage.SERVER_SPACE__USERS:
+			case ModelPackage.SERVER_SPACE__PERMISSION_SET:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -164,6 +166,11 @@ public class ServerSpaceItemProvider extends ItemProviderAdapter implements IEdi
 			(createChildParameter
 				(ModelPackage.Literals.SERVER_SPACE__USERS,
 				 AccesscontrolFactory.eINSTANCE.createACUser()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ModelPackage.Literals.SERVER_SPACE__PERMISSION_SET,
+				 AccesscontrolFactory.eINSTANCE.createPermissionSet()));
 	}
 
 	/**

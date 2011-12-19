@@ -10,12 +10,17 @@
  ******************************************************************************/
 package org.eclipse.emf.emfstore.client.model.accesscontrol;
 
+import java.util.Arrays;
+
 import org.eclipse.emf.emfstore.client.model.Usersession;
+import org.eclipse.emf.emfstore.common.AuthConstants;
+import org.eclipse.emf.emfstore.server.accesscontrol.Permission;
+import org.eclipse.emf.emfstore.server.accesscontrol.util.PermissionUtil;
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
-import org.eclipse.emf.emfstore.server.model.ProjectId;
+import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.roles.Role;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.roles.ServerAdmin;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
+import org.eclipse.emf.emfstore.server.model.operation.Operation;
 
 /**
  * Helper class for access control checks.
@@ -37,34 +42,13 @@ public class AccessControlHelper {
 		this.user = usersession.getACUser();
 	}
 
-	/**
-	 * Check write access for the given project.
-	 * 
-	 * @param projectId the project id
-	 * @throws AccessControlException if access is denied.
-	 */
-	public void checkWriteAccess(ProjectId projectId) throws AccessControlException {
-		for (Role role : user.getRoles()) {
-			if (role.canDelete(projectId, null) || role.canCreate(projectId, null) || role.canModify(projectId, null)) {
-				return;
+	public boolean isServerAdmin() {
+		for (RoleAssignment role : user.getRoles()) {
+			if (role.getRole().getId().equals(AuthConstants.SUPER_ADMIN_ROLE)) {
+				return true;
 			}
 		}
-		throw new AccessControlException();
-	}
-
-	/**
-	 * Check project admin access for the given project.
-	 * 
-	 * @param projectId the project id
-	 * @throws AccessControlException if access is denied.
-	 */
-	public void checkProjectAdminAccess(ProjectId projectId) throws AccessControlException {
-		for (Role role : user.getRoles()) {
-			if (role.canAdministrate(projectId)) {
-				return;
-			}
-		}
-		throw new AccessControlException();
+		return false;
 	}
 
 	/**
@@ -73,12 +57,9 @@ public class AccessControlHelper {
 	 * @throws AccessControlException if access is denied.
 	 */
 	public void checkServerAdminAccess() throws AccessControlException {
-		for (Role role : user.getRoles()) {
-			if (role instanceof ServerAdmin) {
-				return;
-			}
+		if (!isServerAdmin()) {
+			throw new AccessControlException();
 		}
-		throw new AccessControlException();
 	}
 
 	/**
@@ -86,5 +67,11 @@ public class AccessControlHelper {
 	 */
 	public Usersession getUsersession() {
 		return usersession;
+	}
+
+	public boolean hasPermission(Operation<?> op) throws AccessControlException, EmfStoreException {
+		Permission[] permissions = usersession.getAdminBroker().getOperationPermissions(new Operation<?>[] { op })
+			.get(0);
+		return PermissionUtil.hasPermissions(user, Arrays.asList(permissions));
 	}
 }

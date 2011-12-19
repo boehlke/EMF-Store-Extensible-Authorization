@@ -12,10 +12,13 @@ package org.eclipse.emf.emfstore.server.core;
 
 import java.util.List;
 
+import org.eclipse.emf.emfstore.common.filetransfer.FileChunk;
+import org.eclipse.emf.emfstore.common.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.common.model.EMFStoreProperty;
 import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.server.EmfStore;
 import org.eclipse.emf.emfstore.server.accesscontrol.AuthorizationControl;
+import org.eclipse.emf.emfstore.server.connection.xmlrpc.util.StaticOperationFactory;
 import org.eclipse.emf.emfstore.server.core.subinterfaces.EMFStorePropertiesSubInterfaceImpl;
 import org.eclipse.emf.emfstore.server.core.subinterfaces.FileTransferSubInterfaceImpl;
 import org.eclipse.emf.emfstore.server.core.subinterfaces.HistorySubInterfaceImpl;
@@ -25,11 +28,10 @@ import org.eclipse.emf.emfstore.server.core.subinterfaces.UserSubInterfaceImpl;
 import org.eclipse.emf.emfstore.server.core.subinterfaces.VersionSubInterfaceImpl;
 import org.eclipse.emf.emfstore.server.eventmanager.EventHelper;
 import org.eclipse.emf.emfstore.server.eventmanager.EventManager;
+import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.FatalEmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.InvalidVersionSpecException;
-import org.eclipse.emf.emfstore.server.filetransfer.FileChunk;
-import org.eclipse.emf.emfstore.server.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.server.model.ProjectHistory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
@@ -38,6 +40,16 @@ import org.eclipse.emf.emfstore.server.model.SessionId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.OrgUnitProperty;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
+import org.eclipse.emf.emfstore.server.model.operation.AddTagOperation;
+import org.eclipse.emf.emfstore.server.model.operation.CreateProjectByImportOperation;
+import org.eclipse.emf.emfstore.server.model.operation.CreateProjectOperation;
+import org.eclipse.emf.emfstore.server.model.operation.CreateVersionOperation;
+import org.eclipse.emf.emfstore.server.model.operation.DeleteProjectOperation;
+import org.eclipse.emf.emfstore.server.model.operation.FileUploadOperation;
+import org.eclipse.emf.emfstore.server.model.operation.Operation;
+import org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation;
+import org.eclipse.emf.emfstore.server.model.operation.WritePropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.versioning.ChangePackage;
 import org.eclipse.emf.emfstore.server.model.versioning.HistoryInfo;
 import org.eclipse.emf.emfstore.server.model.versioning.HistoryQuery;
@@ -83,13 +95,20 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 		addSubInterface(new EMFStorePropertiesSubInterfaceImpl(this));
 	}
 
+	private void checkOperationPermissions(SessionId sessionId, Operation<?> op) throws AccessControlException {
+		getAuthorizationControl().checkPermissions(sessionId, op);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public List<HistoryInfo> getHistoryInfo(SessionId sessionId, ProjectId projectId, HistoryQuery historyQuery)
 		throws EmfStoreException {
 		sanityCheckObjects(sessionId, projectId, historyQuery);
-		checkReadAccess(sessionId, projectId, null);
+
+		checkOperationPermissions(sessionId,
+			StaticOperationFactory.createReadProjectOperation(projectId, historyQuery.getTarget()));
+
 		return getSubInterface(HistorySubInterfaceImpl.class).getHistoryInfo(projectId, historyQuery);
 	}
 
@@ -98,9 +117,13 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	 */
 	public void addTag(SessionId sessionId, ProjectId projectId, PrimaryVersionSpec versionSpec, TagVersionSpec tag)
 		throws EmfStoreException {
-		sanityCheckObjects(sessionId, projectId, versionSpec, tag);
-		checkProjectAdminAccess(sessionId, projectId);
+		sanityCheckObjects(sessionId, projectId, versionSpec, tag, tag == null ? null : tag.getName());
+
+		AddTagOperation operation = StaticOperationFactory.createAddTagOperation(projectId, versionSpec, tag);
+		checkOperationPermissions(sessionId, operation);
+
 		getSubInterface(HistorySubInterfaceImpl.class).addTag(projectId, versionSpec, tag);
+
 	}
 
 	/**
@@ -109,7 +132,10 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	public void removeTag(SessionId sessionId, ProjectId projectId, PrimaryVersionSpec versionSpec, TagVersionSpec tag)
 		throws EmfStoreException {
 		sanityCheckObjects(sessionId, projectId, versionSpec, tag);
-		checkProjectAdminAccess(sessionId, projectId);
+
+		RemoveTagOperation operation = StaticOperationFactory.createRemoveTagOperation(projectId, versionSpec, tag);
+		checkOperationPermissions(sessionId, operation);
+
 		getSubInterface(HistorySubInterfaceImpl.class).removeTag(projectId, versionSpec, tag);
 	}
 
@@ -119,8 +145,15 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	public ProjectInfo createEmptyProject(SessionId sessionId, String name, String description, LogMessage logMessage)
 		throws EmfStoreException {
 		sanityCheckObjects(sessionId, name, description, logMessage);
-		checkServerAdminAccess(sessionId);
-		return getSubInterface(ProjectSubInterfaceImpl.class).createProject(name, description, logMessage);
+
+		CreateProjectOperation operation = StaticOperationFactory.createCreateProjectOperation(name, description,
+			logMessage, null);
+		checkOperationPermissions(sessionId, operation);
+
+		ProjectInfo projectInfo = getSubInterface(ProjectSubInterfaceImpl.class).createProject(name, description,
+			logMessage);
+
+		return projectInfo;
 	}
 
 	/**
@@ -129,8 +162,15 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	public ProjectInfo createProject(SessionId sessionId, String name, String description, LogMessage logMessage,
 		Project project) throws EmfStoreException {
 		sanityCheckObjects(sessionId, name, description, logMessage, project);
-		checkServerAdminAccess(sessionId);
-		return getSubInterface(ProjectSubInterfaceImpl.class).createProject(name, description, logMessage, project);
+
+		CreateProjectOperation operation = StaticOperationFactory.createCreateProjectOperation(name, description,
+			logMessage, project);
+		checkOperationPermissions(sessionId, operation);
+
+		ProjectInfo projectInfo = getSubInterface(ProjectSubInterfaceImpl.class).createProject(name, description,
+			logMessage, project);
+
+		return projectInfo;
 	}
 
 	/**
@@ -138,7 +178,10 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	 */
 	public void deleteProject(SessionId sessionId, ProjectId projectId, boolean deleteFiles) throws EmfStoreException {
 		sanityCheckObjects(sessionId, projectId);
-		checkServerAdminAccess(sessionId);
+
+		DeleteProjectOperation operation = StaticOperationFactory.createDeleteProjectOperation(projectId, deleteFiles);
+		checkOperationPermissions(sessionId, operation);
+
 		getSubInterface(ProjectSubInterfaceImpl.class).deleteProject(projectId, deleteFiles);
 	}
 
@@ -149,11 +192,16 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 		PrimaryVersionSpec baseVersionSpec, ChangePackage changePackage, LogMessage logMessage)
 		throws EmfStoreException, InvalidVersionSpecException {
 		sanityCheckObjects(sessionId, projectId, baseVersionSpec, changePackage, logMessage);
-		checkWriteAccess(sessionId, projectId, null);
+
+		CreateVersionOperation operation = StaticOperationFactory.createCreateVersionOperation(projectId,
+			baseVersionSpec, changePackage, logMessage);
+		checkOperationPermissions(sessionId, operation);
+
 		ACUser user = getAuthorizationControl().resolveUser(sessionId);
 		PrimaryVersionSpec newVersion = getSubInterface(VersionSubInterfaceImpl.class).createVersion(projectId,
 			baseVersionSpec, changePackage, logMessage, user);
 		EventManager.getInstance().sendEvent(EventHelper.createUpdatedProjectEvent(projectId, newVersion));
+
 		return newVersion;
 	}
 
@@ -163,7 +211,9 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	public List<ChangePackage> getChanges(SessionId sessionId, ProjectId projectId, VersionSpec source,
 		VersionSpec target) throws EmfStoreException {
 		sanityCheckObjects(sessionId, projectId, source, target);
-		checkReadAccess(sessionId, projectId, null);
+
+		checkOperationPermissions(sessionId, StaticOperationFactory.createReadProjectOperation(projectId, target));
+
 		return getSubInterface(VersionSubInterfaceImpl.class).getChanges(projectId, source, target);
 	}
 
@@ -173,7 +223,9 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	public PrimaryVersionSpec resolveVersionSpec(SessionId sessionId, ProjectId projectId, VersionSpec versionSpec)
 		throws EmfStoreException {
 		sanityCheckObjects(sessionId, projectId, versionSpec);
-		checkReadAccess(sessionId, projectId, null);
+
+		checkOperationPermissions(sessionId, StaticOperationFactory.createReadProjectOperation(projectId, versionSpec));
+
 		return getSubInterface(VersionSubInterfaceImpl.class).resolveVersionSpec(projectId, versionSpec);
 	}
 
@@ -183,7 +235,9 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	public Project getProject(SessionId sessionId, ProjectId projectId, VersionSpec versionSpec)
 		throws EmfStoreException {
 		sanityCheckObjects(sessionId, projectId, versionSpec);
-		checkReadAccess(sessionId, projectId, null);
+
+		checkOperationPermissions(sessionId, StaticOperationFactory.createReadProjectOperation(projectId, versionSpec));
+
 		return getSubInterface(ProjectSubInterfaceImpl.class).getProject(projectId, versionSpec);
 	}
 
@@ -201,8 +255,15 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	public ProjectId importProjectHistoryToServer(SessionId sessionId, ProjectHistory projectHistory)
 		throws EmfStoreException {
 		sanityCheckObjects(sessionId, projectHistory);
-		checkServerAdminAccess(sessionId);
-		return getSubInterface(ProjectSubInterfaceImpl.class).importProjectHistoryToServer(projectHistory);
+
+		CreateProjectByImportOperation operation = StaticOperationFactory
+			.createCreateProjectByImportOperation(projectHistory);
+		checkOperationPermissions(sessionId, operation);
+
+		ProjectId projectId = getSubInterface(ProjectSubInterfaceImpl.class).importProjectHistoryToServer(
+			projectHistory);
+
+		return projectId;
 	}
 
 	/**
@@ -211,7 +272,9 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	public ProjectHistory exportProjectHistoryFromServer(SessionId sessionId, ProjectId projectId)
 		throws EmfStoreException {
 		sanityCheckObjects(sessionId, projectId);
-		checkServerAdminAccess(sessionId);
+
+		checkOperationPermissions(sessionId, StaticOperationFactory.createReadProjectOperation(projectId, null));
+
 		return getSubInterface(ProjectSubInterfaceImpl.class).exportProjectHistoryFromServer(projectId);
 	}
 
@@ -229,7 +292,10 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	public FileChunk downloadFileChunk(SessionId sessionId, ProjectId projectId, FileTransferInformation fileInformation)
 		throws EmfStoreException {
 		sanityCheckObjects(sessionId, projectId, fileInformation);
-		checkReadAccess(sessionId, projectId, null);
+
+		checkOperationPermissions(sessionId,
+			StaticOperationFactory.createFileDownloadOperation(projectId, fileInformation));
+
 		return getSubInterface(FileTransferSubInterfaceImpl.class).readChunk(projectId, fileInformation);
 	}
 
@@ -239,8 +305,14 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	public FileTransferInformation uploadFileChunk(SessionId sessionId, ProjectId projectId, FileChunk fileChunk)
 		throws EmfStoreException {
 		sanityCheckObjects(sessionId, projectId, fileChunk, fileChunk.getFileInformation());
-		checkWriteAccess(sessionId, projectId, null);
-		return getSubInterface(FileTransferSubInterfaceImpl.class).writeChunk(fileChunk, projectId);
+
+		FileUploadOperation operation = StaticOperationFactory.createFileUploadOperation(projectId, fileChunk);
+		checkOperationPermissions(sessionId, operation);
+
+		FileTransferInformation chunk = getSubInterface(FileTransferSubInterfaceImpl.class).writeChunk(fileChunk,
+			projectId);
+
+		return chunk;
 	}
 
 	/**
@@ -249,7 +321,10 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	public void transmitProperty(SessionId sessionId, OrgUnitProperty changedProperty, ACUser user, ProjectId projectId)
 		throws EmfStoreException {
 		sanityCheckObjects(projectId, user, changedProperty);
-		checkWriteAccess(sessionId, projectId, null);
+
+		WritePropertiesOperation operation = StaticOperationFactory.createWritePropertiesOperation(projectId, null);
+		checkOperationPermissions(sessionId, operation);
+
 		getSubInterface(ProjectPropertiesSubInterfaceImpl.class).setProperty(changedProperty, user, projectId);
 	}
 
@@ -258,7 +333,9 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	 */
 	public List<EMFStoreProperty> getEMFProperties(SessionId sessionId, ProjectId projectId) throws EmfStoreException {
 		sanityCheckObjects(sessionId, projectId);
-		checkReadAccess(sessionId, projectId, null);
+
+		checkOperationPermissions(sessionId, StaticOperationFactory.createReadPropertiesOperation(projectId));
+
 		return getSubInterface(EMFStorePropertiesSubInterfaceImpl.class).getProperties(projectId);
 	}
 
@@ -268,9 +345,17 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	public void transmitEMFProperties(SessionId sessionId, List<EMFStoreProperty> properties, ProjectId projectId)
 		throws EmfStoreException {
 		sanityCheckObjects(projectId, properties);
-		checkWriteAccess(sessionId, projectId, null);
+
+		WritePropertiesOperation operation = StaticOperationFactory.createWritePropertiesOperation(projectId,
+			properties);
+		checkOperationPermissions(sessionId, operation);
+
 		EMFStorePropertiesSubInterfaceImpl temp = getSubInterface(EMFStorePropertiesSubInterfaceImpl.class);
 
 		temp.setProperties(properties, projectId);
+	}
+
+	public PermissionSet getPermissionSet(SessionId sessionId) throws EmfStoreException {
+		return getServerSpace().getPermissionSet();
 	}
 }

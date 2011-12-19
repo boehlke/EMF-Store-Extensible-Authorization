@@ -47,8 +47,8 @@
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://eclipse.org/emf/emfstore/server/model/roles"
-            class="org.eclipse.emf.emfstore.server.model.accesscontrol.roles.RolesPackage"
+            uri="http://eclipse.org/emf/emfstore/server/model/operation"
+            class="org.eclipse.emf.emfstore.server.model.operation.OperationPackage"
             genModel="model/server.genmodel"/>
    </extension>
 

@@ -49,7 +49,8 @@ public class UserSubInterfaceImpl extends AbstractSubEmfstoreInterface {
 			if (requestingUser.getId().equals(user.getId())) {
 				return user;
 			}
-			getAuthorizationControl().checkServerAdminAccess(sessionId);
+			// TODO: boehlke - implement new auth logic
+			// getAuthorizationControl().checkServerAdminAccess(sessionId);
 			return user;
 		}
 	}

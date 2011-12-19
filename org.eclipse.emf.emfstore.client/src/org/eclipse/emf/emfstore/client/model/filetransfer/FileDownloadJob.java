@@ -17,10 +17,10 @@ import java.rmi.RemoteException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.emfstore.common.filetransfer.FileChunk;
+import org.eclipse.emf.emfstore.common.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
-import org.eclipse.emf.emfstore.server.filetransfer.FileChunk;
 import org.eclipse.emf.emfstore.server.filetransfer.FilePartitionerUtil;
-import org.eclipse.emf.emfstore.server.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.server.model.FileIdentifier;
 
 /**
@@ -42,8 +42,8 @@ public class FileDownloadJob extends FileTransferJob {
 	 */
 	FileDownloadJob(FileDownloadStatus status, FileTransferManager transferManager, FileIdentifier fileId,
 		boolean transferVisibleToUser) {
-		super(transferManager, new FileTransferInformation(fileId, FileTransferInformation.UNKOWN_SIZE),
-			"File Download");
+		super(transferManager,
+			new FileTransferInformation(fileId.getIdentifier(), FileTransferInformation.UNKOWN_SIZE), "File Download");
 		setUser(transferVisibleToUser);
 		this.status = status;
 	}

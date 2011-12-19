@@ -10,88 +10,71 @@
  ******************************************************************************/
 package org.eclipse.emf.emfstore.server.accesscontrol;
 
-import java.util.Set;
+import java.util.Collection;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider.InternalPermission;
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
-import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.SessionId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
+import org.eclipse.emf.emfstore.server.model.operation.Operation;
 
 /**
  * Control for the authorization of users.
  * 
  * @author koegel
+ * @author boehlke
  */
 public interface AuthorizationControl {
 
 	/**
 	 * Check if the given session is valid.
 	 * 
-	 * @param sessionId the session id
-	 * @throws AccessControlException if the session is invalid
+	 * @param sessionId
+	 *            the session id
+	 * @throws AccessControlException
+	 *             if the session is invalid
 	 */
 	void checkSession(SessionId sessionId) throws AccessControlException;
 
-	/**
-	 * Check if the session is valid for admin access to the given project.
-	 * 
-	 * @param sessionId the session id
-	 * @param projectId the project id
-	 * @throws AccessControlException if the session is invalid for admin access
-	 */
-	void checkProjectAdminAccess(SessionId sessionId, ProjectId projectId) throws AccessControlException;
+	void checkPermission(SessionId sessionId, InternalPermission permission) throws AccessControlException;
 
-	/**
-	 * Check if the session is valid for server admin access.
-	 * 
-	 * @param sessionId the session id
-	 * @throws AccessControlException if the session is invalid for server admin access
-	 */
-	void checkServerAdminAccess(SessionId sessionId) throws AccessControlException;
-
-	/**
-	 * Check if the session may read the given model elements in the project.
-	 * 
-	 * @param sessionId session id
-	 * @param projectId project id
-	 * @param modelElements a set of model elements
-	 * @throws AccessControlException if the session may not read any of the model elements
-	 */
-	void checkReadAccess(SessionId sessionId, ProjectId projectId, Set<EObject> modelElements)
+	void checkPermissions(SessionId sessionId, Collection<InternalPermission> permissions)
 		throws AccessControlException;
 
 	/**
-	 * Check if the session may write the given model elements in the project.
+	 * This method looks up the session id on the server and returns the
+	 * relating user. Please notice that the returned user also contains roles
+	 * which are not contained in the original user. These extra roles come from
+	 * the user's groups.
 	 * 
-	 * @param sessionId session id
-	 * @param projectId project id
-	 * @param modelElements a set of model elements
-	 * @throws AccessControlException if the session may not write any of the model elements
-	 */
-	void checkWriteAccess(SessionId sessionId, ProjectId projectId, Set<EObject> modelElements)
-		throws AccessControlException;
-
-	/**
-	 * This method looks up the session id on the server and returns the relating user. Please notice that the returned
-	 * user also contains roles which are not contained in the original user. These extra roles come from the user's
-	 * groups.
-	 * 
-	 * @param sessionId session id
+	 * @param sessionId
+	 *            session id
 	 * @return ACUser user with roles from resolved user and it's groups
-	 * @throws AccessControlException exception
+	 * @throws AccessControlException
+	 *             exception
 	 */
 	ACUser resolveUser(SessionId sessionId) throws AccessControlException;
 
 	/**
-	 * This method looks up the orgUnit id the server and returns the relating user. Please notice that the returned
-	 * user also contains roles which are not contained in the original user. These extra roles come from the user's
-	 * groups.
+	 * This method looks up the orgUnit id the server and returns the relating
+	 * user. Please notice that the returned user also contains roles which are
+	 * not contained in the original user. These extra roles come from the
+	 * user's groups.
 	 * 
-	 * @param orgUnitId OrgUnit id
+	 * @param orgUnitId
+	 *            OrgUnit id
 	 * @return ACUser user with roles from resolved user and it's groups
-	 * @throws AccessControlException exception
+	 * @throws AccessControlException
+	 *             exception
 	 */
 	ACUser resolveUser(ACOrgUnitId orgUnitId) throws AccessControlException;
+
+	boolean hasPermissions(SessionId sessionId, Collection<InternalPermission> readOperationPermissions);
+
+	boolean hasPermissions(SessionId sessionId, Operation<?> operation);
+
+	Collection<InternalPermission> getPermissions(SessionId sessionId, Operation<?> op);
+
+	void checkPermissions(SessionId sessionId, Operation<?> op) throws AccessControlException;
 }

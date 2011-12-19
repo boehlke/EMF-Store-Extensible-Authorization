@@ -68,6 +68,10 @@ public class AccesscontrolFactoryImpl extends EFactoryImpl implements Accesscont
 			case AccesscontrolPackage.AC_GROUP: return createACGroup();
 			case AccesscontrolPackage.AC_ORG_UNIT_ID: return createACOrgUnitId();
 			case AccesscontrolPackage.ORG_UNIT_PROPERTY: return createOrgUnitProperty();
+			case AccesscontrolPackage.ROLE_ASSIGNMENT: return createRoleAssignment();
+			case AccesscontrolPackage.ROLE: return createRole();
+			case AccesscontrolPackage.PERMISSION_TYPE: return createPermissionType();
+			case AccesscontrolPackage.PERMISSION_SET: return createPermissionSet();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -116,6 +120,46 @@ public class AccesscontrolFactoryImpl extends EFactoryImpl implements Accesscont
 	public OrgUnitProperty createOrgUnitProperty() {
 		OrgUnitPropertyImpl orgUnitProperty = new OrgUnitPropertyImpl();
 		return orgUnitProperty;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RoleAssignment createRoleAssignment() {
+		RoleAssignmentImpl roleAssignment = new RoleAssignmentImpl();
+		return roleAssignment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Role createRole() {
+		RoleImpl role = new RoleImpl();
+		return role;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PermissionType createPermissionType() {
+		PermissionTypeImpl permissionType = new PermissionTypeImpl();
+		return permissionType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PermissionSet createPermissionSet() {
+		PermissionSetImpl permissionSet = new PermissionSetImpl();
+		return permissionSet;
 	}
 
 	/**

@@ -19,11 +19,11 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.emfstore.common.model.ModelPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.impl.AccesscontrolPackageImpl;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.roles.RolesPackage;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.roles.impl.RolesPackageImpl;
 import org.eclipse.emf.emfstore.server.model.impl.ModelPackageImpl;
 import org.eclipse.emf.emfstore.server.model.notification.NotificationPackage;
 import org.eclipse.emf.emfstore.server.model.notification.impl.NotificationPackageImpl;
+import org.eclipse.emf.emfstore.server.model.operation.OperationPackage;
+import org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl;
 import org.eclipse.emf.emfstore.server.model.url.UrlPackage;
 import org.eclipse.emf.emfstore.server.model.url.impl.UrlPackageImpl;
 import org.eclipse.emf.emfstore.server.model.versioning.VersioningPackage;
@@ -291,9 +291,9 @@ public class EventsPackageImpl extends EPackageImpl implements EventsPackage {
 		SemanticPackageImpl theSemanticPackage = (SemanticPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SemanticPackage.eNS_URI) instanceof SemanticPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SemanticPackage.eNS_URI) : SemanticPackage.eINSTANCE);
 		ServerPackageImpl theServerPackage = (ServerPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ServerPackage.eNS_URI) instanceof ServerPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ServerPackage.eNS_URI) : ServerPackage.eINSTANCE);
 		AccesscontrolPackageImpl theAccesscontrolPackage = (AccesscontrolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(AccesscontrolPackage.eNS_URI) instanceof AccesscontrolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(AccesscontrolPackage.eNS_URI) : AccesscontrolPackage.eINSTANCE);
-		RolesPackageImpl theRolesPackage = (RolesPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RolesPackage.eNS_URI) instanceof RolesPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RolesPackage.eNS_URI) : RolesPackage.eINSTANCE);
 		NotificationPackageImpl theNotificationPackage = (NotificationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI) instanceof NotificationPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI) : NotificationPackage.eINSTANCE);
 		UrlPackageImpl theUrlPackage = (UrlPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UrlPackage.eNS_URI) instanceof UrlPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UrlPackage.eNS_URI) : UrlPackage.eINSTANCE);
+		OperationPackageImpl theOperationPackage = (OperationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(OperationPackage.eNS_URI) instanceof OperationPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(OperationPackage.eNS_URI) : OperationPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theEventsPackage.createPackageContents();
@@ -303,9 +303,9 @@ public class EventsPackageImpl extends EPackageImpl implements EventsPackage {
 		theSemanticPackage.createPackageContents();
 		theServerPackage.createPackageContents();
 		theAccesscontrolPackage.createPackageContents();
-		theRolesPackage.createPackageContents();
 		theNotificationPackage.createPackageContents();
 		theUrlPackage.createPackageContents();
+		theOperationPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theEventsPackage.initializePackageContents();
@@ -315,9 +315,9 @@ public class EventsPackageImpl extends EPackageImpl implements EventsPackage {
 		theSemanticPackage.initializePackageContents();
 		theServerPackage.initializePackageContents();
 		theAccesscontrolPackage.initializePackageContents();
-		theRolesPackage.initializePackageContents();
 		theNotificationPackage.initializePackageContents();
 		theUrlPackage.initializePackageContents();
+		theOperationPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theEventsPackage.freeze();

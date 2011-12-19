@@ -221,7 +221,7 @@ public interface ModelPackage extends EPackage {
 	int SERVER_SPACE = 3;
 
 	/**
-	 * The feature id for the '<em><b>Groups</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Groups</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -248,7 +248,7 @@ public interface ModelPackage extends EPackage {
 	int SERVER_SPACE__OPEN_SESSIONS = 2;
 
 	/**
-	 * The feature id for the '<em><b>Users</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Users</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -257,13 +257,22 @@ public interface ModelPackage extends EPackage {
 	int SERVER_SPACE__USERS = 3;
 
 	/**
+	 * The feature id for the '<em><b>Permission Set</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SERVER_SPACE__PERMISSION_SET = 4;
+
+	/**
 	 * The number of structural features of the '<em>Server Space</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SERVER_SPACE_FEATURE_COUNT = 4;
+	int SERVER_SPACE_FEATURE_COUNT = 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.impl.ProjectIdImpl <em>Project Id</em>}' class.
@@ -526,10 +535,10 @@ public interface ModelPackage extends EPackage {
 	EClass getServerSpace();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.emfstore.server.model.ServerSpace#getGroups <em>Groups</em>}'.
+	 * Returns the meta object for the reference list '{@link org.eclipse.emf.emfstore.server.model.ServerSpace#getGroups <em>Groups</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Groups</em>'.
+	 * @return the meta object for the reference list '<em>Groups</em>'.
 	 * @see org.eclipse.emf.emfstore.server.model.ServerSpace#getGroups()
 	 * @see #getServerSpace()
 	 * @generated
@@ -559,15 +568,26 @@ public interface ModelPackage extends EPackage {
 	EReference getServerSpace_OpenSessions();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.emfstore.server.model.ServerSpace#getUsers <em>Users</em>}'.
+	 * Returns the meta object for the reference list '{@link org.eclipse.emf.emfstore.server.model.ServerSpace#getUsers <em>Users</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Users</em>'.
+	 * @return the meta object for the reference list '<em>Users</em>'.
 	 * @see org.eclipse.emf.emfstore.server.model.ServerSpace#getUsers()
 	 * @see #getServerSpace()
 	 * @generated
 	 */
 	EReference getServerSpace_Users();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.emfstore.server.model.ServerSpace#getPermissionSet <em>Permission Set</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Permission Set</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.ServerSpace#getPermissionSet()
+	 * @see #getServerSpace()
+	 * @generated
+	 */
+	EReference getServerSpace_PermissionSet();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.ProjectId <em>Project Id</em>}'.
@@ -777,7 +797,7 @@ public interface ModelPackage extends EPackage {
 		EClass SERVER_SPACE = eINSTANCE.getServerSpace();
 
 		/**
-		 * The meta object literal for the '<em><b>Groups</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Groups</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -801,12 +821,20 @@ public interface ModelPackage extends EPackage {
 		EReference SERVER_SPACE__OPEN_SESSIONS = eINSTANCE.getServerSpace_OpenSessions();
 
 		/**
-		 * The meta object literal for the '<em><b>Users</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Users</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference SERVER_SPACE__USERS = eINSTANCE.getServerSpace_Users();
+
+		/**
+		 * The meta object literal for the '<em><b>Permission Set</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SERVER_SPACE__PERMISSION_SET = eINSTANCE.getServerSpace_PermissionSet();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.impl.ProjectIdImpl <em>Project Id</em>}' class.
