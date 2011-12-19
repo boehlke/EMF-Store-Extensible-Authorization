@@ -8,11 +8,9 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.emfstore.server.filetransfer;
+package org.eclipse.emf.emfstore.common.filetransfer;
 
 import java.io.Serializable;
-
-import org.eclipse.emf.emfstore.server.model.FileIdentifier;
 
 /**
  * @author pfeifferc
@@ -62,7 +60,7 @@ public class FileChunk implements Serializable {
 	/**
 	 * @return file identifier
 	 */
-	public FileIdentifier getFileIdentifier() {
+	public String getFileIdentifier() {
 		return fileInformation.getFileIdentifier();
 	}
 

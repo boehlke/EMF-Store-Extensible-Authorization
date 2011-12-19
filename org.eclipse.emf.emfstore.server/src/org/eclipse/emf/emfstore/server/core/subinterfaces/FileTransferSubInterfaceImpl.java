@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.eclipse.emf.emfstore.common.filetransfer.FileChunk;
+import org.eclipse.emf.emfstore.common.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.common.model.util.FileUtil;
 import org.eclipse.emf.emfstore.server.ServerConfiguration;
 import org.eclipse.emf.emfstore.server.core.AbstractEmfstoreInterface;
@@ -22,9 +24,7 @@ import org.eclipse.emf.emfstore.server.core.MonitorProvider;
 import org.eclipse.emf.emfstore.server.exceptions.FatalEmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.FileNotOnServerException;
 import org.eclipse.emf.emfstore.server.exceptions.FileTransferException;
-import org.eclipse.emf.emfstore.server.filetransfer.FileChunk;
 import org.eclipse.emf.emfstore.server.filetransfer.FilePartitionerUtil;
-import org.eclipse.emf.emfstore.server.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 
 /**
@@ -165,7 +165,7 @@ public class FileTransferSubInterfaceImpl extends AbstractSubEmfstoreInterface {
 	}
 
 	private String constructFileName(FileTransferInformation fileInfo) {
-		return fileInfo.getFileIdentifier().getIdentifier();
+		return fileInfo.getFileIdentifier();
 	}
 
 	private String getProjectAttachmentFolder(ProjectId projectId) {

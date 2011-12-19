@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.eclipse.emf.emfstore.server.exceptions;
 
-import org.eclipse.emf.emfstore.server.model.FileIdentifier;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 
 /**
@@ -28,8 +27,8 @@ public class FileNotOnServerException extends FileTransferException {
 	 * @param p project id of the file that was not found on server
 	 * @param fileIdentifier identifier of the file
 	 */
-	public FileNotOnServerException(ProjectId p, FileIdentifier fileIdentifier) {
-		super("The file with the identifier " + fileIdentifier.getIdentifier() + " for project " + p.getId()
+	public FileNotOnServerException(ProjectId p, String fileIdentifier) {
+		super("The file with the identifier " + fileIdentifier + " for project " + p.getId()
 			+ " does not exist on the server.");
 	}
 

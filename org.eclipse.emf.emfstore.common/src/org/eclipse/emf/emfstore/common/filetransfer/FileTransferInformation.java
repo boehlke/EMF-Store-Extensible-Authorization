@@ -8,12 +8,9 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.emfstore.server.filetransfer;
+package org.eclipse.emf.emfstore.common.filetransfer;
 
 import java.io.Serializable;
-
-import org.eclipse.emf.emfstore.server.model.FileIdentifier;
-import org.eclipse.emf.emfstore.server.model.ModelFactory;
 
 /**
  * Data object for file transfer information.
@@ -41,8 +38,8 @@ public class FileTransferInformation implements Serializable {
 	 * @param identifier the file identifier
 	 * @param fileSize the file size, in bytes
 	 */
-	public FileTransferInformation(FileIdentifier identifier, int fileSize) {
-		this.fileIdentifier = identifier.getIdentifier();
+	public FileTransferInformation(String identifier, int fileSize) {
+		this.fileIdentifier = identifier;
 		this.fileSize = fileSize;
 	}
 
@@ -64,10 +61,8 @@ public class FileTransferInformation implements Serializable {
 	 * @return the file identifier
 	 */
 
-	public FileIdentifier getFileIdentifier() {
-		FileIdentifier fid = ModelFactory.eINSTANCE.createFileIdentifier();
-		fid.setIdentifier(fileIdentifier);
-		return fid;
+	public String getFileIdentifier() {
+		return fileIdentifier;
 	}
 
 	/**
@@ -75,8 +70,8 @@ public class FileTransferInformation implements Serializable {
 	 * 
 	 * @param fileId file identifier
 	 */
-	public void setFileIdentifier(FileIdentifier fileId) {
-		fileIdentifier = fileId.getIdentifier();
+	public void setFileIdentifier(String fileId) {
+		fileIdentifier = fileId;
 	}
 
 	/**
