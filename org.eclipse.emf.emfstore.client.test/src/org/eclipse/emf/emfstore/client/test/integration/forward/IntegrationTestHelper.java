@@ -53,7 +53,6 @@ import org.eclipse.emf.emfstore.server.model.versioning.ChangePackage;
 import org.eclipse.emf.emfstore.server.model.versioning.PrimaryVersionSpec;
 import org.eclipse.emf.emfstore.server.model.versioning.VersioningFactory;
 import org.eclipse.emf.emfstore.server.model.versioning.operations.AbstractOperation;
-import org.eclipse.emf.emfstore.server.model.versioning.operations.CreateDeleteOperation;
 
 /**
  * Helper class for testing.
@@ -1295,8 +1294,8 @@ public final class IntegrationTestHelper {
 		EObject modelElement = getRandomME(getTestProject());
 		getTestProject().deleteModelElement(modelElement);
 		List<AbstractOperation> operations = WorkspaceManager.getProjectSpace(testProject).getOperations();
-		CreateDeleteOperation operation = (CreateDeleteOperation) operations.get(operations.size() - 1);
-		CreateDeleteOperation reverse = (CreateDeleteOperation) operation.reverse();
+		AbstractOperation operation = operations.get(operations.size() - 1);
+		AbstractOperation reverse = operation.reverse();
 		reverse.apply(getTestProject());
 	}
 
