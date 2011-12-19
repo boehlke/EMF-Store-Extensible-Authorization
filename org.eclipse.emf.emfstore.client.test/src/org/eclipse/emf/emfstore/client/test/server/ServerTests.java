@@ -14,6 +14,7 @@ import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.ConnectionManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.KeyStoreManager;
 import org.eclipse.emf.emfstore.client.test.SetupHelper;
+import org.eclipse.emf.emfstore.client.test.testmodel.TestmodelFactory;
 import org.eclipse.emf.emfstore.common.model.ModelFactory;
 import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
@@ -116,6 +117,8 @@ public class ServerTests {
 		login(SetupHelper.getServerInfo());
 		// FIXME: readd when new project generator is available
 		generatedProject = ModelFactory.eINSTANCE.createProject();
+		generatedProject.addModelElement(TestmodelFactory.eINSTANCE.createTestElement());
+		generatedProject.initCaches();
 		projectsOnServerBeforeTest = 1;
 		initArguments();
 	}
