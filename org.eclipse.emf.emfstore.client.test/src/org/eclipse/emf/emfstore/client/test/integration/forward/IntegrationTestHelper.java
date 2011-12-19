@@ -1261,12 +1261,11 @@ public final class IntegrationTestHelper {
 		EReference refToChange = null;
 
 		while (meToReference == null) {
-			me = createRandomME();
-			refToChange = getRandomNonContainmentRef(me);
-			while (refToChange == null) {
+			do {
 				me = createRandomME();
 				refToChange = getRandomNonContainmentRef(me);
-			}
+			} while (refToChange == null);
+
 			meToReference = getRandomMEofType(getTestProject(), refToChange.getEReferenceType());
 		}
 
