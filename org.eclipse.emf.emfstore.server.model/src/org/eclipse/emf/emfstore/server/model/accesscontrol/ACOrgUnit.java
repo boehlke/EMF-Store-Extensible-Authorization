@@ -12,6 +12,7 @@ package org.eclipse.emf.emfstore.server.model.accesscontrol;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.emfstore.common.model.IdentifiableElement;
+import org.eclipse.emf.emfstore.server.model.ProjectId;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object ' <em><b>AC Org Unit</b></em>'. <!-- end-user-doc -->
@@ -149,5 +150,15 @@ public interface ACOrgUnit extends IdentifiableElement {
 	 * @generated
 	 */
 	EList<OrgUnitProperty> getProperties();
+
+	/**
+	 * checks if the OrgUnit has a specific role in the specific project
+	 * 
+	 * @param role
+	 * @param projectId
+	 * @return
+	 * @generated NOT
+	 */
+	boolean hasProjectRole(Role role, ProjectId projectId);
 
 } // ACOrgUnit
