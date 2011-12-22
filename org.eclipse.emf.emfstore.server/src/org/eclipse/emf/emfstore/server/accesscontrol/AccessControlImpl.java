@@ -58,7 +58,7 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 	private ServerSpace serverSpace;
 	private AbstractAuthenticationControl authenticationControl;
 	private PermissionProvider permissionProvider;
-	private PermissionSet PermissionSet;
+	private PermissionSet permissionSet;
 
 	/**
 	 * Default constructor.
@@ -72,7 +72,7 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 		throws FatalEmfStoreException {
 		this.sessionUserMap = new HashMap<SessionId, ACUserContainer>();
 		this.serverSpace = serverSpace;
-		this.PermissionSet = serverSpace.getPermissionSet();
+		this.permissionSet = serverSpace.getPermissionSet();
 		this.permissionProvider = permissionProvider;
 
 		authenticationControl = getAuthenticationFactory().createAuthenticationControl();
@@ -267,8 +267,8 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 			Iterator<InternalPermission> iterator = requiredPermissions.iterator();
 			while (iterator.hasNext()) {
 				InternalPermission requiredPermission = iterator.next();
-				if (requiredPermission.getType().getId().equals(permission.getType().getId())
-					&& (projectId == null || projectId.getId().equals(requiredPermission.getProjectId().getId()))) {
+				if (requiredPermission.getType().equals(permission.getType())
+					&& (projectId == null || projectId.equals(requiredPermission.getProjectId()))) {
 					iterator.remove();
 				}
 			}
@@ -309,7 +309,7 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 		return new PermissionContext() {
 
 			public PermissionType resolvePermissionType(String typeId) {
-				for (PermissionType type : PermissionSet.getPermissionTypes()) {
+				for (PermissionType type : permissionSet.getPermissionTypes()) {
 					if (type.getId().equals(typeId)) {
 						return type;
 					}
