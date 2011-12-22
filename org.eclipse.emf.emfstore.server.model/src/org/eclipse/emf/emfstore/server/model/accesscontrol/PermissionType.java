@@ -20,6 +20,7 @@ import org.eclipse.emf.emfstore.common.model.IdentifiableElement;
  * <ul>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType#getReferingRoles <em>Refering Roles</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType#isProjectPermission <em>Project Permission</em>}</li>
  * </ul>
  * </p>
  *
@@ -71,5 +72,31 @@ public interface PermissionType extends IdentifiableElement {
 	 * @generated
 	 */
 	EList<Role> getReferingRoles();
+
+	/**
+	 * Returns the value of the '<em><b>Project Permission</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Project Permission</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Project Permission</em>' attribute.
+	 * @see #setProjectPermission(boolean)
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getPermissionType_ProjectPermission()
+	 * @model
+	 * @generated
+	 */
+	boolean isProjectPermission();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType#isProjectPermission <em>Project Permission</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Project Permission</em>' attribute.
+	 * @see #isProjectPermission()
+	 * @generated
+	 */
+	void setProjectPermission(boolean value);
 
 } // PermissionType

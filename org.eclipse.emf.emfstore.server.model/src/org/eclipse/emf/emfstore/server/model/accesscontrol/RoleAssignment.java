@@ -30,7 +30,6 @@ import org.eclipse.emf.emfstore.server.model.ProjectId;
 public interface RoleAssignment extends IdentifiableElement {
 	/**
 	 * Returns the value of the '<em><b>Role</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getUsingAssignments <em>Using Assignments</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Role</em>' reference isn't clear,
@@ -40,8 +39,7 @@ public interface RoleAssignment extends IdentifiableElement {
 	 * @return the value of the '<em>Role</em>' reference.
 	 * @see #setRole(Role)
 	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getRoleAssignment_Role()
-	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getUsingAssignments
-	 * @model opposite="usingAssignments" required="true"
+	 * @model required="true"
 	 * @generated
 	 */
 	Role getRole();

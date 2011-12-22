@@ -36,6 +36,7 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
  * <ul>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionTypeImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionTypeImpl#getReferingRoles <em>Refering Roles</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionTypeImpl#isProjectPermission <em>Project Permission</em>}</li>
  * </ul>
  * </p>
  *
@@ -71,6 +72,26 @@ public class PermissionTypeImpl extends IdentifiableElementImpl implements Permi
 	 * @ordered
 	 */
 	protected EList<Role> referingRoles;
+
+	/**
+	 * The default value of the '{@link #isProjectPermission() <em>Project Permission</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isProjectPermission()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean PROJECT_PERMISSION_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isProjectPermission() <em>Project Permission</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isProjectPermission()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean projectPermission = PROJECT_PERMISSION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -129,6 +150,27 @@ public class PermissionTypeImpl extends IdentifiableElementImpl implements Permi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isProjectPermission() {
+		return projectPermission;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProjectPermission(boolean newProjectPermission) {
+		boolean oldProjectPermission = projectPermission;
+		projectPermission = newProjectPermission;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, AccesscontrolPackage.PERMISSION_TYPE__PROJECT_PERMISSION, oldProjectPermission, projectPermission));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -165,6 +207,8 @@ public class PermissionTypeImpl extends IdentifiableElementImpl implements Permi
 				return getId();
 			case AccesscontrolPackage.PERMISSION_TYPE__REFERING_ROLES:
 				return getReferingRoles();
+			case AccesscontrolPackage.PERMISSION_TYPE__PROJECT_PERMISSION:
+				return isProjectPermission();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -185,6 +229,9 @@ public class PermissionTypeImpl extends IdentifiableElementImpl implements Permi
 				getReferingRoles().clear();
 				getReferingRoles().addAll((Collection<? extends Role>)newValue);
 				return;
+			case AccesscontrolPackage.PERMISSION_TYPE__PROJECT_PERMISSION:
+				setProjectPermission((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -203,6 +250,9 @@ public class PermissionTypeImpl extends IdentifiableElementImpl implements Permi
 			case AccesscontrolPackage.PERMISSION_TYPE__REFERING_ROLES:
 				getReferingRoles().clear();
 				return;
+			case AccesscontrolPackage.PERMISSION_TYPE__PROJECT_PERMISSION:
+				setProjectPermission(PROJECT_PERMISSION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -219,6 +269,8 @@ public class PermissionTypeImpl extends IdentifiableElementImpl implements Permi
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case AccesscontrolPackage.PERMISSION_TYPE__REFERING_ROLES:
 				return referingRoles != null && !referingRoles.isEmpty();
+			case AccesscontrolPackage.PERMISSION_TYPE__PROJECT_PERMISSION:
+				return projectPermission != PROJECT_PERMISSION_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -235,6 +287,8 @@ public class PermissionTypeImpl extends IdentifiableElementImpl implements Permi
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (id: ");
 		result.append(id);
+		result.append(", projectPermission: ");
+		result.append(projectPermission);
 		result.append(')');
 		return result.toString();
 	}

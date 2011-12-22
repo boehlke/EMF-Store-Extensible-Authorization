@@ -431,22 +431,13 @@ public interface AccesscontrolPackage extends EPackage {
 	int ROLE__PERMISSION_TYPES = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Using Assignments</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROLE__USING_ASSIGNMENTS = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ROLE__DESCRIPTION = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
+	int ROLE__DESCRIPTION = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -455,7 +446,7 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROLE__ID = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
+	int ROLE__ID = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -464,7 +455,7 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROLE__NAME = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
+	int ROLE__NAME = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>System Role</b></em>' attribute.
@@ -473,7 +464,7 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROLE__SYSTEM_ROLE = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
+	int ROLE__SYSTEM_ROLE = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Role</em>' class.
@@ -482,7 +473,7 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROLE_FEATURE_COUNT = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 6;
+	int ROLE_FEATURE_COUNT = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionTypeImpl <em>Permission Type</em>}' class.
@@ -522,13 +513,22 @@ public interface AccesscontrolPackage extends EPackage {
 	int PERMISSION_TYPE__REFERING_ROLES = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Project Permission</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PERMISSION_TYPE__PROJECT_PERMISSION = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Permission Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PERMISSION_TYPE_FEATURE_COUNT = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
+	int PERMISSION_TYPE_FEATURE_COUNT = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl <em>Permission Set</em>}' class.
@@ -805,17 +805,6 @@ public interface AccesscontrolPackage extends EPackage {
 	EReference getRole_PermissionTypes();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getUsingAssignments <em>Using Assignments</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Using Assignments</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getUsingAssignments()
-	 * @see #getRole()
-	 * @generated
-	 */
-	EReference getRole_UsingAssignments();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getDescription <em>Description</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -890,6 +879,17 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getPermissionType_ReferingRoles();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType#isProjectPermission <em>Project Permission</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Project Permission</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType#isProjectPermission()
+	 * @see #getPermissionType()
+	 * @generated
+	 */
+	EAttribute getPermissionType_ProjectPermission();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet <em>Permission Set</em>}'.
@@ -1143,14 +1143,6 @@ public interface AccesscontrolPackage extends EPackage {
 		EReference ROLE__PERMISSION_TYPES = eINSTANCE.getRole_PermissionTypes();
 
 		/**
-		 * The meta object literal for the '<em><b>Using Assignments</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ROLE__USING_ASSIGNMENTS = eINSTANCE.getRole_UsingAssignments();
-
-		/**
 		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1207,6 +1199,14 @@ public interface AccesscontrolPackage extends EPackage {
 		 * @generated
 		 */
 		EReference PERMISSION_TYPE__REFERING_ROLES = eINSTANCE.getPermissionType_ReferingRoles();
+
+		/**
+		 * The meta object literal for the '<em><b>Project Permission</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PERMISSION_TYPE__PROJECT_PERMISSION = eINSTANCE.getPermissionType_ProjectPermission();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl <em>Permission Set</em>}' class.

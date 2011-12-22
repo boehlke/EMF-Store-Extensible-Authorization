@@ -458,15 +458,13 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="RoleAssignment" eSuperTypes="../../org.eclipse.emf.emfstore.common.model/model/common.ecore#//IdentifiableElement">
       <eStructuralFeatures xsi:type="ecore:EReference" name="role" lowerBound="1"
-          eType="#//accesscontrol/Role" eOpposite="#//accesscontrol/Role/usingAssignments"/>
+          eType="#//accesscontrol/Role"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="projectId" eType="#//ProjectId"
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Role" eSuperTypes="../../org.eclipse.emf.emfstore.common.model/model/common.ecore#//IdentifiableElement">
       <eStructuralFeatures xsi:type="ecore:EReference" name="permissionTypes" upperBound="-1"
           eType="#//accesscontrol/PermissionType" eOpposite="#//accesscontrol/PermissionType/referingRoles"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="usingAssignments" upperBound="-1"
-          eType="#//accesscontrol/RoleAssignment" eOpposite="#//accesscontrol/RoleAssignment/role"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1"
@@ -477,6 +475,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="referingRoles" upperBound="-1"
           eType="#//accesscontrol/Role" eOpposite="#//accesscontrol/Role/permissionTypes"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="projectPermission" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="PermissionSet">
       <eStructuralFeatures xsi:type="ecore:EReference" name="permissionTypes" upperBound="-1"
@@ -606,8 +605,8 @@
       </eGenericSuperTypes>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="CreateOrUpdateRoleOperation">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="roleData" lowerBound="1"
-          eType="#//operation/RoleData" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="role" lowerBound="1"
+          eType="#//accesscontrol/Role" containment="true"/>
       <eGenericSuperTypes eClassifier="#//operation/UserManagementOperation">
         <eTypeArguments eClassifier="#//operation/Void"/>
       </eGenericSuperTypes>
@@ -715,15 +714,6 @@
       <eGenericSuperTypes eClassifier="#//operation/Operation">
         <eTypeArguments eClassifier="#//ProjectInfo"/>
       </eGenericSuperTypes>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="RoleData">
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1"
-          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="permissionTypeIds" upperBound="-1"
-          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="systemRole" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
   </eSubpackages>
 </ecore:EPackage>

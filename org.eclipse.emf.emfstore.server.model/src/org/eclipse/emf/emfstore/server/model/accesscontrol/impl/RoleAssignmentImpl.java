@@ -107,33 +107,11 @@ public class RoleAssignmentImpl extends IdentifiableElementImpl implements RoleA
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetRole(Role newRole, NotificationChain msgs) {
+	public void setRole(Role newRole) {
 		Role oldRole = role;
 		role = newRole;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AccesscontrolPackage.ROLE_ASSIGNMENT__ROLE, oldRole, newRole);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setRole(Role newRole) {
-		if (newRole != role) {
-			NotificationChain msgs = null;
-			if (role != null)
-				msgs = ((InternalEObject)role).eInverseRemove(this, AccesscontrolPackage.ROLE__USING_ASSIGNMENTS, Role.class, msgs);
-			if (newRole != null)
-				msgs = ((InternalEObject)newRole).eInverseAdd(this, AccesscontrolPackage.ROLE__USING_ASSIGNMENTS, Role.class, msgs);
-			msgs = basicSetRole(newRole, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, AccesscontrolPackage.ROLE_ASSIGNMENT__ROLE, newRole, newRole));
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, AccesscontrolPackage.ROLE_ASSIGNMENT__ROLE, oldRole, role));
 	}
 
 	/**
@@ -208,26 +186,8 @@ public class RoleAssignmentImpl extends IdentifiableElementImpl implements RoleA
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case AccesscontrolPackage.ROLE_ASSIGNMENT__ROLE:
-				if (role != null)
-					msgs = ((InternalEObject)role).eInverseRemove(this, AccesscontrolPackage.ROLE__USING_ASSIGNMENTS, Role.class, msgs);
-				return basicSetRole((Role)otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case AccesscontrolPackage.ROLE_ASSIGNMENT__ROLE:
-				return basicSetRole(null, msgs);
 			case AccesscontrolPackage.ROLE_ASSIGNMENT__PROJECT_ID:
 				return basicSetProjectId(null, msgs);
 		}
