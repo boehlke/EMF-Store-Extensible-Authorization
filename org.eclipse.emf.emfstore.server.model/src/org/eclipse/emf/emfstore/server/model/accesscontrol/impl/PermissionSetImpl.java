@@ -346,4 +346,20 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 
 		return Collections.unmodifiableList(projectRoles);
 	}
+
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getPermissionType(java.lang.String)
+	 * @generated NOT
+	 */
+	public PermissionType getPermissionType(String id) {
+		for (PermissionType type : getPermissionTypes()) {
+			if (type.getId().equals(id)) {
+				return type;
+			}
+		}
+		return null;
+	}
 } // PermissionSetImpl

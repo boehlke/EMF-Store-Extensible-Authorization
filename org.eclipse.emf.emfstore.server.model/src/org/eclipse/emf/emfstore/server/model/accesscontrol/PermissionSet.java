@@ -128,4 +128,13 @@ public interface PermissionSet extends EObject {
 	 */
 	Collection<Role> getProjectRoles();
 
+	/**
+	 * convenience method to get a specific permission type, might return null
+	 * 
+	 * @param string
+	 * @return
+	 * @generated NOT
+	 */
+	PermissionType getPermissionType(String id);
+
 } // PermissionSet
