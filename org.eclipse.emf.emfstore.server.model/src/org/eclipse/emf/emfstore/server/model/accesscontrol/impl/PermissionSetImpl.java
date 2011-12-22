@@ -337,7 +337,7 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 				continue;
 			}
 			for (PermissionType type : role.getPermissionTypes()) {
-				if (type.isProjectRole()) {
+				if (type.isProjectPermission()) {
 					projectRoles.add(role);
 					continue ROLES;
 				}
