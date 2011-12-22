@@ -33,10 +33,8 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.emfstore.client.model.changeTracking.commands.EMFStoreBasicCommandStack;
-import org.eclipse.emf.emfstore.client.model.connectionmanager.AdminConnectionManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.ConnectionManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.KeyStoreManager;
-import org.eclipse.emf.emfstore.client.model.connectionmanager.xmlrpc.XmlRpcAdminConnectionManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.xmlrpc.XmlRpcConnectionManager;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreCommand;
 import org.eclipse.emf.emfstore.client.model.util.EditingDomainProvider;
@@ -64,7 +62,6 @@ public final class WorkspaceManager {
 
 	private Workspace currentWorkspace;
 	private ConnectionManager connectionManager;
-	private AdminConnectionManager adminConnectionManager;
 
 	private ObserverBus observerBus;
 
@@ -121,7 +118,6 @@ public final class WorkspaceManager {
 	private void initialize() {
 		initializeObserverBus();
 		this.connectionManager = initConnectionManager();
-		this.adminConnectionManager = initAdminConnectionManager();
 		this.currentWorkspace = initWorkSpace();
 	}
 
@@ -164,18 +160,6 @@ public final class WorkspaceManager {
 		KeyStoreManager.getInstance().setupKeys();
 		// return new RMIConnectionManagerImpl();
 		return new XmlRpcConnectionManager();
-	}
-
-	/**
-	 * Initialize the connection manager of the workspace. The connection
-	 * manager connects the workspace with the emf store.
-	 * 
-	 * @return the admin connection manager
-	 * @generated NOT
-	 */
-	private AdminConnectionManager initAdminConnectionManager() {
-		// return new RMIAdminConnectionManagerImpl();
-		return new XmlRpcAdminConnectionManager();
 	}
 
 	/**
@@ -534,16 +518,6 @@ public final class WorkspaceManager {
 	 */
 	public void setConnectionManager(ConnectionManager manager) {
 		connectionManager = manager;
-	}
-
-	/**
-	 * Get the admin connection manager. Return the admin connection manager for
-	 * this workspace.
-	 * 
-	 * @return the connectionManager
-	 */
-	public AdminConnectionManager getAdminConnectionManager() {
-		return adminConnectionManager;
 	}
 
 	/**

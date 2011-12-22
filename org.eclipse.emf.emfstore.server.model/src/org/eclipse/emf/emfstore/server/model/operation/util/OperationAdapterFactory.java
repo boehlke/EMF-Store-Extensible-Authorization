@@ -172,6 +172,10 @@ public class OperationAdapterFactory extends AdapterFactoryImpl {
 				return createCreateProjectOperationAdapter();
 			}
 			@Override
+			public Adapter caseRoleContainer(RoleContainer object) {
+				return createRoleContainerAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -538,6 +542,20 @@ public class OperationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCreateProjectOperationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.emfstore.server.model.operation.RoleContainer <em>Role Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.emfstore.server.model.operation.RoleContainer
+	 * @generated
+	 */
+	public Adapter createRoleContainerAdapter() {
 		return null;
 	}
 

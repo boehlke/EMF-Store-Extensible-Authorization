@@ -20,6 +20,7 @@ import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
 import org.eclipse.emf.emfstore.common.model.util.SerializationException;
 import org.eclipse.emf.emfstore.server.ServerConfiguration;
+import org.eclipse.emf.emfstore.server.accesscontrol.simple.SimplePermissionProvider;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
@@ -135,9 +136,11 @@ public class ServerTests {
 	public static void setupUsersAndRoles() throws EmfStoreException {
 		PermissionSet set = SetupHelper.updatePermissionSet(getSessionId());
 		if (set.getRole(ROLE_READER) == null) {
-			SetupHelper.addRole(getSessionId(), set, ROLE_WRITER, "projectwrite", "projectread");
-			SetupHelper.addRole(getSessionId(), set, ROLE_READER, "projectread");
-			SetupHelper.addRole(getSessionId(), set, ROLE_ADMIN, "projectwrite", "projectread", "projectadmin");
+			SetupHelper.addRole(getSessionId(), set, ROLE_WRITER, SimplePermissionProvider.PROJECT_WRITER_PERMISSION,
+				SimplePermissionProvider.PROJECT_READER_PERMISSION);
+			SetupHelper.addRole(getSessionId(), set, ROLE_READER, SimplePermissionProvider.PROJECT_READER_PERMISSION);
+			SetupHelper.addRole(getSessionId(), set, ROLE_ADMIN, SimplePermissionProvider.PROJECT_WRITER_PERMISSION,
+				SimplePermissionProvider.PROJECT_READER_PERMISSION, SimplePermissionProvider.PROJECT_ADMIN_PERMISSION);
 		}
 		if (set.getOrgUnit("reader") == null) {
 			ACOrgUnitId orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "reader");
@@ -169,7 +172,6 @@ public class ServerTests {
 	 */
 	protected static void login(ServerInfo serverInfo) throws EmfStoreException {
 		sessionId = login(serverInfo, "super", "super");
-		WorkspaceManager.getInstance().getAdminConnectionManager().initConnection(serverInfo, sessionId);
 	}
 
 	/**

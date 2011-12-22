@@ -37,9 +37,7 @@ import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
 import org.eclipse.emf.emfstore.server.accesscontrol.AccessControlImpl;
 import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider;
 import org.eclipse.emf.emfstore.server.connection.ConnectionHandler;
-import org.eclipse.emf.emfstore.server.connection.xmlrpc.XmlRpcAdminConnectionHander;
 import org.eclipse.emf.emfstore.server.connection.xmlrpc.XmlRpcConnectionHandler;
-import org.eclipse.emf.emfstore.server.core.AdminEmfStoreImpl;
 import org.eclipse.emf.emfstore.server.core.EmfStoreImpl;
 import org.eclipse.emf.emfstore.server.core.helper.HistoryCache;
 import org.eclipse.emf.emfstore.server.core.helper.PermissionSetConfiguration;
@@ -69,7 +67,6 @@ import org.eclipse.equinox.app.IApplicationContext;
 public class EmfStoreController implements IApplication, Runnable {
 
 	private EmfStore emfStore;
-	private AdminEmfStore adminEmfStore;
 	private AccessControlImpl accessControl;
 	private Set<ConnectionHandler<? extends EmfStoreInterface>> connectionHandlers;
 	private Properties properties;
@@ -136,7 +133,6 @@ public class EmfStoreController implements IApplication, Runnable {
 
 		accessControl = initAccessControl(serverSpace, permissionProvider);
 		emfStore = new EmfStoreImpl(serverSpace, accessControl);
-		adminEmfStore = new AdminEmfStoreImpl(serverSpace, accessControl);
 
 		// copy keystore file to workspace if not existent
 		copyFileToWorkspace(ServerConfiguration.getServerKeyStorePath(), ServerConfiguration.SERVER_KEYSTORE_FILE,
@@ -255,10 +251,6 @@ public class EmfStoreController implements IApplication, Runnable {
 		XmlRpcConnectionHandler xmlRpcConnectionHander = new XmlRpcConnectionHandler();
 		xmlRpcConnectionHander.init(emfStore, accessControl);
 		connectionHandlers.add(xmlRpcConnectionHander);
-
-		XmlRpcAdminConnectionHander xmlRpcAdminConnectionHander = new XmlRpcAdminConnectionHander();
-		xmlRpcAdminConnectionHander.init(adminEmfStore, accessControl);
-		connectionHandlers.add(xmlRpcAdminConnectionHander);
 
 		return connectionHandlers;
 	}

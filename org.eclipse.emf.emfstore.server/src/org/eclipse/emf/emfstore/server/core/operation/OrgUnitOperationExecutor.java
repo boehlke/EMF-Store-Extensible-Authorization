@@ -1,8 +1,9 @@
 package org.eclipse.emf.emfstore.server.core.operation;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.emfstore.server.OperationExecution;
 import org.eclipse.emf.emfstore.server.accesscontrol.AuthorizationControl;
@@ -164,12 +165,23 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 	@OperationHandler(operationClass = CreateOrUpdateRoleOperation.class)
 	public void changeOrCreateRole(OperationExecution<Void, CreateOrUpdateRoleOperation> execution)
 		throws EmfStoreException {
-		Role roleData = execution.getOperation().getRole();
+		Role roleData = execution.getOperation().getRole().getRole();
 		Role role = Util.getRoleOrNull(roleData.getId(), getServerSpace());
+
+		List<PermissionType> permissionTypes = new ArrayList<PermissionType>();
+		for (PermissionType permissionType : roleData.getPermissionTypes()) {
+			PermissionType resolvedPermissionType = getServerSpace().getPermissionSet().getPermissionType(
+				permissionType.getId());
+			if (resolvedPermissionType == null) {
+				throw new InvalidInputException("invalid permission type: " + permissionType.getId());
+			}
+			permissionTypes.add(resolvedPermissionType);
+		}
+
 		if (role != null) {
-			EList<PermissionType> permissionTypes = role.getPermissionTypes();
+			role.getPermissionTypes().clear();
 			permissionTypes.clear();
-			addPermssionTypes(roleData, permissionTypes);
+			role.getPermissionTypes().addAll(permissionTypes);
 			role.setDescription(roleData.getDescription());
 			role.setName(roleData.getName());
 		} else {
@@ -177,20 +189,10 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 			role.setDescription(roleData.getDescription());
 			role.setName(roleData.getName());
 			role.setId(roleData.getId());
-			addPermssionTypes(roleData, role.getPermissionTypes());
+			role.getPermissionTypes().addAll(permissionTypes);
 			getServerSpace().getPermissionSet().getRoles().add(role);
 		}
 		save();
-	}
-
-	private void addPermssionTypes(Role roleData, EList<PermissionType> permissionTypes) throws InvalidInputException {
-		for (PermissionType permissionTypeData : roleData.getPermissionTypes()) {
-			PermissionType permissionType = Util.getPermissionTypeOrNull(permissionTypeData.getId(), getServerSpace());
-			if (permissionType == null) {
-				throw new InvalidInputException("invalid permission type: " + permissionTypeData.getId());
-			}
-			permissionTypes.add(permissionType);
-		}
 	}
 
 	private ACGroup getGroup(String orgUnitId) throws EmfStoreException {

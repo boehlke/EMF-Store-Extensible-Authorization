@@ -13,29 +13,35 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
-import org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation;
-import org.eclipse.emf.emfstore.server.model.operation.OperationFactory;
+
 import org.eclipse.emf.emfstore.server.model.operation.OperationPackage;
+import org.eclipse.emf.emfstore.server.model.operation.RoleContainer;
+
+import org.eclipse.emf.emfstore.server.model.provider.ServerEditPlugin;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.emfstore.server.model.operation.RoleContainer} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class CreateOrUpdateRoleOperationItemProvider
-	extends UserManagementOperationItemProvider
+public class RoleContainerItemProvider
+	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -48,7 +54,7 @@ public class CreateOrUpdateRoleOperationItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CreateOrUpdateRoleOperationItemProvider(AdapterFactory adapterFactory) {
+	public RoleContainerItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -63,8 +69,31 @@ public class CreateOrUpdateRoleOperationItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addPermissionTypesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Permission Types feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addPermissionTypesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RoleContainer_permissionTypes_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RoleContainer_permissionTypes_feature", "_UI_RoleContainer_type"),
+				 OperationPackage.Literals.ROLE_CONTAINER__PERMISSION_TYPES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -79,7 +108,7 @@ public class CreateOrUpdateRoleOperationItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(OperationPackage.Literals.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE);
+			childrenFeatures.add(OperationPackage.Literals.ROLE_CONTAINER__ROLE);
 		}
 		return childrenFeatures;
 	}
@@ -98,14 +127,14 @@ public class CreateOrUpdateRoleOperationItemProvider
 	}
 
 	/**
-	 * This returns CreateOrUpdateRoleOperation.gif.
+	 * This returns RoleContainer.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CreateOrUpdateRoleOperation"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/RoleContainer"));
 	}
 
 	/**
@@ -116,7 +145,7 @@ public class CreateOrUpdateRoleOperationItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_CreateOrUpdateRoleOperation_type");
+		return getString("_UI_RoleContainer_type");
 	}
 
 	/**
@@ -130,8 +159,8 @@ public class CreateOrUpdateRoleOperationItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(CreateOrUpdateRoleOperation.class)) {
-			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE:
+		switch (notification.getFeatureID(RoleContainer.class)) {
+			case OperationPackage.ROLE_CONTAINER__ROLE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -151,8 +180,19 @@ public class CreateOrUpdateRoleOperationItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(OperationPackage.Literals.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE,
-				 OperationFactory.eINSTANCE.createRoleContainer()));
+				(OperationPackage.Literals.ROLE_CONTAINER__ROLE,
+				 AccesscontrolFactory.eINSTANCE.createRole()));
+	}
+
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return ServerEditPlugin.INSTANCE;
 	}
 
 }

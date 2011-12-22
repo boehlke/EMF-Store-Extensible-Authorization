@@ -114,6 +114,7 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 			case OperationPackage.REMOVE_TAG_OPERATION: return createRemoveTagOperation();
 			case OperationPackage.WRITE_PROPERTIES_OPERATION: return createWritePropertiesOperation();
 			case OperationPackage.CREATE_PROJECT_OPERATION: return createCreateProjectOperation();
+			case OperationPackage.ROLE_CONTAINER: return createRoleContainer();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -405,6 +406,16 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 	public CreateProjectOperation createCreateProjectOperation() {
 		CreateProjectOperationImpl createProjectOperation = new CreateProjectOperationImpl();
 		return createProjectOperation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RoleContainer createRoleContainer() {
+		RoleContainerImpl roleContainer = new RoleContainerImpl();
+		return roleContainer;
 	}
 
 	/**

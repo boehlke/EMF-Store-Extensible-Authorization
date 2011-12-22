@@ -25,7 +25,6 @@ import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.model.Usersession;
 import org.eclipse.emf.emfstore.client.model.Workspace;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
-import org.eclipse.emf.emfstore.client.model.connectionmanager.AdminConnectionManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.ConnectionManager;
 import org.eclipse.emf.emfstore.client.model.exceptions.NoLocalChangesException;
 import org.eclipse.emf.emfstore.client.model.impl.WorkspaceImpl;
@@ -43,10 +42,7 @@ import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.SessionId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.versioning.LogMessage;
 import org.eclipse.emf.emfstore.server.model.versioning.PrimaryVersionSpec;
 import org.eclipse.emf.emfstore.server.model.versioning.VersioningFactory;
@@ -146,7 +142,7 @@ public class SetupHelper {
 	 * @throws EmfStoreException in case of failure
 	 */
 	public static ACOrgUnitId createUserOnServer(SessionId sessionId, String username) throws EmfStoreException {
-		AdminConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getAdminConnectionManager();
+		ConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getConnectionManager();
 		adminConnectionManager.executeOperation(sessionId, StaticOperationFactory.createCreateUserOperation(username));
 		PermissionSet set = updatePermissionSet(sessionId);
 		return set.getOrgUnit(username).getId();
@@ -161,7 +157,7 @@ public class SetupHelper {
 	 */
 	public static void setUsersRole(SessionId sessionId, String orgUnitId, String roleId, ProjectId projectId)
 		throws EmfStoreException {
-		AdminConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getAdminConnectionManager();
+		ConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getConnectionManager();
 		adminConnectionManager.executeOperation(sessionId,
 			StaticOperationFactory.createAssignRoleOperation(orgUnitId, roleId, projectId.getId()));
 	}
@@ -671,21 +667,10 @@ public class SetupHelper {
 
 	public static void addRole(SessionId sessionId, PermissionSet permissionSet, String name, String... permissionTypes)
 		throws InvalidInputException, EmfStoreException {
-		Role role = AccesscontrolFactory.eINSTANCE.createRole();
-		role.setDescription(name + " role");
-		role.setName(name);
-		for (String pType : permissionTypes) {
-			PermissionType permissionType = permissionSet.getPermissionType("org.eclipse.emf.emfstore.server.simple."
-				+ pType);
-			if (permissionType == null) {
-				throw new RuntimeException("no such permission type '" + pType + "'");
-			}
-			role.getPermissionTypes().add(permissionType);
-		}
-		role.setId(name);
-		AdminConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getAdminConnectionManager();
-		adminConnectionManager.executeOperation(sessionId,
-			StaticOperationFactory.createCreateOrUpdateRoleOperation(role));
+
+		ConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getConnectionManager();
+		adminConnectionManager.executeOperation(sessionId, StaticOperationFactory.createCreateOrUpdateRoleOperation(
+			name, name + " role", name, permissionSet, permissionTypes));
 	}
 
 	public static PermissionSet updatePermissionSet(SessionId sessionId) throws EmfStoreException {

@@ -914,6 +914,43 @@ public interface OperationPackage extends EPackage {
 	int CREATE_PROJECT_OPERATION_FEATURE_COUNT = OPERATION_FEATURE_COUNT + 4;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.RoleContainerImpl <em>Role Container</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.RoleContainerImpl
+	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getRoleContainer()
+	 * @generated
+	 */
+	int ROLE_CONTAINER = 25;
+
+	/**
+	 * The feature id for the '<em><b>Role</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_CONTAINER__ROLE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Permission Types</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_CONTAINER__PERMISSION_TYPES = 1;
+
+	/**
+	 * The number of structural features of the '<em>Role Container</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_CONTAINER_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '<em>Void</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -921,7 +958,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getVoid()
 	 * @generated
 	 */
-	int VOID = 25;
+	int VOID = 26;
 
 	/**
 	 * The meta object id for the '<em>File Transfer Information</em>' data type.
@@ -931,7 +968,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getFileTransferInformation()
 	 * @generated
 	 */
-	int FILE_TRANSFER_INFORMATION = 26;
+	int FILE_TRANSFER_INFORMATION = 27;
 
 	/**
 	 * The meta object id for the '<em>File Chunk</em>' data type.
@@ -941,7 +978,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getFileChunk()
 	 * @generated
 	 */
-	int FILE_CHUNK = 27;
+	int FILE_CHUNK = 28;
 
 
 	/**
@@ -1470,6 +1507,38 @@ public interface OperationPackage extends EPackage {
 	EAttribute getCreateProjectOperation_Name();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.operation.RoleContainer <em>Role Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Role Container</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.operation.RoleContainer
+	 * @generated
+	 */
+	EClass getRoleContainer();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.emfstore.server.model.operation.RoleContainer#getRole <em>Role</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Role</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.operation.RoleContainer#getRole()
+	 * @see #getRoleContainer()
+	 * @generated
+	 */
+	EReference getRoleContainer_Role();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.emfstore.server.model.operation.RoleContainer#getPermissionTypes <em>Permission Types</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Permission Types</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.operation.RoleContainer#getPermissionTypes()
+	 * @see #getRoleContainer()
+	 * @generated
+	 */
+	EReference getRoleContainer_PermissionTypes();
+
+	/**
 	 * Returns the meta object for data type '{@link java.lang.Void <em>Void</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1973,6 +2042,32 @@ public interface OperationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CREATE_PROJECT_OPERATION__NAME = eINSTANCE.getCreateProjectOperation_Name();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.RoleContainerImpl <em>Role Container</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.emfstore.server.model.operation.impl.RoleContainerImpl
+		 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getRoleContainer()
+		 * @generated
+		 */
+		EClass ROLE_CONTAINER = eINSTANCE.getRoleContainer();
+
+		/**
+		 * The meta object literal for the '<em><b>Role</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ROLE_CONTAINER__ROLE = eINSTANCE.getRoleContainer_Role();
+
+		/**
+		 * The meta object literal for the '<em><b>Permission Types</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ROLE_CONTAINER__PERMISSION_TYPES = eINSTANCE.getRoleContainer_PermissionTypes();
 
 		/**
 		 * The meta object literal for the '<em>Void</em>' data type.

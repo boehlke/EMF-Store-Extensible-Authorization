@@ -35,12 +35,12 @@ public interface CreateOrUpdateRoleOperation extends UserManagementOperation<Voi
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Role</em>' containment reference.
-	 * @see #setRole(Role)
+	 * @see #setRole(RoleContainer)
 	 * @see org.eclipse.emf.emfstore.server.model.operation.OperationPackage#getCreateOrUpdateRoleOperation_Role()
 	 * @model containment="true" resolveProxies="true" required="true"
 	 * @generated
 	 */
-	Role getRole();
+	RoleContainer getRole();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation#getRole <em>Role</em>}' containment reference.
@@ -50,6 +50,6 @@ public interface CreateOrUpdateRoleOperation extends UserManagementOperation<Voi
 	 * @see #getRole()
 	 * @generated
 	 */
-	void setRole(Role value);
+	void setRole(RoleContainer value);
 
 } // CreateOrUpdateRoleOperation

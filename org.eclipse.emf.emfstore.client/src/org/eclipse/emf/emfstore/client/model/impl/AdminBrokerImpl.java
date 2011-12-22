@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.emfstore.client.model.AdminBroker;
 import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
+import org.eclipse.emf.emfstore.client.model.connectionmanager.ConnectionManager;
 import org.eclipse.emf.emfstore.server.accesscontrol.Permission;
 import org.eclipse.emf.emfstore.server.exceptions.ConnectionException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
@@ -26,11 +27,6 @@ import org.eclipse.emf.emfstore.server.model.operation.Operation;
  * Implementation of the AdminBroker.
  * 
  * @author Wesendonk
- */
-/**
- * @author koegel
- */
-/**
  * @author koegel
  */
 public class AdminBrokerImpl implements AdminBroker {
@@ -46,7 +42,6 @@ public class AdminBrokerImpl implements AdminBroker {
 	 */
 	public AdminBrokerImpl(ServerInfo serverInfo, SessionId sessionId) throws ConnectionException {
 		this.sessionId = sessionId;
-		WorkspaceManager.getInstance().getAdminConnectionManager().initConnection(serverInfo, sessionId);
 	}
 
 	/**
@@ -56,20 +51,38 @@ public class AdminBrokerImpl implements AdminBroker {
 	 */
 	public List<ProjectInfo> getProjectInfos() throws EmfStoreException {
 
-		return WorkspaceManager.getInstance().getAdminConnectionManager().getProjectInfos(getSessionId());
+		return getConnectionManager().getProjectList(getSessionId());
+	}
+
+	private ConnectionManager getConnectionManager() {
+		return WorkspaceManager.getInstance().getConnectionManager();
 	}
 
 	private SessionId getSessionId() {
 		return sessionId;
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.emfstore.client.model.AdminBroker#executeOperation(org.eclipse.emf.emfstore.server.model.operation.Operation)
+	 */
 	public <T> T executeOperation(Operation<T> op) throws EmfStoreException {
-		return WorkspaceManager.getInstance().getAdminConnectionManager().executeOperation(sessionId, op);
+		return getConnectionManager().executeOperation(sessionId, op);
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see
+	 *      org.eclipse.emf.emfstore.client.model.AdminBroker#getOperationPermissions(org.eclipse.emf.emfstore.server.
+	 *      model
+	 *      .operation.Operation<?>[])
+	 */
 	public List<Permission[]> getOperationPermissions(Operation<?>[] operations) throws EmfStoreException {
-		return WorkspaceManager.getInstance().getAdminConnectionManager()
-			.getOperationPermissions(sessionId, operations);
+		return getConnectionManager().getOperationPermissions(sessionId, operations);
 	}
 
 }

@@ -10,6 +10,9 @@ import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.server.exceptions.InvalidInputException;
 import org.eclipse.emf.emfstore.server.model.ProjectHistory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.operation.AddTagOperation;
 import org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation;
@@ -27,6 +30,7 @@ import org.eclipse.emf.emfstore.server.model.operation.ReadOrgUnitOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadProjectOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadPropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation;
+import org.eclipse.emf.emfstore.server.model.operation.RoleContainer;
 import org.eclipse.emf.emfstore.server.model.operation.WritePropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.versioning.ChangePackage;
 import org.eclipse.emf.emfstore.server.model.versioning.LogMessage;
@@ -171,10 +175,29 @@ public class StaticOperationFactory {
 		return op;
 	}
 
-	public static CreateOrUpdateRoleOperation createCreateOrUpdateRoleOperation(Role role) throws InvalidInputException {
-		checkNotNull(role);
+	public static CreateOrUpdateRoleOperation createCreateOrUpdateRoleOperation(String roleId, String roleName,
+		String roleDescription, PermissionSet permissionSet, String... permissionTypeIds) throws InvalidInputException {
+		checkNotNull(roleId, roleName, permissionSet);
+
+		RoleContainer container = OperationFactory.eINSTANCE.createRoleContainer();
+
+		for (String pType : permissionTypeIds) {
+			PermissionType permissionType = permissionSet.getPermissionType(pType);
+			if (permissionType == null) {
+				throw new RuntimeException("no such permission type '" + pType + "'");
+			}
+			container.getPermissionTypes().add(EcoreUtil.copy(permissionType));
+		}
+
+		Role role = AccesscontrolFactory.eINSTANCE.createRole();
+		container.setRole(role);
+		role.setDescription(roleDescription);
+		role.setName(roleName);
+		role.setId(roleId);
+		role.getPermissionTypes().addAll(container.getPermissionTypes());
+
 		CreateOrUpdateRoleOperation op = OperationFactory.eINSTANCE.createCreateOrUpdateRoleOperation();
-		op.setRole(role);
+		op.setRole(container);
 		return op;
 	}
 

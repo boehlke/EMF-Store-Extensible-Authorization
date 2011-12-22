@@ -606,7 +606,7 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="CreateOrUpdateRoleOperation">
       <eStructuralFeatures xsi:type="ecore:EReference" name="role" lowerBound="1"
-          eType="#//accesscontrol/Role" containment="true"/>
+          eType="#//operation/RoleContainer" containment="true"/>
       <eGenericSuperTypes eClassifier="#//operation/UserManagementOperation">
         <eTypeArguments eClassifier="#//operation/Void"/>
       </eGenericSuperTypes>
@@ -714,6 +714,12 @@
       <eGenericSuperTypes eClassifier="#//operation/Operation">
         <eTypeArguments eClassifier="#//ProjectInfo"/>
       </eGenericSuperTypes>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RoleContainer">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="role" lowerBound="1"
+          eType="#//accesscontrol/Role" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="permissionTypes" upperBound="-1"
+          eType="#//accesscontrol/PermissionType" containment="true"/>
     </eClassifiers>
   </eSubpackages>
 </ecore:EPackage>

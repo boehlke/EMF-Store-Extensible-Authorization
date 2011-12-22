@@ -19,6 +19,7 @@ import org.eclipse.emf.emfstore.common.filetransfer.FileChunk;
 import org.eclipse.emf.emfstore.common.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.common.model.EMFStoreProperty;
 import org.eclipse.emf.emfstore.common.model.Project;
+import org.eclipse.emf.emfstore.server.accesscontrol.Permission;
 import org.eclipse.emf.emfstore.server.connection.xmlrpc.XmlRpcConnectionHandler;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.InvalidVersionSpecException;
@@ -31,6 +32,7 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.OrgUnitProperty;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
+import org.eclipse.emf.emfstore.server.model.operation.Operation;
 import org.eclipse.emf.emfstore.server.model.versioning.ChangePackage;
 import org.eclipse.emf.emfstore.server.model.versioning.HistoryInfo;
 import org.eclipse.emf.emfstore.server.model.versioning.HistoryQuery;
@@ -228,7 +230,39 @@ public class XmlRpcConnectionManager extends AbstractConnectionManager<XmlRpcCli
 			projectId);
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.emfstore.server.EmfStore#getPermissionSet(org.eclipse.emf.emfstore.server.model.SessionId)
+	 */
 	public PermissionSet getPermissionSet(SessionId sessionId) throws EmfStoreException {
 		return getConnectionProxy(sessionId).callWithResult("getPermissionSet", PermissionSet.class, sessionId);
+	}
+
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.emfstore.server.EmfStore#executeOperation(org.eclipse.emf.emfstore.server.model.SessionId,
+	 *      org.eclipse.emf.emfstore.server.model.operation.Operation)
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> T executeOperation(SessionId sessionId, Operation<T> op) throws EmfStoreException {
+		return (T) getConnectionProxy(sessionId).callWithResult("executeOperation", Object.class, sessionId, op);
+	}
+
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see 
+	 *      org.eclipse.emf.emfstore.server.EmfStore#getOperationPermissions(org.eclipse.emf.emfstore.server.model.SessionId
+	 *      , org.eclipse.emf.emfstore.server.model.operation.Operation<?>[])
+	 */
+	public List<Permission[]> getOperationPermissions(SessionId sessionId, Operation<?>[] operations)
+		throws EmfStoreException {
+		return getConnectionProxy(sessionId).callWithListResult("getOperationPermissions", Permission[].class,
+			sessionId, operations);
 	}
 }

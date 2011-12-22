@@ -643,6 +643,29 @@ public class OperationItemProviderAdapterFactory extends OperationAdapterFactory
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.emfstore.server.model.operation.RoleContainer} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RoleContainerItemProvider roleContainerItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.emfstore.server.model.operation.RoleContainer}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRoleContainerAdapter() {
+		if (roleContainerItemProvider == null) {
+			roleContainerItemProvider = new RoleContainerItemProvider(this);
+		}
+
+		return roleContainerItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -766,6 +789,7 @@ public class OperationItemProviderAdapterFactory extends OperationAdapterFactory
 		if (removeTagOperationItemProvider != null) removeTagOperationItemProvider.dispose();
 		if (writePropertiesOperationItemProvider != null) writePropertiesOperationItemProvider.dispose();
 		if (createProjectOperationItemProvider != null) createProjectOperationItemProvider.dispose();
+		if (roleContainerItemProvider != null) roleContainerItemProvider.dispose();
 	}
 
 }

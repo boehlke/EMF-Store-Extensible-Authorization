@@ -17,7 +17,9 @@ import org.eclipse.emf.emfstore.common.filetransfer.FileChunk;
 import org.eclipse.emf.emfstore.common.filetransfer.FileTransferInformation;
 import org.eclipse.emf.emfstore.common.model.EMFStoreProperty;
 import org.eclipse.emf.emfstore.common.model.Project;
+import org.eclipse.emf.emfstore.server.accesscontrol.Permission;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
+import org.eclipse.emf.emfstore.server.exceptions.FatalEmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.InvalidVersionSpecException;
 import org.eclipse.emf.emfstore.server.model.ProjectHistory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
@@ -27,6 +29,7 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.OrgUnitProperty;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
+import org.eclipse.emf.emfstore.server.model.operation.Operation;
 import org.eclipse.emf.emfstore.server.model.versioning.ChangePackage;
 import org.eclipse.emf.emfstore.server.model.versioning.HistoryInfo;
 import org.eclipse.emf.emfstore.server.model.versioning.HistoryQuery;
@@ -40,6 +43,8 @@ import org.eclipse.emf.emfstore.server.model.versioning.VersionSpec;
  * projects and for persisting projects.
  * 
  * @author Maximilian Koegel
+ * @author Wesendonk
+ * @author boehlke
  * @generated NOT
  */
 public interface EmfStore extends EmfStoreInterface {
@@ -387,5 +392,25 @@ public interface EmfStore extends EmfStoreInterface {
 	 * @throws EmfStoreException
 	 */
 	PermissionSet getPermissionSet(SessionId sessionId) throws EmfStoreException;
+
+	/**
+	 * executes a user management operation
+	 * 
+	 * @param op
+	 * @return
+	 * @throws EmfStoreException
+	 * @throws FatalEmfStoreException
+	 */
+	<T> T executeOperation(final SessionId sessionId, Operation<T> op) throws EmfStoreException;
+
+	/**
+	 * get permissions required to execute given operations on server
+	 * 
+	 * @param sessionId (ignored)
+	 * @param operations
+	 * @return
+	 * @throws EmfStoreException
+	 */
+	List<Permission[]> getOperationPermissions(SessionId sessionId, Operation<?>[] operations) throws EmfStoreException;
 
 }

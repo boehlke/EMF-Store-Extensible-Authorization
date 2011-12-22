@@ -35,14 +35,13 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl#getPermissionTypes <em>
- * Permission Types</em>}</li>
- * <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl#getRoles <em>Roles</em>}</li>
- * <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl#getGroups <em>Groups</em>}</li>
- * <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl#getUsers <em>Users</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl#getPermissionTypes <em>Permission Types</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl#getRoles <em>Roles</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl#getGroups <em>Groups</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl#getUsers <em>Users</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
@@ -50,7 +49,6 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	 * The cached value of the '{@link #getPermissionTypes() <em>Permission Types</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getPermissionTypes()
 	 * @generated
 	 * @ordered
@@ -61,7 +59,6 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	 * The cached value of the '{@link #getRoles() <em>Roles</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getRoles()
 	 * @generated
 	 * @ordered
@@ -72,7 +69,6 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	 * The cached value of the '{@link #getGroups() <em>Groups</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getGroups()
 	 * @generated
 	 * @ordered
@@ -83,7 +79,6 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	 * The cached value of the '{@link #getUsers() <em>Users</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getUsers()
 	 * @generated
 	 * @ordered
@@ -93,7 +88,6 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected PermissionSetImpl() {
@@ -103,7 +97,6 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -114,13 +107,11 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EList<PermissionType> getPermissionTypes() {
 		if (permissionTypes == null) {
-			permissionTypes = new EObjectContainmentEList.Resolving<PermissionType>(PermissionType.class, this,
-				AccesscontrolPackage.PERMISSION_SET__PERMISSION_TYPES);
+			permissionTypes = new EObjectContainmentEList.Resolving<PermissionType>(PermissionType.class, this, AccesscontrolPackage.PERMISSION_SET__PERMISSION_TYPES);
 		}
 		return permissionTypes;
 	}
@@ -128,13 +119,11 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EList<Role> getRoles() {
 		if (roles == null) {
-			roles = new EObjectContainmentEList.Resolving<Role>(Role.class, this,
-				AccesscontrolPackage.PERMISSION_SET__ROLES);
+			roles = new EObjectContainmentEList.Resolving<Role>(Role.class, this, AccesscontrolPackage.PERMISSION_SET__ROLES);
 		}
 		return roles;
 	}
@@ -142,13 +131,11 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EList<ACGroup> getGroups() {
 		if (groups == null) {
-			groups = new EObjectContainmentEList.Resolving<ACGroup>(ACGroup.class, this,
-				AccesscontrolPackage.PERMISSION_SET__GROUPS);
+			groups = new EObjectContainmentEList.Resolving<ACGroup>(ACGroup.class, this, AccesscontrolPackage.PERMISSION_SET__GROUPS);
 		}
 		return groups;
 	}
@@ -156,13 +143,11 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EList<ACUser> getUsers() {
 		if (users == null) {
-			users = new EObjectContainmentEList.Resolving<ACUser>(ACUser.class, this,
-				AccesscontrolPackage.PERMISSION_SET__USERS);
+			users = new EObjectContainmentEList.Resolving<ACUser>(ACUser.class, this, AccesscontrolPackage.PERMISSION_SET__USERS);
 		}
 		return users;
 	}
@@ -170,20 +155,19 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case AccesscontrolPackage.PERMISSION_SET__PERMISSION_TYPES:
-			return ((InternalEList<?>) getPermissionTypes()).basicRemove(otherEnd, msgs);
-		case AccesscontrolPackage.PERMISSION_SET__ROLES:
-			return ((InternalEList<?>) getRoles()).basicRemove(otherEnd, msgs);
-		case AccesscontrolPackage.PERMISSION_SET__GROUPS:
-			return ((InternalEList<?>) getGroups()).basicRemove(otherEnd, msgs);
-		case AccesscontrolPackage.PERMISSION_SET__USERS:
-			return ((InternalEList<?>) getUsers()).basicRemove(otherEnd, msgs);
+			case AccesscontrolPackage.PERMISSION_SET__PERMISSION_TYPES:
+				return ((InternalEList<?>)getPermissionTypes()).basicRemove(otherEnd, msgs);
+			case AccesscontrolPackage.PERMISSION_SET__ROLES:
+				return ((InternalEList<?>)getRoles()).basicRemove(otherEnd, msgs);
+			case AccesscontrolPackage.PERMISSION_SET__GROUPS:
+				return ((InternalEList<?>)getGroups()).basicRemove(otherEnd, msgs);
+			case AccesscontrolPackage.PERMISSION_SET__USERS:
+				return ((InternalEList<?>)getUsers()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -191,20 +175,19 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case AccesscontrolPackage.PERMISSION_SET__PERMISSION_TYPES:
-			return getPermissionTypes();
-		case AccesscontrolPackage.PERMISSION_SET__ROLES:
-			return getRoles();
-		case AccesscontrolPackage.PERMISSION_SET__GROUPS:
-			return getGroups();
-		case AccesscontrolPackage.PERMISSION_SET__USERS:
-			return getUsers();
+			case AccesscontrolPackage.PERMISSION_SET__PERMISSION_TYPES:
+				return getPermissionTypes();
+			case AccesscontrolPackage.PERMISSION_SET__ROLES:
+				return getRoles();
+			case AccesscontrolPackage.PERMISSION_SET__GROUPS:
+				return getGroups();
+			case AccesscontrolPackage.PERMISSION_SET__USERS:
+				return getUsers();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -212,29 +195,28 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case AccesscontrolPackage.PERMISSION_SET__PERMISSION_TYPES:
-			getPermissionTypes().clear();
-			getPermissionTypes().addAll((Collection<? extends PermissionType>) newValue);
-			return;
-		case AccesscontrolPackage.PERMISSION_SET__ROLES:
-			getRoles().clear();
-			getRoles().addAll((Collection<? extends Role>) newValue);
-			return;
-		case AccesscontrolPackage.PERMISSION_SET__GROUPS:
-			getGroups().clear();
-			getGroups().addAll((Collection<? extends ACGroup>) newValue);
-			return;
-		case AccesscontrolPackage.PERMISSION_SET__USERS:
-			getUsers().clear();
-			getUsers().addAll((Collection<? extends ACUser>) newValue);
-			return;
+			case AccesscontrolPackage.PERMISSION_SET__PERMISSION_TYPES:
+				getPermissionTypes().clear();
+				getPermissionTypes().addAll((Collection<? extends PermissionType>)newValue);
+				return;
+			case AccesscontrolPackage.PERMISSION_SET__ROLES:
+				getRoles().clear();
+				getRoles().addAll((Collection<? extends Role>)newValue);
+				return;
+			case AccesscontrolPackage.PERMISSION_SET__GROUPS:
+				getGroups().clear();
+				getGroups().addAll((Collection<? extends ACGroup>)newValue);
+				return;
+			case AccesscontrolPackage.PERMISSION_SET__USERS:
+				getUsers().clear();
+				getUsers().addAll((Collection<? extends ACUser>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -242,24 +224,23 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case AccesscontrolPackage.PERMISSION_SET__PERMISSION_TYPES:
-			getPermissionTypes().clear();
-			return;
-		case AccesscontrolPackage.PERMISSION_SET__ROLES:
-			getRoles().clear();
-			return;
-		case AccesscontrolPackage.PERMISSION_SET__GROUPS:
-			getGroups().clear();
-			return;
-		case AccesscontrolPackage.PERMISSION_SET__USERS:
-			getUsers().clear();
-			return;
+			case AccesscontrolPackage.PERMISSION_SET__PERMISSION_TYPES:
+				getPermissionTypes().clear();
+				return;
+			case AccesscontrolPackage.PERMISSION_SET__ROLES:
+				getRoles().clear();
+				return;
+			case AccesscontrolPackage.PERMISSION_SET__GROUPS:
+				getGroups().clear();
+				return;
+			case AccesscontrolPackage.PERMISSION_SET__USERS:
+				getUsers().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -267,20 +248,19 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case AccesscontrolPackage.PERMISSION_SET__PERMISSION_TYPES:
-			return permissionTypes != null && !permissionTypes.isEmpty();
-		case AccesscontrolPackage.PERMISSION_SET__ROLES:
-			return roles != null && !roles.isEmpty();
-		case AccesscontrolPackage.PERMISSION_SET__GROUPS:
-			return groups != null && !groups.isEmpty();
-		case AccesscontrolPackage.PERMISSION_SET__USERS:
-			return users != null && !users.isEmpty();
+			case AccesscontrolPackage.PERMISSION_SET__PERMISSION_TYPES:
+				return permissionTypes != null && !permissionTypes.isEmpty();
+			case AccesscontrolPackage.PERMISSION_SET__ROLES:
+				return roles != null && !roles.isEmpty();
+			case AccesscontrolPackage.PERMISSION_SET__GROUPS:
+				return groups != null && !groups.isEmpty();
+			case AccesscontrolPackage.PERMISSION_SET__USERS:
+				return users != null && !users.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
