@@ -8,7 +8,10 @@
  */
 package org.eclipse.emf.emfstore.server.model.accesscontrol.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -282,6 +285,13 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 		return super.eIsSet(featureID);
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getOrgUnit(java.lang.String)
+	 * @generated NOT
+	 */
 	public ACOrgUnit getOrgUnit(String name) {
 		for (ACUser user : getUsers()) {
 			if (user.getName().equals(name)) {
@@ -296,6 +306,13 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 		return null;
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getRole(java.lang.String)
+	 * @generated NOT
+	 */
 	public Role getRole(String roleName) {
 		for (Role role : getRoles()) {
 			if (role.getId().equals(roleName)) {
@@ -305,4 +322,28 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 		return null;
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getProjectRoles()
+	 * @generated NOT
+	 */
+	public Collection<Role> getProjectRoles() {
+		List<Role> projectRoles = new ArrayList<Role>();
+
+		ROLES: for (Role role : getRoles()) {
+			if (role.isSystemRole()) {
+				continue;
+			}
+			for (PermissionType type : role.getPermissionTypes()) {
+				if (type.isProjectRole()) {
+					projectRoles.add(role);
+					continue ROLES;
+				}
+			}
+		}
+
+		return Collections.unmodifiableList(projectRoles);
+	}
 } // PermissionSetImpl

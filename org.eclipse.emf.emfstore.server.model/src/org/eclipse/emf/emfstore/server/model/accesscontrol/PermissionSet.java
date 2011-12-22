@@ -8,6 +8,8 @@
  */
 package org.eclipse.emf.emfstore.server.model.accesscontrol;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
@@ -117,5 +119,13 @@ public interface PermissionSet extends EObject {
 	 * @generated NOT
 	 */
 	Role getRole(String roleName);
+
+	/**
+	 * get project roles, project roles are roles which contain project permissions, so they can be assigned to projects
+	 * 
+	 * @return readonly collection of project roles
+	 * @generated NOT
+	 */
+	Collection<Role> getProjectRoles();
 
 } // PermissionSet
