@@ -135,9 +135,9 @@ public class ServerTests {
 	public static void setupUsersAndRoles() throws EmfStoreException {
 		PermissionSet set = SetupHelper.updatePermissionSet(getSessionId());
 		if (set.getRole(ROLE_READER) == null) {
-			SetupHelper.addRole(getSessionId(), ROLE_WRITER, "projectwrite", "projectread");
-			SetupHelper.addRole(getSessionId(), ROLE_READER, "projectread");
-			SetupHelper.addRole(getSessionId(), ROLE_ADMIN, "projectwrite", "projectread", "projectadmin");
+			SetupHelper.addRole(getSessionId(), set, ROLE_WRITER, "projectwrite", "projectread");
+			SetupHelper.addRole(getSessionId(), set, ROLE_READER, "projectread");
+			SetupHelper.addRole(getSessionId(), set, ROLE_ADMIN, "projectwrite", "projectread", "projectadmin");
 		}
 		if (set.getOrgUnit("reader") == null) {
 			ACOrgUnitId orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "reader");

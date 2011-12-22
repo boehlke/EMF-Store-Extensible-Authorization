@@ -43,9 +43,10 @@ import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.SessionId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
-import org.eclipse.emf.emfstore.server.model.operation.OperationFactory;
-import org.eclipse.emf.emfstore.server.model.operation.RoleData;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.versioning.LogMessage;
 import org.eclipse.emf.emfstore.server.model.versioning.PrimaryVersionSpec;
 import org.eclipse.emf.emfstore.server.model.versioning.VersioningFactory;
@@ -668,13 +669,18 @@ public class SetupHelper {
 
 	}
 
-	public static void addRole(SessionId sessionId, String name, String... permissionTypes)
+	public static void addRole(SessionId sessionId, PermissionSet permissionSet, String name, String... permissionTypes)
 		throws InvalidInputException, EmfStoreException {
-		RoleData role = OperationFactory.eINSTANCE.createRoleData();
+		Role role = AccesscontrolFactory.eINSTANCE.createRole();
 		role.setDescription(name + " role");
 		role.setName(name);
 		for (String pType : permissionTypes) {
-			role.getPermissionTypeIds().add("org.eclipse.emf.emfstore.server.simple." + pType);
+			PermissionType permissionType = permissionSet.getPermissionType("org.eclipse.emf.emfstore.server.simple."
+				+ pType);
+			if (permissionType == null) {
+				throw new RuntimeException("no such permission type '" + pType + "'");
+			}
+			role.getPermissionTypes().add(permissionType);
 		}
 		role.setId(name);
 		AdminConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getAdminConnectionManager();
