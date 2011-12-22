@@ -10,6 +10,7 @@ import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.server.exceptions.InvalidInputException;
 import org.eclipse.emf.emfstore.server.model.ProjectHistory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.operation.AddTagOperation;
 import org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation;
@@ -26,7 +27,6 @@ import org.eclipse.emf.emfstore.server.model.operation.ReadOrgUnitOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadProjectOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadPropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation;
-import org.eclipse.emf.emfstore.server.model.operation.RoleData;
 import org.eclipse.emf.emfstore.server.model.operation.WritePropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.versioning.ChangePackage;
 import org.eclipse.emf.emfstore.server.model.versioning.LogMessage;
@@ -171,11 +171,10 @@ public class StaticOperationFactory {
 		return op;
 	}
 
-	public static CreateOrUpdateRoleOperation createCreateOrUpdateRoleOperation(RoleData role)
-		throws InvalidInputException {
+	public static CreateOrUpdateRoleOperation createCreateOrUpdateRoleOperation(Role role) throws InvalidInputException {
 		checkNotNull(role);
 		CreateOrUpdateRoleOperation op = OperationFactory.eINSTANCE.createCreateOrUpdateRoleOperation();
-		op.setRoleData(role);
+		op.setRole(role);
 		return op;
 	}
 

@@ -27,7 +27,6 @@ import org.eclipse.emf.emfstore.server.model.operation.CreateUserOperation;
 import org.eclipse.emf.emfstore.server.model.operation.DeleteOrgUnitOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveGroupMemberOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation;
-import org.eclipse.emf.emfstore.server.model.operation.RoleData;
 
 public class OrgUnitOperationExecutor extends OperationExecutor {
 
@@ -165,7 +164,7 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 	@OperationHandler(operationClass = CreateOrUpdateRoleOperation.class)
 	public void changeOrCreateRole(OperationExecution<Void, CreateOrUpdateRoleOperation> execution)
 		throws EmfStoreException {
-		RoleData roleData = execution.getOperation().getRoleData();
+		Role roleData = execution.getOperation().getRole();
 		Role role = Util.getRoleOrNull(roleData.getId(), getServerSpace());
 		if (role != null) {
 			EList<PermissionType> permissionTypes = role.getPermissionTypes();
@@ -184,12 +183,11 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 		save();
 	}
 
-	private void addPermssionTypes(RoleData roleData, EList<PermissionType> permissionTypes)
-		throws InvalidInputException {
-		for (String permissionTypeId : roleData.getPermissionTypeIds()) {
-			PermissionType permissionType = Util.getPermissionTypeOrNull(permissionTypeId, getServerSpace());
+	private void addPermssionTypes(Role roleData, EList<PermissionType> permissionTypes) throws InvalidInputException {
+		for (PermissionType permissionTypeData : roleData.getPermissionTypes()) {
+			PermissionType permissionType = Util.getPermissionTypeOrNull(permissionTypeData.getId(), getServerSpace());
 			if (permissionType == null) {
-				throw new InvalidInputException("invalid permission type: " + permissionTypeId);
+				throw new InvalidInputException("invalid permission type: " + permissionTypeData.getId());
 			}
 			permissionTypes.add(permissionType);
 		}

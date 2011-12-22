@@ -33,6 +33,7 @@ public class PermissionSetConfiguration {
 		for (IConfigurationElement iConfigurationElement : permissionTypeConfigs) {
 			PermissionType type = AccesscontrolFactory.eINSTANCE.createPermissionType();
 			type.setId(iConfigurationElement.getAttribute("id"));
+			type.setProjectPermission(Boolean.valueOf(iConfigurationElement.getAttribute("projectPermission")));
 			permissionSet.getPermissionTypes().add(type);
 		}
 

@@ -356,6 +356,7 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	}
 
 	public PermissionSet getPermissionSet(SessionId sessionId) throws EmfStoreException {
+		// TODO
 		return getServerSpace().getPermissionSet();
 	}
 }
