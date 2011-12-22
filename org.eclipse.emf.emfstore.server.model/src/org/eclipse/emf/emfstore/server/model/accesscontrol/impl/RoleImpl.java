@@ -1,5 +1,7 @@
 /**
- * <copyright> Copyright (c) 2008-2009 Jonas Helming, Maximilian Koegel. All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html </copyright>
+ * <copyright> Copyright (c) 2008-2009 Jonas Helming, Maximilian Koegel. All rights reserved. This program and the
+ * accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this
+ * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html </copyright>
  * 
  * 
  * 
@@ -10,19 +12,13 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.emf.emfstore.common.model.impl.IdentifiableElementImpl;
-
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
@@ -36,7 +32,6 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl#getPermissionTypes <em>Permission Types</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl#getUsingAssignments <em>Using Assignments</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl#getName <em>Name</em>}</li>
@@ -56,16 +51,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 	 * @ordered
 	 */
 	protected EList<PermissionType> permissionTypes;
-
-	/**
-	 * The cached value of the '{@link #getUsingAssignments() <em>Using Assignments</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUsingAssignments()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<RoleAssignment> usingAssignments;
 
 	/**
 	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
@@ -183,18 +168,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<RoleAssignment> getUsingAssignments() {
-		if (usingAssignments == null) {
-			usingAssignments = new EObjectWithInverseResolvingEList<RoleAssignment>(RoleAssignment.class, this, AccesscontrolPackage.ROLE__USING_ASSIGNMENTS, AccesscontrolPackage.ROLE_ASSIGNMENT__ROLE);
-		}
-		return usingAssignments;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getDescription() {
 		return description;
 	}
@@ -285,8 +258,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 		switch (featureID) {
 			case AccesscontrolPackage.ROLE__PERMISSION_TYPES:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getPermissionTypes()).basicAdd(otherEnd, msgs);
-			case AccesscontrolPackage.ROLE__USING_ASSIGNMENTS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getUsingAssignments()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -301,8 +272,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 		switch (featureID) {
 			case AccesscontrolPackage.ROLE__PERMISSION_TYPES:
 				return ((InternalEList<?>)getPermissionTypes()).basicRemove(otherEnd, msgs);
-			case AccesscontrolPackage.ROLE__USING_ASSIGNMENTS:
-				return ((InternalEList<?>)getUsingAssignments()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -317,8 +286,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 		switch (featureID) {
 			case AccesscontrolPackage.ROLE__PERMISSION_TYPES:
 				return getPermissionTypes();
-			case AccesscontrolPackage.ROLE__USING_ASSIGNMENTS:
-				return getUsingAssignments();
 			case AccesscontrolPackage.ROLE__DESCRIPTION:
 				return getDescription();
 			case AccesscontrolPackage.ROLE__ID:
@@ -343,10 +310,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 			case AccesscontrolPackage.ROLE__PERMISSION_TYPES:
 				getPermissionTypes().clear();
 				getPermissionTypes().addAll((Collection<? extends PermissionType>)newValue);
-				return;
-			case AccesscontrolPackage.ROLE__USING_ASSIGNMENTS:
-				getUsingAssignments().clear();
-				getUsingAssignments().addAll((Collection<? extends RoleAssignment>)newValue);
 				return;
 			case AccesscontrolPackage.ROLE__DESCRIPTION:
 				setDescription((String)newValue);
@@ -375,9 +338,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 			case AccesscontrolPackage.ROLE__PERMISSION_TYPES:
 				getPermissionTypes().clear();
 				return;
-			case AccesscontrolPackage.ROLE__USING_ASSIGNMENTS:
-				getUsingAssignments().clear();
-				return;
 			case AccesscontrolPackage.ROLE__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
@@ -404,8 +364,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 		switch (featureID) {
 			case AccesscontrolPackage.ROLE__PERMISSION_TYPES:
 				return permissionTypes != null && !permissionTypes.isEmpty();
-			case AccesscontrolPackage.ROLE__USING_ASSIGNMENTS:
-				return usingAssignments != null && !usingAssignments.isEmpty();
 			case AccesscontrolPackage.ROLE__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case AccesscontrolPackage.ROLE__ID:
@@ -440,4 +398,4 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 		return result.toString();
 	}
 
-} //RoleImpl
+} // RoleImpl
