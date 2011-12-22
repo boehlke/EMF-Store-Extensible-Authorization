@@ -68,6 +68,14 @@ public class SimplePermissionProvider implements PermissionProvider {
 		return getProjectPermission(null, SYSTEM_PERMISSION, resolver);
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider#getPermissions(org.eclipse.emf.emfstore.server.model.operation.Operation,
+	 *      org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser,
+	 *      org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider.PermissionContext)
+	 */
 	public Collection<InternalPermission> getPermissions(Operation<?> op, ACUser user, PermissionContext resolver) {
 
 		if (op instanceof ProjectOperation) {
@@ -107,5 +115,18 @@ public class SimplePermissionProvider implements PermissionProvider {
 		}
 
 		return getServerAdminPermissions(resolver);
+	}
+
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider#getAllPermissionTypes()
+	 */
+	public PermissionTypeData[] getAllPermissionTypes() {
+		return new PermissionTypeData[] { new PermissionTypeData(PROJECT_READER_PERMISSION, "project read", true),
+			new PermissionTypeData(PROJECT_WRITER_PERMISSION, "project write", true),
+			new PermissionTypeData(PROJECT_ADMIN_PERMISSION, "project administrate", true),
+			new PermissionTypeData(SYSTEM_PERMISSION, "system administrate", false) };
 	}
 }

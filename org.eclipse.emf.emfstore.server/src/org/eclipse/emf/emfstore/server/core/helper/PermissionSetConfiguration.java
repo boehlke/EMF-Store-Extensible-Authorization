@@ -6,6 +6,7 @@ import java.util.List;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider;
+import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider.PermissionTypeData;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
@@ -28,17 +29,17 @@ public class PermissionSetConfiguration {
 		permissionSet = AccesscontrolFactory.eINSTANCE.createPermissionSet();
 
 		IConfigurationElement[] permissionProviderConfigs = getByName(iConfigurationElements, "permissionProvider");
-		IConfigurationElement[] permissionTypeConfigs = getByName(iConfigurationElements, "permissionType");
-
-		for (IConfigurationElement iConfigurationElement : permissionTypeConfigs) {
-			PermissionType type = AccesscontrolFactory.eINSTANCE.createPermissionType();
-			type.setId(iConfigurationElement.getAttribute("id"));
-			type.setProjectPermission(Boolean.valueOf(iConfigurationElement.getAttribute("projectPermission")));
-			permissionSet.getPermissionTypes().add(type);
-		}
 
 		permissionProvider = (PermissionProvider) permissionProviderConfigs[0]
 			.createExecutableExtension("providerClass");
+
+		for (PermissionTypeData permissionType : permissionProvider.getAllPermissionTypes()) {
+			PermissionType type = AccesscontrolFactory.eINSTANCE.createPermissionType();
+			type.setId(permissionType.getId());
+			type.setProjectPermission(permissionType.isProjectPermission());
+			permissionSet.getPermissionTypes().add(type);
+		}
+
 	}
 
 	public PermissionSet getPermissionSet() {

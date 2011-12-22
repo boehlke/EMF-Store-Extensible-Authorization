@@ -30,6 +30,30 @@ public interface PermissionProvider {
 		ProjectId resolveProjectId(String projectId);
 	}
 
+	public static class PermissionTypeData {
+		private boolean projectPermission;
+		private String name;
+		private String id;
+
+		public PermissionTypeData(String id, String name, boolean projectPermission) {
+			this.id = id;
+			this.name = name;
+			this.projectPermission = projectPermission;
+		}
+
+		public String getId() {
+			return id;
+		}
+
+		public boolean isProjectPermission() {
+			return projectPermission;
+		}
+
+		public String getName() {
+			return name;
+		}
+	}
+
 	/**
 	 * internal representation of a permission, it holds references instead of ids, see {@see Permission}
 	 * 
@@ -69,6 +93,13 @@ public interface PermissionProvider {
 			return type.hashCode() + (projectId == null ? 0 : projectId.hashCode());
 		}
 	}
+
+	/**
+	 * returns the permission types used by the permission provider
+	 * 
+	 * @return
+	 */
+	public PermissionTypeData[] getAllPermissionTypes();
 
 	/**
 	 * get the permissions needed by the user to execute the operation

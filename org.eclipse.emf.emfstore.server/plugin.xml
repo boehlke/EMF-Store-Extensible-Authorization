@@ -36,35 +36,8 @@
    </extension>
    <extension
          point="org.eclipse.emf.emfstore.server.accesscontrol">
-      <version
-            versionNumber="1">
-      </version>
       <permissionProvider
             providerClass="org.eclipse.emf.emfstore.server.accesscontrol.simple.SimplePermissionProvider">
       </permissionProvider>
-      <permissionType
-            description="Administrate permission"
-            id="org.eclipse.emf.emfstore.server.simple.projectadmin"
-            name="projectadmin"
-            projectPermission="true">
-      </permissionType>
-      <permissionType
-            description="Writer permission"
-            id="org.eclipse.emf.emfstore.server.simple.projectwrite"
-            name="project write permission"
-            projectPermission="true">
-      </permissionType>
-      <permissionType
-            description="Read permission"
-            id="org.eclipse.emf.emfstore.server.simple.projectread"
-            name="Read permission"
-            projectPermission="true">
-      </permissionType>
-      <permissionType
-            description="global administrate permission, create projects etc."
-            id="org.eclipse.emf.emfstore.server.simple.globaladmin"
-            name="Global Admin"
-            projectPermission="false">
-      </permissionType>
    </extension>
 </plugin>
