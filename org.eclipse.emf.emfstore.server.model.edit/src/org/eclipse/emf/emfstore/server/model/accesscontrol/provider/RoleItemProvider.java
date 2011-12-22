@@ -68,7 +68,6 @@ public class RoleItemProvider
 			super.getPropertyDescriptors(object);
 
 			addPermissionTypesPropertyDescriptor(object);
-			addUsingAssignmentsPropertyDescriptor(object);
 			addDescriptionPropertyDescriptor(object);
 			addIdPropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
@@ -91,28 +90,6 @@ public class RoleItemProvider
 				 getString("_UI_Role_permissionTypes_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Role_permissionTypes_feature", "_UI_Role_type"),
 				 AccesscontrolPackage.Literals.ROLE__PERMISSION_TYPES,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Using Assignments feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addUsingAssignmentsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Role_usingAssignments_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Role_usingAssignments_feature", "_UI_Role_type"),
-				 AccesscontrolPackage.Literals.ROLE__USING_ASSIGNMENTS,
 				 true,
 				 false,
 				 true,

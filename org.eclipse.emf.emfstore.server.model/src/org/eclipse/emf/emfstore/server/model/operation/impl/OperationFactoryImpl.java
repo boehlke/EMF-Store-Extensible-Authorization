@@ -42,7 +42,6 @@ import org.eclipse.emf.emfstore.server.model.operation.ReadPropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveGroupMemberOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation;
-import org.eclipse.emf.emfstore.server.model.operation.RoleData;
 import org.eclipse.emf.emfstore.server.model.operation.UserManagementOperation;
 import org.eclipse.emf.emfstore.server.model.operation.WritePropertiesOperation;
 
@@ -115,7 +114,6 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 			case OperationPackage.REMOVE_TAG_OPERATION: return createRemoveTagOperation();
 			case OperationPackage.WRITE_PROPERTIES_OPERATION: return createWritePropertiesOperation();
 			case OperationPackage.CREATE_PROJECT_OPERATION: return createCreateProjectOperation();
-			case OperationPackage.ROLE_DATA: return createRoleData();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -407,16 +405,6 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 	public CreateProjectOperation createCreateProjectOperation() {
 		CreateProjectOperationImpl createProjectOperation = new CreateProjectOperationImpl();
 		return createProjectOperation;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public RoleData createRoleData() {
-		RoleDataImpl roleData = new RoleDataImpl();
-		return roleData;
 	}
 
 	/**

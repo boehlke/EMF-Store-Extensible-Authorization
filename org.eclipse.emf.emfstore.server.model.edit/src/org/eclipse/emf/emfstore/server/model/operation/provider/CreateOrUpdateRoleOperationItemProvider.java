@@ -23,6 +23,7 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.OperationFactory;
 import org.eclipse.emf.emfstore.server.model.operation.OperationPackage;
@@ -78,7 +79,7 @@ public class CreateOrUpdateRoleOperationItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(OperationPackage.Literals.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA);
+			childrenFeatures.add(OperationPackage.Literals.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE);
 		}
 		return childrenFeatures;
 	}
@@ -130,7 +131,7 @@ public class CreateOrUpdateRoleOperationItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(CreateOrUpdateRoleOperation.class)) {
-			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA:
+			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -150,8 +151,8 @@ public class CreateOrUpdateRoleOperationItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(OperationPackage.Literals.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA,
-				 OperationFactory.eINSTANCE.createRoleData()));
+				(OperationPackage.Literals.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE,
+				 AccesscontrolFactory.eINSTANCE.createRole()));
 	}
 
 }

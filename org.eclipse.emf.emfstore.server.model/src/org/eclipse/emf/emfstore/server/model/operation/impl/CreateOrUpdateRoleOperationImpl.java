@@ -14,9 +14,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.OperationPackage;
-import org.eclipse.emf.emfstore.server.model.operation.RoleData;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,7 +25,7 @@ import org.eclipse.emf.emfstore.server.model.operation.RoleData;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.emfstore.server.model.operation.impl.CreateOrUpdateRoleOperationImpl#getRoleData <em>Role Data</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.operation.impl.CreateOrUpdateRoleOperationImpl#getRole <em>Role</em>}</li>
  * </ul>
  * </p>
  *
@@ -33,15 +33,14 @@ import org.eclipse.emf.emfstore.server.model.operation.RoleData;
  */
 public class CreateOrUpdateRoleOperationImpl extends UserManagementOperationImpl<Void> implements CreateOrUpdateRoleOperation {
 	/**
-	 * The cached value of the '{@link #getRoleData() <em>Role Data</em>}' containment reference.
+	 * The cached value of the '{@link #getRole() <em>Role</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getRoleData()
+	 * @see #getRole()
 	 * @generated
 	 * @ordered
 	 */
-	protected RoleData roleData;
-
+	protected Role role;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -66,22 +65,22 @@ public class CreateOrUpdateRoleOperationImpl extends UserManagementOperationImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RoleData getRoleData() {
-		if (roleData != null && roleData.eIsProxy()) {
-			InternalEObject oldRoleData = (InternalEObject)roleData;
-			roleData = (RoleData)eResolveProxy(oldRoleData);
-			if (roleData != oldRoleData) {
-				InternalEObject newRoleData = (InternalEObject)roleData;
-				NotificationChain msgs = oldRoleData.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA, null, null);
-				if (newRoleData.eInternalContainer() == null) {
-					msgs = newRoleData.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA, null, msgs);
+	public Role getRole() {
+		if (role != null && role.eIsProxy()) {
+			InternalEObject oldRole = (InternalEObject)role;
+			role = (Role)eResolveProxy(oldRole);
+			if (role != oldRole) {
+				InternalEObject newRole = (InternalEObject)role;
+				NotificationChain msgs = oldRole.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE, null, null);
+				if (newRole.eInternalContainer() == null) {
+					msgs = newRole.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE, null, msgs);
 				}
 				if (msgs != null) msgs.dispatch();
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA, oldRoleData, roleData));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE, oldRole, role));
 			}
 		}
-		return roleData;
+		return role;
 	}
 
 	/**
@@ -89,8 +88,8 @@ public class CreateOrUpdateRoleOperationImpl extends UserManagementOperationImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RoleData basicGetRoleData() {
-		return roleData;
+	public Role basicGetRole() {
+		return role;
 	}
 
 	/**
@@ -98,11 +97,11 @@ public class CreateOrUpdateRoleOperationImpl extends UserManagementOperationImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetRoleData(RoleData newRoleData, NotificationChain msgs) {
-		RoleData oldRoleData = roleData;
-		roleData = newRoleData;
+	public NotificationChain basicSetRole(Role newRole, NotificationChain msgs) {
+		Role oldRole = role;
+		role = newRole;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA, oldRoleData, newRoleData);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE, oldRole, newRole);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -113,18 +112,18 @@ public class CreateOrUpdateRoleOperationImpl extends UserManagementOperationImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setRoleData(RoleData newRoleData) {
-		if (newRoleData != roleData) {
+	public void setRole(Role newRole) {
+		if (newRole != role) {
 			NotificationChain msgs = null;
-			if (roleData != null)
-				msgs = ((InternalEObject)roleData).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA, null, msgs);
-			if (newRoleData != null)
-				msgs = ((InternalEObject)newRoleData).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA, null, msgs);
-			msgs = basicSetRoleData(newRoleData, msgs);
+			if (role != null)
+				msgs = ((InternalEObject)role).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE, null, msgs);
+			if (newRole != null)
+				msgs = ((InternalEObject)newRole).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE, null, msgs);
+			msgs = basicSetRole(newRole, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA, newRoleData, newRoleData));
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE, newRole, newRole));
 	}
 
 	/**
@@ -135,8 +134,8 @@ public class CreateOrUpdateRoleOperationImpl extends UserManagementOperationImpl
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA:
-				return basicSetRoleData(null, msgs);
+			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE:
+				return basicSetRole(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -149,9 +148,9 @@ public class CreateOrUpdateRoleOperationImpl extends UserManagementOperationImpl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA:
-				if (resolve) return getRoleData();
-				return basicGetRoleData();
+			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE:
+				if (resolve) return getRole();
+				return basicGetRole();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -164,8 +163,8 @@ public class CreateOrUpdateRoleOperationImpl extends UserManagementOperationImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA:
-				setRoleData((RoleData)newValue);
+			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE:
+				setRole((Role)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -179,8 +178,8 @@ public class CreateOrUpdateRoleOperationImpl extends UserManagementOperationImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA:
-				setRoleData((RoleData)null);
+			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE:
+				setRole((Role)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -194,8 +193,8 @@ public class CreateOrUpdateRoleOperationImpl extends UserManagementOperationImpl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA:
-				return roleData != null;
+			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION__ROLE:
+				return role != null;
 		}
 		return super.eIsSet(featureID);
 	}

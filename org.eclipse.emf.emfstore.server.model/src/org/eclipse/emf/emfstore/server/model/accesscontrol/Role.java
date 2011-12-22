@@ -19,7 +19,6 @@ import org.eclipse.emf.emfstore.common.model.IdentifiableElement;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getPermissionTypes <em>Permission Types</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getUsingAssignments <em>Using Assignments</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getDescription <em>Description</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getName <em>Name</em>}</li>
@@ -49,24 +48,6 @@ public interface Role extends IdentifiableElement {
 	 * @generated
 	 */
 	EList<PermissionType> getPermissionTypes();
-
-	/**
-	 * Returns the value of the '<em><b>Using Assignments</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment}.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment#getRole <em>Role</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Using Assignments</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Using Assignments</em>' reference list.
-	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getRole_UsingAssignments()
-	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment#getRole
-	 * @model opposite="role"
-	 * @generated
-	 */
-	EList<RoleAssignment> getUsingAssignments();
 
 	/**
 	 * Returns the value of the '<em><b>Description</b></em>' attribute.

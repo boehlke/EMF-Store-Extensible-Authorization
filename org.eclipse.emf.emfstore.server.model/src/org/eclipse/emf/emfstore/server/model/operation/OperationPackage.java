@@ -378,13 +378,13 @@ public interface OperationPackage extends EPackage {
 	int CREATE_OR_UPDATE_ROLE_OPERATION = 10;
 
 	/**
-	 * The feature id for the '<em><b>Role Data</b></em>' containment reference.
+	 * The feature id for the '<em><b>Role</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA = USER_MANAGEMENT_OPERATION_FEATURE_COUNT + 0;
+	int CREATE_OR_UPDATE_ROLE_OPERATION__ROLE = USER_MANAGEMENT_OPERATION_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Create Or Update Role Operation</em>' class.
@@ -914,70 +914,6 @@ public interface OperationPackage extends EPackage {
 	int CREATE_PROJECT_OPERATION_FEATURE_COUNT = OPERATION_FEATURE_COUNT + 4;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.RoleDataImpl <em>Role Data</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.RoleDataImpl
-	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getRoleData()
-	 * @generated
-	 */
-	int ROLE_DATA = 25;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROLE_DATA__DESCRIPTION = 0;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROLE_DATA__ID = 1;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROLE_DATA__NAME = 2;
-
-	/**
-	 * The feature id for the '<em><b>Permission Type Ids</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROLE_DATA__PERMISSION_TYPE_IDS = 3;
-
-	/**
-	 * The feature id for the '<em><b>System Role</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROLE_DATA__SYSTEM_ROLE = 4;
-
-	/**
-	 * The number of structural features of the '<em>Role Data</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROLE_DATA_FEATURE_COUNT = 5;
-
-	/**
 	 * The meta object id for the '<em>Void</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -985,7 +921,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getVoid()
 	 * @generated
 	 */
-	int VOID = 26;
+	int VOID = 25;
 
 	/**
 	 * The meta object id for the '<em>File Transfer Information</em>' data type.
@@ -995,7 +931,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getFileTransferInformation()
 	 * @generated
 	 */
-	int FILE_TRANSFER_INFORMATION = 27;
+	int FILE_TRANSFER_INFORMATION = 26;
 
 	/**
 	 * The meta object id for the '<em>File Chunk</em>' data type.
@@ -1005,7 +941,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getFileChunk()
 	 * @generated
 	 */
-	int FILE_CHUNK = 28;
+	int FILE_CHUNK = 27;
 
 
 	/**
@@ -1207,15 +1143,15 @@ public interface OperationPackage extends EPackage {
 	EClass getCreateOrUpdateRoleOperation();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation#getRoleData <em>Role Data</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation#getRole <em>Role</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Role Data</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation#getRoleData()
+	 * @return the meta object for the containment reference '<em>Role</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation#getRole()
 	 * @see #getCreateOrUpdateRoleOperation()
 	 * @generated
 	 */
-	EReference getCreateOrUpdateRoleOperation_RoleData();
+	EReference getCreateOrUpdateRoleOperation_Role();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.operation.CreateProjectByImportOperation <em>Create Project By Import Operation</em>}'.
@@ -1534,71 +1470,6 @@ public interface OperationPackage extends EPackage {
 	EAttribute getCreateProjectOperation_Name();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.operation.RoleData <em>Role Data</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Role Data</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.RoleData
-	 * @generated
-	 */
-	EClass getRoleData();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.operation.RoleData#getDescription <em>Description</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Description</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.RoleData#getDescription()
-	 * @see #getRoleData()
-	 * @generated
-	 */
-	EAttribute getRoleData_Description();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.operation.RoleData#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.RoleData#getId()
-	 * @see #getRoleData()
-	 * @generated
-	 */
-	EAttribute getRoleData_Id();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.operation.RoleData#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.RoleData#getName()
-	 * @see #getRoleData()
-	 * @generated
-	 */
-	EAttribute getRoleData_Name();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.emf.emfstore.server.model.operation.RoleData#getPermissionTypeIds <em>Permission Type Ids</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Permission Type Ids</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.RoleData#getPermissionTypeIds()
-	 * @see #getRoleData()
-	 * @generated
-	 */
-	EAttribute getRoleData_PermissionTypeIds();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.operation.RoleData#isSystemRole <em>System Role</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>System Role</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.RoleData#isSystemRole()
-	 * @see #getRoleData()
-	 * @generated
-	 */
-	EAttribute getRoleData_SystemRole();
-
-	/**
 	 * Returns the meta object for data type '{@link java.lang.Void <em>Void</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1828,12 +1699,12 @@ public interface OperationPackage extends EPackage {
 		EClass CREATE_OR_UPDATE_ROLE_OPERATION = eINSTANCE.getCreateOrUpdateRoleOperation();
 
 		/**
-		 * The meta object literal for the '<em><b>Role Data</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Role</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA = eINSTANCE.getCreateOrUpdateRoleOperation_RoleData();
+		EReference CREATE_OR_UPDATE_ROLE_OPERATION__ROLE = eINSTANCE.getCreateOrUpdateRoleOperation_Role();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.CreateProjectByImportOperationImpl <em>Create Project By Import Operation</em>}' class.
@@ -2102,56 +1973,6 @@ public interface OperationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CREATE_PROJECT_OPERATION__NAME = eINSTANCE.getCreateProjectOperation_Name();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.RoleDataImpl <em>Role Data</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.emfstore.server.model.operation.impl.RoleDataImpl
-		 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getRoleData()
-		 * @generated
-		 */
-		EClass ROLE_DATA = eINSTANCE.getRoleData();
-
-		/**
-		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ROLE_DATA__DESCRIPTION = eINSTANCE.getRoleData_Description();
-
-		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ROLE_DATA__ID = eINSTANCE.getRoleData_Id();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ROLE_DATA__NAME = eINSTANCE.getRoleData_Name();
-
-		/**
-		 * The meta object literal for the '<em><b>Permission Type Ids</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ROLE_DATA__PERMISSION_TYPE_IDS = eINSTANCE.getRoleData_PermissionTypeIds();
-
-		/**
-		 * The meta object literal for the '<em><b>System Role</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ROLE_DATA__SYSTEM_ROLE = eINSTANCE.getRoleData_SystemRole();
 
 		/**
 		 * The meta object literal for the '<em>Void</em>' data type.

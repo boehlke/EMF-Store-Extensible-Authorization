@@ -251,15 +251,6 @@ public interface OperationFactory extends EFactory {
 	CreateProjectOperation createCreateProjectOperation();
 
 	/**
-	 * Returns a new object of class '<em>Role Data</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Role Data</em>'.
-	 * @generated
-	 */
-	RoleData createRoleData();
-
-	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -6,6 +6,8 @@
  */
 package org.eclipse.emf.emfstore.server.model.operation;
 
+import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -15,7 +17,7 @@ package org.eclipse.emf.emfstore.server.model.operation;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation#getRoleData <em>Role Data</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation#getRole <em>Role</em>}</li>
  * </ul>
  * </p>
  *
@@ -25,29 +27,29 @@ package org.eclipse.emf.emfstore.server.model.operation;
  */
 public interface CreateOrUpdateRoleOperation extends UserManagementOperation<Void> {
 	/**
-	 * Returns the value of the '<em><b>Role Data</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Role</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Role Data</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Role</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Role Data</em>' containment reference.
-	 * @see #setRoleData(RoleData)
-	 * @see org.eclipse.emf.emfstore.server.model.operation.OperationPackage#getCreateOrUpdateRoleOperation_RoleData()
+	 * @return the value of the '<em>Role</em>' containment reference.
+	 * @see #setRole(Role)
+	 * @see org.eclipse.emf.emfstore.server.model.operation.OperationPackage#getCreateOrUpdateRoleOperation_Role()
 	 * @model containment="true" resolveProxies="true" required="true"
 	 * @generated
 	 */
-	RoleData getRoleData();
+	Role getRole();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation#getRoleData <em>Role Data</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation#getRole <em>Role</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Role Data</em>' containment reference.
-	 * @see #getRoleData()
+	 * @param value the new value of the '<em>Role</em>' containment reference.
+	 * @see #getRole()
 	 * @generated
 	 */
-	void setRoleData(RoleData value);
+	void setRole(Role value);
 
 } // CreateOrUpdateRoleOperation

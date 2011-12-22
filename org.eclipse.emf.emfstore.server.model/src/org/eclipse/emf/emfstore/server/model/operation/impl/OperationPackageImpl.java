@@ -49,7 +49,6 @@ import org.eclipse.emf.emfstore.server.model.operation.ReadPropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveGroupMemberOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation;
-import org.eclipse.emf.emfstore.server.model.operation.RoleData;
 import org.eclipse.emf.emfstore.server.model.operation.UserManagementOperation;
 import org.eclipse.emf.emfstore.server.model.operation.WritePropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.url.UrlPackage;
@@ -246,13 +245,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 	 * @generated
 	 */
 	private EClass createProjectOperationEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass roleDataEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -543,7 +535,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCreateOrUpdateRoleOperation_RoleData() {
+	public EReference getCreateOrUpdateRoleOperation_Role() {
 		return (EReference)createOrUpdateRoleOperationEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -822,60 +814,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getRoleData() {
-		return roleDataEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getRoleData_Description() {
-		return (EAttribute)roleDataEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getRoleData_Id() {
-		return (EAttribute)roleDataEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getRoleData_Name() {
-		return (EAttribute)roleDataEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getRoleData_PermissionTypeIds() {
-		return (EAttribute)roleDataEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getRoleData_SystemRole() {
-		return (EAttribute)roleDataEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EDataType getVoid() {
 		return voidEDataType;
 	}
@@ -955,7 +893,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		createEAttribute(createOrgUnitOperationEClass, CREATE_ORG_UNIT_OPERATION__NAME);
 
 		createOrUpdateRoleOperationEClass = createEClass(CREATE_OR_UPDATE_ROLE_OPERATION);
-		createEReference(createOrUpdateRoleOperationEClass, CREATE_OR_UPDATE_ROLE_OPERATION__ROLE_DATA);
+		createEReference(createOrUpdateRoleOperationEClass, CREATE_OR_UPDATE_ROLE_OPERATION__ROLE);
 
 		createProjectByImportOperationEClass = createEClass(CREATE_PROJECT_BY_IMPORT_OPERATION);
 		createEReference(createProjectByImportOperationEClass, CREATE_PROJECT_BY_IMPORT_OPERATION__PROJECT_HISTORY);
@@ -1001,13 +939,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		createEReference(createProjectOperationEClass, CREATE_PROJECT_OPERATION__LOG_MESSAGE);
 		createEAttribute(createProjectOperationEClass, CREATE_PROJECT_OPERATION__NAME);
 
-		roleDataEClass = createEClass(ROLE_DATA);
-		createEAttribute(roleDataEClass, ROLE_DATA__DESCRIPTION);
-		createEAttribute(roleDataEClass, ROLE_DATA__ID);
-		createEAttribute(roleDataEClass, ROLE_DATA__NAME);
-		createEAttribute(roleDataEClass, ROLE_DATA__PERMISSION_TYPE_IDS);
-		createEAttribute(roleDataEClass, ROLE_DATA__SYSTEM_ROLE);
-
 		// Create data types
 		voidEDataType = createEDataType(VOID);
 		fileTransferInformationEDataType = createEDataType(FILE_TRANSFER_INFORMATION);
@@ -1039,6 +970,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 
 		// Obtain other dependent packages
 		VersioningPackage theVersioningPackage = (VersioningPackage)EPackage.Registry.INSTANCE.getEPackage(VersioningPackage.eNS_URI);
+		AccesscontrolPackage theAccesscontrolPackage = (AccesscontrolPackage)EPackage.Registry.INSTANCE.getEPackage(AccesscontrolPackage.eNS_URI);
 		org.eclipse.emf.emfstore.server.model.ModelPackage theModelPackage_1 = (org.eclipse.emf.emfstore.server.model.ModelPackage)EPackage.Registry.INSTANCE.getEPackage(org.eclipse.emf.emfstore.server.model.ModelPackage.eNS_URI);
 		ModelPackage theModelPackage = (ModelPackage)EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI);
 
@@ -1181,7 +1113,7 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		initEAttribute(getCreateOrgUnitOperation_Name(), ecorePackage.getEString(), "name", null, 1, 1, CreateOrgUnitOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(createOrUpdateRoleOperationEClass, CreateOrUpdateRoleOperation.class, "CreateOrUpdateRoleOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCreateOrUpdateRoleOperation_RoleData(), this.getRoleData(), null, "roleData", null, 1, 1, CreateOrUpdateRoleOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCreateOrUpdateRoleOperation_Role(), theAccesscontrolPackage.getRole(), null, "role", null, 1, 1, CreateOrUpdateRoleOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(createProjectByImportOperationEClass, CreateProjectByImportOperation.class, "CreateProjectByImportOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCreateProjectByImportOperation_ProjectHistory(), theModelPackage_1.getProjectHistory(), null, "projectHistory", null, 1, 1, CreateProjectByImportOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1226,13 +1158,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		initEReference(getCreateProjectOperation_Project(), theModelPackage.getProject(), null, "project", null, 0, 1, CreateProjectOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCreateProjectOperation_LogMessage(), theVersioningPackage.getLogMessage(), null, "logMessage", null, 0, 1, CreateProjectOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCreateProjectOperation_Name(), ecorePackage.getEString(), "name", null, 1, 1, CreateProjectOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(roleDataEClass, RoleData.class, "RoleData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getRoleData_Description(), ecorePackage.getEString(), "description", null, 0, 1, RoleData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRoleData_Id(), ecorePackage.getEString(), "id", null, 1, 1, RoleData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRoleData_Name(), ecorePackage.getEString(), "name", null, 1, 1, RoleData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRoleData_PermissionTypeIds(), ecorePackage.getEString(), "permissionTypeIds", null, 0, -1, RoleData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRoleData_SystemRole(), ecorePackage.getEBoolean(), "systemRole", null, 0, 1, RoleData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(voidEDataType, Void.class, "Void", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
