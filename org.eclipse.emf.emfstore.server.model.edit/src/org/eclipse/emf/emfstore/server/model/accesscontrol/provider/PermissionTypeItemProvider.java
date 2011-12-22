@@ -69,6 +69,7 @@ public class PermissionTypeItemProvider
 
 			addIdPropertyDescriptor(object);
 			addReferingRolesPropertyDescriptor(object);
+			addProjectPermissionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -118,6 +119,28 @@ public class PermissionTypeItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Project Permission feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addProjectPermissionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_PermissionType_projectPermission_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_PermissionType_projectPermission_feature", "_UI_PermissionType_type"),
+				 AccesscontrolPackage.Literals.PERMISSION_TYPE__PROJECT_PERMISSION,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns PermissionType.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -155,6 +178,7 @@ public class PermissionTypeItemProvider
 
 		switch (notification.getFeatureID(PermissionType.class)) {
 			case AccesscontrolPackage.PERMISSION_TYPE__ID:
+			case AccesscontrolPackage.PERMISSION_TYPE__PROJECT_PERMISSION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}
