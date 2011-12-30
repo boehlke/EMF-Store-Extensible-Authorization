@@ -17,17 +17,18 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Permission Set</b></em>'.
  * <!-- end-user-doc -->
- *
+ * 
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getPermissionTypes <em>Permission Types</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getRoles <em>Roles</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getGroups <em>Groups</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getUsers <em>Users</em>}</li>
+ * <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getPermissionTypes <em>Permission Types
+ * </em>}</li>
+ * <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getRoles <em>Roles</em>}</li>
+ * <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getGroups <em>Groups</em>}</li>
+ * <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getUsers <em>Users</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getPermissionSet()
  * @model
  * @generated
@@ -42,6 +43,7 @@ public interface PermissionSet extends EObject {
 	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Permission Types</em>' containment reference list.
 	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getPermissionSet_PermissionTypes()
 	 * @model containment="true" resolveProxies="true"
@@ -58,6 +60,7 @@ public interface PermissionSet extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Roles</em>' containment reference list.
 	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getPermissionSet_Roles()
 	 * @model containment="true" resolveProxies="true"
@@ -74,6 +77,7 @@ public interface PermissionSet extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Groups</em>' containment reference list.
 	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getPermissionSet_Groups()
 	 * @model containment="true" resolveProxies="true"
@@ -90,6 +94,7 @@ public interface PermissionSet extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Users</em>' containment reference list.
 	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getPermissionSet_Users()
 	 * @model containment="true" resolveProxies="true"
@@ -100,11 +105,20 @@ public interface PermissionSet extends EObject {
 	/**
 	 * get an org unit by name
 	 * 
-	 * @param username
+	 * @param name of the org unit
 	 * @return
 	 * @generated NOT
 	 */
 	ACOrgUnit getOrgUnit(String name);
+
+	/**
+	 * get an org unit by id
+	 * 
+	 * @param id
+	 * @return
+	 * @generated NOT
+	 */
+	ACOrgUnit getOrgUnit(ACOrgUnitId id);
 
 	/**
 	 * get a role by name
