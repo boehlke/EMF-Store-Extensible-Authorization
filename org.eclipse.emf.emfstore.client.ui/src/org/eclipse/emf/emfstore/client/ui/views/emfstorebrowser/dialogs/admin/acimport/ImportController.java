@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecp.common.util.DialogHandler;
-import org.eclipse.emf.emfstore.client.model.AdminBroker;
+import org.eclipse.emf.emfstore.client.model.util.EmfStoreInterface;
 import org.eclipse.emf.emfstore.client.model.util.WorkspaceUtil;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACGroup;
@@ -28,7 +28,7 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
  */
 public class ImportController {
 
-	private final AdminBroker adminBroker;
+	private final EmfStoreInterface adminBroker;
 
 	private ImportSource importSource;
 
@@ -38,7 +38,7 @@ public class ImportController {
 	 * @param adminBroker
 	 *            the admin broker.
 	 */
-	public ImportController(AdminBroker adminBroker) {
+	public ImportController(EmfStoreInterface adminBroker) {
 		this.adminBroker = adminBroker;
 		this.importedUnits = new Hashtable<ACOrgUnitId, ImportItemWrapper>();
 	}
@@ -164,7 +164,7 @@ public class ImportController {
 	/**
 	 * @return the admin broker.
 	 */
-	public AdminBroker getAdminBroker() {
+	public EmfStoreInterface getAdminBroker() {
 		return adminBroker;
 	}
 

@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.acimport.wizard;
 
-import org.eclipse.emf.emfstore.client.model.AdminBroker;
+import org.eclipse.emf.emfstore.client.model.util.EmfStoreInterface;
 import org.eclipse.emf.emfstore.client.ui.Activator;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -21,13 +21,13 @@ import org.eclipse.swt.widgets.Display;
  */
 public class AcUserImportAction extends Action {
 
-	private final AdminBroker broker;
+	private final EmfStoreInterface broker;
 
 	/**
 	 * @param broker
 	 *            The admin broker which is needed for the wizard.
 	 */
-	public AcUserImportAction(AdminBroker broker) {
+	public AcUserImportAction(EmfStoreInterface broker) {
 		super("Import user or group");
 		this.broker = broker;
 		this.setImageDescriptor(Activator.getImageDescriptor("icons/importuser.png"));
