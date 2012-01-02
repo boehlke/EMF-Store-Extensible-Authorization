@@ -85,6 +85,21 @@
            </and>
         </enabledWhen>
      </handler>
+     <handler
+           class="org.eclipse.emf.emfstore.client.ui.views.users.command.UserDeleteCommandHandler"
+           commandId="org.eclipse.emf.emfstore.client.ui.admin.DeleteUser">
+        <enabledWhen>
+           <and>
+              <iterate
+                    ifEmpty="false"
+                    operator="and">
+                 <instanceof
+                       value="org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit">
+                 </instanceof>
+              </iterate>
+           </and>
+        </enabledWhen>
+     </handler>
   </extension>
   <extension
         point="org.eclipse.ui.commands">
@@ -235,11 +250,6 @@
            name="ImportProjectHistory">
      </command>
      <command
-           defaultHandler="org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.handlers.ManageOrgUnitsHandler"
-           id="org.eclipse.emf.emfstore.client.ui.repositorybrowser.ManageOrgUnits"
-           name="ManageOrgUnits">
-     </command>
-     <command
            defaultHandler="org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.handlers.ProjectCheckoutHandler"
            id="org.eclipse.emf.emfstore.client.ui.repositorybrowser.ProjectCheckout"
            name="ProjectCheckout">
@@ -253,6 +263,17 @@
            defaultHandler="org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.handlers.ServerPropertiesHandler"
            id="org.eclipse.emf.emfstore.client.ui.repositorybrowser.ServerProperties"
            name="ServerProperties">
+     </command>
+     <command
+           defaultHandler="org.eclipse.emf.emfstore.client.ui.views.users.command.UserCreateCommandHandler"
+           description="Create a user"
+           id="org.eclipse.emf.emfstore.client.ui.admin.CreateUser"
+           name="Create User">
+     </command>
+     <command
+           description="Delete a user"
+           id="org.eclipse.emf.emfstore.client.ui.admin.DeleteUser"
+           name="Delete User">
      </command>
   </extension>
   <extension
@@ -1277,6 +1298,21 @@
             name="History Browser"
             restorable="false">
       </view>
+      <view
+            class="org.eclipse.emf.emfstore.client.ui.views.users.UsersView"
+            id="org.eclipse.emf.emfstore.client.ui.views.users.UsersView"
+            name="Users">
+      </view>
+      <view
+            class="org.eclipse.emf.emfstore.client.ui.views.users.UserRolesView"
+            id="org.eclipse.emf.emfstore.client.ui.views.users.UserRolesView"
+            name="User Roles">
+      </view>
+      <view
+            class="org.eclipse.emf.emfstore.client.ui.views.users.UserPropertiesView"
+            id="org.eclipse.emf.emfstore.client.ui.views.users.UserPropertiesView"
+            name="User Properties">
+      </view>
    </extension>
    <extension
          point="org.eclipse.help.contexts">
@@ -1336,6 +1372,63 @@
             id="org.eclipse.emf.emfstore.client.ui.EMFStorePerspective"
             name="EMFStore">
       </perspective>
+      <perspective
+            class="org.eclipse.emf.emfstore.client.ui.AdminPerspective"
+            id="org.eclipse.emf.emfstore.client.ui.AdminPerspective"
+            name="Administration Perspective">
+      </perspective>
+   </extension>
+
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="org.eclipse.emf.ecore.EObject"
+            class="org.eclipse.emf.emfstore.client.ui.EObjectAdapterFactory">
+         <adapter
+               type="org.eclipse.ui.model.IWorkbenchAdapter">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.SelectRolesPage.RoleBox"
+            class="org.eclipse.emf.emfstore.client.ui.views.AdpaterFactory">
+         <adapter
+               type="org.eclipse.ui.model.IWorkbenchAdapter">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.emf.ecore.EObject"
+            class="org.eclipse.emf.emfstore.client.ui.views.users.PropertySourceAdapterFactory">
+         <adapter
+               type="org.eclipse.ui.views.properties.IPropertySource">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.emf.emfstore.client.ui.views.users.RoleSelection"
+            class="org.eclipse.emf.emfstore.client.ui.views.AdpaterFactory">
+         <adapter
+               type="org.eclipse.ui.model.IWorkbenchAdapter">
+         </adapter>
+      </factory>
+   </extension>
+   <extension
+         id="id1"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="org.eclipse.emf.emfstore.client.ui.AdminUiApplication">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.eclipse.emf.emfstore.client.ui.WorkbenchPropertyPage1"
+            id="org.eclipse.emf.emfstore.client.ui.page1"
+            name="name">
+      </page>
    </extension>
 
 </plugin>
