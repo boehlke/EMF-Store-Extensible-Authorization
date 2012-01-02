@@ -170,6 +170,8 @@ public class EmfStoreController implements IApplication, Runnable {
 		if (getRole(AuthConstants.SUPER_ADMIN_ROLE) == null) {
 			Role superAdminRole = AccesscontrolFactory.eINSTANCE.createRole();
 			superAdminRole.setId(AuthConstants.SUPER_ADMIN_ROLE);
+			superAdminRole.setSystemRole(true);
+			superAdminRole.setName("System Administrator");
 			// super admin has all permissions without project binding (for all projects)
 			superAdminRole.getPermissionTypes().addAll(config.getPermissionSet().getPermissionTypes());
 			serverSpace.getPermissionSet().getRoles().add(superAdminRole);
