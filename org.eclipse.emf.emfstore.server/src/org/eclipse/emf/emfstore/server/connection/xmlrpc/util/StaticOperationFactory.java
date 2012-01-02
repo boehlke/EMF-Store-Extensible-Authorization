@@ -16,6 +16,7 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.operation.AddTagOperation;
 import org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation;
+import org.eclipse.emf.emfstore.server.model.operation.CreateGroupOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateProjectByImportOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateProjectOperation;
@@ -208,4 +209,10 @@ public class StaticOperationFactory {
 		return op;
 	}
 
+	public static CreateGroupOperation createCreateGroupOperation(String name) throws InvalidInputException {
+		checkNotNull(name);
+		CreateGroupOperation op = OperationFactory.eINSTANCE.createCreateGroupOperation();
+		op.setName(name);
+		return op;
+	}
 }
