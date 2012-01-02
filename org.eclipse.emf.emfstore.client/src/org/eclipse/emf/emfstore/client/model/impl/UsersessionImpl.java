@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.eclipse.emf.emfstore.client.model.impl;
 
+import java.lang.reflect.Proxy;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -28,7 +29,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.emfstore.client.model.AdminBroker;
 import org.eclipse.emf.emfstore.client.model.Configuration;
 import org.eclipse.emf.emfstore.client.model.ModelPackage;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
@@ -38,6 +38,8 @@ import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.ConnectionManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.KeyStoreManager;
 import org.eclipse.emf.emfstore.client.model.observers.LoginObserver;
+import org.eclipse.emf.emfstore.client.model.util.EmfStoreInterface;
+import org.eclipse.emf.emfstore.client.model.util.PermissionHelper;
 import org.eclipse.emf.emfstore.client.model.util.WorkspaceUtil;
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.ConnectionException;
@@ -55,22 +57,23 @@ import org.eclipse.emf.emfstore.server.model.versioning.VersionSpec;
 import org.eclipse.emf.emfstore.server.model.versioning.VersioningFactory;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '
- * <em><b>Usersession</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object ' <em><b>Usersession</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getUsername <em>Username</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getPassword <em>Password</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getSessionId <em>Session Id</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getPersistentPassword <em>Persistent Password</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getServerInfo <em>Server Info</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#isSavePassword <em>Save Password</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getACUser <em>AC User</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getChangedProperties <em>Changed Properties</em>}</li>
+ * <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getUsername <em>Username</em>}</li>
+ * <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getPassword <em>Password</em>}</li>
+ * <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getSessionId <em>Session Id</em>}</li>
+ * <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getPersistentPassword <em>Persistent Password
+ * </em>}</li>
+ * <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getServerInfo <em>Server Info</em>}</li>
+ * <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#isSavePassword <em>Save Password</em>}</li>
+ * <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getACUser <em>AC User</em>}</li>
+ * <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getChangedProperties <em>Changed Properties
+ * </em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class UsersessionImpl extends EObjectImpl implements Usersession {
@@ -83,6 +86,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	/**
 	 * The default value of the '{@link #getUsername() <em>Username</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getUsername()
 	 * @generated
 	 * @ordered
@@ -92,6 +96,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	/**
 	 * The cached value of the '{@link #getUsername() <em>Username</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getUsername()
 	 * @generated
 	 * @ordered
@@ -101,6 +106,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	/**
 	 * The default value of the '{@link #getPassword() <em>Password</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getPassword()
 	 * @generated
 	 * @ordered
@@ -110,6 +116,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	/**
 	 * The cached value of the '{@link #getPassword() <em>Password</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getPassword()
 	 * @generated
 	 * @ordered
@@ -119,6 +126,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	/**
 	 * The cached value of the '{@link #getSessionId() <em>Session Id</em>}' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getSessionId()
 	 * @generated
 	 * @ordered
@@ -129,6 +137,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	 * The default value of the '{@link #getPersistentPassword() <em>Persistent Password</em>}' attribute.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
+	 * 
 	 * @see #getPersistentPassword()
 	 * @generated
 	 * @ordered
@@ -139,6 +148,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	 * The cached value of the '{@link #getPersistentPassword() <em>Persistent Password</em>}' attribute.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
+	 * 
 	 * @see #getPersistentPassword()
 	 * @generated
 	 * @ordered
@@ -148,6 +158,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	/**
 	 * The cached value of the '{@link #getServerInfo() <em>Server Info</em>}' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getServerInfo()
 	 * @generated
 	 * @ordered
@@ -158,6 +169,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	 * The default value of the '{@link #isSavePassword() <em>Save Password</em>}' attribute.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
+	 * 
 	 * @see #isSavePassword()
 	 * @generated
 	 * @ordered
@@ -167,6 +179,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	/**
 	 * The cached value of the '{@link #isSavePassword() <em>Save Password</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #isSavePassword()
 	 * @generated
 	 * @ordered
@@ -176,6 +189,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	/**
 	 * The cached value of the '{@link #getACUser() <em>AC User</em>}' containment reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getACUser()
 	 * @generated
 	 * @ordered
@@ -197,6 +211,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected UsersessionImpl() {
@@ -205,6 +220,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -214,6 +230,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String getUsername() {
@@ -222,6 +239,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setUsername(String newUsername) {
@@ -234,6 +252,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String getPasswordGen() {
@@ -260,6 +279,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setPasswordGen(String newPassword) {
@@ -294,6 +314,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public SessionId getSessionIdGen() {
@@ -311,6 +332,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public SessionId basicGetSessionId() {
@@ -319,6 +341,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setSessionId(SessionId newSessionId) {
@@ -331,6 +354,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String getPersistentPassword() {
@@ -339,6 +363,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setPersistentPasswordGen(String newPersistentPassword) {
@@ -363,6 +388,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	// end of custom code
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ServerInfo getServerInfo() {
@@ -380,6 +406,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ServerInfo basicGetServerInfo() {
@@ -388,6 +415,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setServerInfo(ServerInfo newServerInfo) {
@@ -400,6 +428,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public boolean isSavePassword() {
@@ -408,6 +437,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setSavePasswordGen(boolean newSavePassword) {
@@ -437,6 +467,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ACUser getACUser() {
@@ -463,6 +494,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ACUser basicGetACUser() {
@@ -471,6 +503,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetACUser(ACUser newACUser, NotificationChain msgs) {
@@ -489,6 +522,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setACUser(ACUser newACUser) {
@@ -510,6 +544,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<OrgUnitProperty> getChangedProperties() {
@@ -639,6 +674,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -666,6 +702,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	// end of custom code
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -699,6 +736,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -736,6 +774,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -771,6 +810,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -828,8 +868,7 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.emfstore.client.model.Usersession#createProject(java.lang.String,
-	 *      java.lang.String)
+	 * @see org.eclipse.emf.emfstore.client.model.Usersession#createProject(java.lang.String, java.lang.String)
 	 * @generated NOT
 	 */
 	public ProjectInfo createProject(String name, String description) throws AccessControlException, EmfStoreException {
@@ -870,9 +909,9 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	 * 
 	 * @generated NOT
 	 */
-	public AdminBroker getAdminBroker() throws ConnectionException {
+	public EmfStoreInterface getEmfStoreProxy() throws ConnectionException {
 		// OW: cache admin broker??
-		return new AdminBrokerImpl(getServerInfo(), getSessionId());
+		return getEmfStoreProxy(getSessionId());
 	}
 
 	/**
@@ -912,6 +951,12 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 		if (loginObservers != null) {
 			loginObservers.remove(observer);
 		}
+	}
+
+	public static EmfStoreInterface getEmfStoreProxy(SessionId sessionId) {
+		return (EmfStoreInterface) Proxy.newProxyInstance(PermissionHelper.class.getClassLoader(),
+			new Class[] { EmfStoreInterface.class }, new PermissionHelper.Handler(WorkspaceManager.getInstance()
+				.getConnectionManager(), sessionId));
 	}
 
 } // UsersessionImpl

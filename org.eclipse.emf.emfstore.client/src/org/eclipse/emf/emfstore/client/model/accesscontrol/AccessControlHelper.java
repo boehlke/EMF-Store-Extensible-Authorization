@@ -70,7 +70,7 @@ public class AccessControlHelper {
 	}
 
 	public boolean hasPermission(Operation<?> op) throws AccessControlException, EmfStoreException {
-		Permission[] permissions = usersession.getAdminBroker().getOperationPermissions(new Operation<?>[] { op })
+		Permission[] permissions = usersession.getEmfStoreProxy().getOperationPermissions(new Operation<?>[] { op })
 			.get(0);
 		return PermissionUtil.hasPermissions(user, Arrays.asList(permissions));
 	}
