@@ -6,7 +6,6 @@ Bundle-Version: 0.8.9.M908
 Bundle-Activator: org.eclipse.emf.emfstore.client.ui.Activator
 Require-Bundle: org.eclipse.emf.emfstore.client.model.edit;visibility:=reexport,
  org.eclipse.emf.ecp.common.util
-Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: diff.match.patch,
  org.eclipse.emf.emfstore.client.ui;
@@ -138,4 +137,5 @@ Export-Package: diff.match.patch,
    org.eclipse.emf.emfstore.client.model"
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-ClassPath: .,
- lib/dmp.jar
+ lib/dmp.jar,
+ swing2swt.jar
