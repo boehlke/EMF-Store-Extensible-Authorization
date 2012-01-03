@@ -117,6 +117,9 @@ public class PropertySourceAdapterFactory implements IAdapterFactory {
 					List<RoleAssignment> assignments = new ArrayList<RoleAssignment>();
 					for (Object object : result) {
 						RoleSelection sel = (RoleSelection) object;
+						if (sel.getRole() == null) {
+							continue;
+						}
 						RoleAssignment assignment = AccesscontrolFactory.eINSTANCE.createRoleAssignment();
 						assignment.setRole(sel.getRole());
 						if (sel.getProject() != null) {
