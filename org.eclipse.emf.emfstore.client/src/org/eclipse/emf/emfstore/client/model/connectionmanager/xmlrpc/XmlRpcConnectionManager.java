@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.eclipse.emf.emfstore.client.model.connectionmanager.xmlrpc;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.emf.emfstore.client.model.ServerInfo;
@@ -256,13 +258,25 @@ public class XmlRpcConnectionManager extends AbstractConnectionManager<XmlRpcCli
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see 
-	 *      org.eclipse.emf.emfstore.server.EmfStore#getOperationPermissions(org.eclipse.emf.emfstore.server.model.SessionId
+	 * @see
+	 *      org.eclipse.emf.emfstore.server.EmfStore#getOperationPermissions(org.eclipse.emf.emfstore.server.model.
+	 *      SessionId
 	 *      , org.eclipse.emf.emfstore.server.model.operation.Operation<?>[])
 	 */
 	public List<Permission[]> getOperationPermissions(SessionId sessionId, Operation<?>[] operations)
 		throws EmfStoreException {
-		return getConnectionProxy(sessionId).callWithListResult("getOperationPermissions", Permission[].class,
-			sessionId, operations);
+		List<Permission[]> result = getConnectionProxy(sessionId).callWithListResult("getOperationPermissions",
+			Permission[].class, sessionId, operations);
+
+		List<Permission[]> cleanedResult = new ArrayList<Permission[]>();
+		for (Object[] permissions : result) {
+			cleanedResult.add(Arrays.asList(permissions).toArray(new Permission[0]));
+			// List<Permission> opPermissions = new ArrayList<Permission>();
+			// for (Object permission : permissions) {
+			// opPermissions.add((Permission) permission);
+			// }
+			// cleanedResult.add(opPermissions.toArray(new Permission[0]));
+		}
+		return cleanedResult;
 	}
 }

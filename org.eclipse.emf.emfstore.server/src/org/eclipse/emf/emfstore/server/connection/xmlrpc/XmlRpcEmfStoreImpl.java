@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.eclipse.emf.emfstore.server.connection.xmlrpc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.emfstore.common.filetransfer.FileChunk;
@@ -244,16 +245,34 @@ public class XmlRpcEmfStoreImpl implements EmfStore, AuthenticationControl {
 	}
 
 	/**
+	 * helper method, because XMLRPC server cannot see the type of the array elements
+	 * 
+	 * @param sessionId
+	 * @param operations
+	 * @return
+	 * @throws EmfStoreException
+	 */
+	public List<Permission[]> getOperationPermissions(SessionId sessionId, Object[] operationObjects)
+		throws EmfStoreException {
+		List<Operation<?>> operations = new ArrayList<Operation<?>>();
+		for (Object object : operationObjects) {
+			operations.add((Operation<?>) object);
+		}
+		return getEmfStore().getOperationPermissions(sessionId, operations.toArray(new Operation<?>[0]));
+	}
+
+	/**
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see 
-	 *      org.eclipse.emf.emfstore.server.EmfStore#getOperationPermissions(org.eclipse.emf.emfstore.server.model.SessionId
+	 * @see
+	 *      org.eclipse.emf.emfstore.server.EmfStore#getOperationPermissions(org.eclipse.emf.emfstore.server.model.
+	 *      SessionId
 	 *      , org.eclipse.emf.emfstore.server.model.operation.Operation<?>[])
 	 */
 	public List<Permission[]> getOperationPermissions(SessionId sessionId, Operation<?>[] operations)
 		throws EmfStoreException {
-		return getEmfStore().getOperationPermissions(sessionId, operations);
+		throw new RuntimeException("this method will never be used by the XMLRPC server");
 	}
 
 }
