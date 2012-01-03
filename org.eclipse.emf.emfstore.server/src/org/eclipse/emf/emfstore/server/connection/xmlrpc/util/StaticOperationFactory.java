@@ -10,6 +10,7 @@ import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.server.exceptions.InvalidInputException;
 import org.eclipse.emf.emfstore.server.model.ProjectHistory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
@@ -22,6 +23,7 @@ import org.eclipse.emf.emfstore.server.model.operation.CreateProjectByImportOper
 import org.eclipse.emf.emfstore.server.model.operation.CreateProjectOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateUserOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateVersionOperation;
+import org.eclipse.emf.emfstore.server.model.operation.DeleteOrgUnitOperation;
 import org.eclipse.emf.emfstore.server.model.operation.DeleteProjectOperation;
 import org.eclipse.emf.emfstore.server.model.operation.FileDownloadOperation;
 import org.eclipse.emf.emfstore.server.model.operation.FileUploadOperation;
@@ -213,6 +215,13 @@ public class StaticOperationFactory {
 		checkNotNull(name);
 		CreateGroupOperation op = OperationFactory.eINSTANCE.createCreateGroupOperation();
 		op.setName(name);
+		return op;
+	}
+
+	public static DeleteOrgUnitOperation createDeleteOrgUnitOperation(ACOrgUnitId id) throws InvalidInputException {
+		checkNotNull(id);
+		DeleteOrgUnitOperation op = OperationFactory.eINSTANCE.createDeleteOrgUnitOperation();
+		op.setOrgUnitId(id.getId());
 		return op;
 	}
 }
