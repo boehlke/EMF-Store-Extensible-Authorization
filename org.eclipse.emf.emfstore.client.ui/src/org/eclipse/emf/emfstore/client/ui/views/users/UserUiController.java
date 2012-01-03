@@ -114,7 +114,7 @@ public class UserUiController {
 		return UsersessionImpl.getEmfStoreProxy(getSession().getSessionId());
 	}
 
-	public PermissionSet getNewPermissionSet() {
+	public PermissionSet getPermissionSetFromServer() {
 		try {
 			return getEmfStoreProxy().getPermissionSet();
 		} catch (EmfStoreException e) {
@@ -125,7 +125,7 @@ public class UserUiController {
 
 	public PermissionSet getPermissionSet() {
 		if (permissionSet == null) {
-			permissionSet = getNewPermissionSet();
+			permissionSet = getPermissionSetFromServer();
 		}
 		return permissionSet;
 	}
@@ -157,7 +157,7 @@ public class UserUiController {
 			return;
 		}
 
-		PermissionSet newPermissionSet = getNewPermissionSet();
+		PermissionSet newPermissionSet = getPermissionSetFromServer();
 		ACUser createdUser = (ACUser) newPermissionSet.getOrgUnit(newUser.getName());
 
 		for (RoleAssignment assignment : newUser.getRoles()) {

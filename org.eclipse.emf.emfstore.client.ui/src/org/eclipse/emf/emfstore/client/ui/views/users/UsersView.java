@@ -149,7 +149,7 @@ public class UsersView extends ViewPart {
 
 			@Override
 			public void run() {
-				userTreeViewer.setInput(contoller.getNewPermissionSet());
+				userTreeViewer.setInput(contoller.getPermissionSetFromServer());
 			}
 		});
 	}
