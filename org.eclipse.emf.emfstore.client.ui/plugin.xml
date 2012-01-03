@@ -96,6 +96,11 @@
                  <instanceof
                        value="org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit">
                  </instanceof>
+                 <test
+                       forcePluginActivation="true"
+                       property="org.eclipse.emf.emfstore.client.ui.commands.canDelete"
+                       value="true">
+                 </test>
               </iterate>
            </and>
         </enabledWhen>
@@ -1274,6 +1279,13 @@
               properties="treeNodeClassTester"
               type="org.eclipse.jface.viewers.TreeNode">
         </propertyTester>
+              <propertyTester
+                    class="org.eclipse.emf.emfstore.client.ui.views.users.command.CanDeleteOrgUnitTester"
+                    id="org.eclipse.emf.emfstore.client.ui.commands.canDeleteOrgUnitTester"
+                    namespace="org.eclipse.emf.emfstore.client.ui.commands"
+                    properties="canDelete"
+                    type="org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit">
+              </propertyTester>
      </extension>
         
            <extension
