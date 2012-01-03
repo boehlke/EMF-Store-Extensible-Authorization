@@ -30,8 +30,18 @@ public class PermissionSetConfiguration {
 
 		IConfigurationElement[] permissionProviderConfigs = getByName(iConfigurationElements, "permissionProvider");
 
-		permissionProvider = (PermissionProvider) permissionProviderConfigs[0]
-			.createExecutableExtension("providerClass");
+		if (permissionProviderConfigs.length > 1) {
+			for (IConfigurationElement config : permissionProviderConfigs) {
+				String name = config.getContributor().getName();
+				if (!name.equals("org.eclipse.emf.emfstore.server")) {
+					permissionProvider = (PermissionProvider) config.createExecutableExtension("providerClass");
+					break;
+				}
+			}
+		} else {
+			permissionProvider = (PermissionProvider) permissionProviderConfigs[0]
+				.createExecutableExtension("providerClass");
+		}
 
 		for (PermissionTypeData permissionType : permissionProvider.getAllPermissionTypes()) {
 			PermissionType type = AccesscontrolFactory.eINSTANCE.createPermissionType();
