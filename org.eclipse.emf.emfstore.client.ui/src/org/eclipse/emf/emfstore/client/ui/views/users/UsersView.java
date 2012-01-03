@@ -8,6 +8,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -62,6 +63,7 @@ public class UsersView extends ViewPart {
 	}
 
 	private UserUiController contoller;
+	private TreeViewer userTreeViewer;
 
 	public UsersView() {
 		this.contoller = UserUiController.getInstance();
@@ -83,7 +85,7 @@ public class UsersView extends ViewPart {
 	}
 
 	private void createContols(Composite parent) {
-		TreeViewer userTreeViewer = new TreeViewer(parent, SWT.BORDER);
+		userTreeViewer = new TreeViewer(parent, SWT.BORDER);
 
 		AdapterFactory adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
@@ -115,6 +117,41 @@ public class UsersView extends ViewPart {
 
 		toolbarManager.add(createCommandContributionItem(COMMANDID_CREATEUSER));
 		toolbarManager.add(createCommandContributionItem(COMMANDID_DELETEUSER));
+		toolbarManager.add(new Action() {
+
+			@Override
+			public boolean isEnabled() {
+				return true;
+			}
+
+			@Override
+			public String getText() {
+				return "Create Enco Roles";
+			}
+
+			@Override
+			public void run() {
+				contoller.createStandardEnCoRoles();
+			}
+		});
+
+		toolbarManager.add(new Action() {
+
+			@Override
+			public boolean isEnabled() {
+				return true;
+			}
+
+			@Override
+			public String getText() {
+				return "Update";
+			}
+
+			@Override
+			public void run() {
+				userTreeViewer.setInput(contoller.getNewPermissionSet());
+			}
+		});
 	}
 
 	private ContributionItem createCommandContributionItem(String commandId) {
@@ -133,7 +170,6 @@ public class UsersView extends ViewPart {
 
 	@Override
 	public void setFocus() {
-		// Set the focus
 	}
 
 }

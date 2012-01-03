@@ -4,22 +4,29 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.emfstore.client.model.Usersession;
 import org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreClientUtil;
 import org.eclipse.emf.emfstore.client.model.util.EmfStoreInterface;
+import org.eclipse.emf.emfstore.client.model.util.PermissionHelper;
 import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
+import org.eclipse.emf.emfstore.server.accesscontrol.Permission;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
-import org.eclipse.emf.emfstore.server.model.ModelFactory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation;
+import org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateUserOperation;
+import org.eclipse.emf.emfstore.server.model.operation.Operation;
 import org.eclipse.emf.emfstore.server.model.operation.OperationFactory;
+import org.eclipse.emf.emfstore.server.model.operation.RoleContainer;
 
 /**
  * controller for the user UI views/wizards/actions
@@ -32,38 +39,18 @@ public class UserUiController {
 	private static UserUiController instance;
 	private Map<String, ProjectInfo> projectInfoMap;
 	private PermissionSet permissionSet;
+	private Map<Operation<?>, Permission[]> operationPermissionCache = new HashMap<Operation<?>, Permission[]>();
 
 	private UserUiController() {
-		projectInfoMap = new HashMap<String, ProjectInfo>();
-
-		ProjectInfo projectInfo = ModelFactory.eINSTANCE.createProjectInfo();
-		projectInfo.setName("Testprojekt");
-		projectInfoMap.put("test", projectInfo);
-
-		projectInfo = ModelFactory.eINSTANCE.createProjectInfo();
-		projectInfo.setName("Testprojekt 1");
-		projectInfoMap.put("p1", projectInfo);
-
-		projectInfo = ModelFactory.eINSTANCE.createProjectInfo();
-		projectInfo.setName("Testprojekt 2");
-		projectInfoMap.put("p2", projectInfo);
-
-		projectInfo = ModelFactory.eINSTANCE.createProjectInfo();
-		projectInfo.setName("Testprojekt 3");
-		projectInfoMap.put("p3", projectInfo);
-
-		projectInfo = ModelFactory.eINSTANCE.createProjectInfo();
-		projectInfo.setName("Testprojekt 4");
-		projectInfoMap.put("p4", projectInfo);
-
-		for (Map.Entry<String, ProjectInfo> entry : projectInfoMap.entrySet()) {
-			ProjectInfo info = entry.getValue();
-
-			ProjectId projectId = ModelFactory.eINSTANCE.createProjectId();
-			projectId.setId(entry.getKey());
-			info.setProjectId(projectId);
+		try {
+			for (ProjectInfo project : getEmfStoreProxy().getProjectList()) {
+				projectInfoMap.put(project.getProjectId().getId(), project);
+			}
+		} catch (EmfStoreException e) {
+			// TODO: handle Input Errors
+			// TODO: handle this like all other server problems if server problem
+			e.printStackTrace();
 		}
-
 	}
 
 	public static UserUiController getInstance() {
@@ -73,15 +60,58 @@ public class UserUiController {
 		return instance;
 	}
 
-	private EmfStoreInterface getEmfStoreProxy() {
+	public void createRole(Role role) {
+		CreateOrUpdateRoleOperation op = OperationFactory.eINSTANCE.createCreateOrUpdateRoleOperation();
+		RoleContainer containter = OperationFactory.eINSTANCE.createRoleContainer();
+		op.setRole(containter);
+		containter.getPermissionTypes().addAll(EcoreUtil.copyAll(role.getPermissionTypes()));
+		Role copy = EcoreUtil.copy(role);
+		containter.setRole(copy);
+		copy.getPermissionTypes().clear();
+		copy.getPermissionTypes().addAll(containter.getPermissionTypes());
+
+		EmfStoreInterface emfStore = getEmfStoreProxy();
 		try {
-			Usersession session = EMFStoreClientUtil.createUsersession("super", "super", "localhost", 8080);
-			session.logIn();
-			return UsersessionImpl.getEmfStoreProxy(session.getSessionId());
+			emfStore.executeOperation(op);
 		} catch (EmfStoreException e) {
-			ModelUtil.logException(e);
+			// TODO: handle auth exception
+			throw new RuntimeException(e);
 		}
-		return null;
+	}
+
+	public void createStandardEnCoRoles() {
+
+		PermissionSet set = getPermissionSet();
+
+		Role catalogAdminRole = AccesscontrolFactory.eINSTANCE.createRole();
+		catalogAdminRole.setDescription("");
+		catalogAdminRole.setName("Catalog Admin");
+		catalogAdminRole.setId("catalogadmin");
+		catalogAdminRole.setSystemRole(true);
+		createRole(catalogAdminRole);
+
+		Role projectMemberRole = AccesscontrolFactory.eINSTANCE.createRole();
+		projectMemberRole.setDescription("member");
+		projectMemberRole.setName("Projektteilnehmer");
+		projectMemberRole.setId("projectmember");
+		createRole(projectMemberRole);
+
+		Role projectAdminRole = AccesscontrolFactory.eINSTANCE.createRole();
+		projectAdminRole.setDescription("admin");
+		projectAdminRole.setName("Projektadmin");
+		projectAdminRole.setId("projectadmin");
+		createRole(projectAdminRole);
+
+		Role reviewerRole = AccesscontrolFactory.eINSTANCE.createRole();
+		reviewerRole.setDescription("reviwer...");
+		reviewerRole.setName("Reviewer");
+		reviewerRole.setId("reviewer");
+		createRole(reviewerRole);
+
+	}
+
+	private EmfStoreInterface getEmfStoreProxy() {
+		return UsersessionImpl.getEmfStoreProxy(getSession().getSessionId());
 	}
 
 	public PermissionSet getNewPermissionSet() {
@@ -98,77 +128,11 @@ public class UserUiController {
 			permissionSet = getNewPermissionSet();
 		}
 		return permissionSet;
-
-		// final PermissionSet permissionSet = AccesscontrolFactory.eINSTANCE.createPermissionSet();
-		//
-		// Role systemAdminRole = AccesscontrolFactory.eINSTANCE.createRole();
-		// systemAdminRole.setDescription("test");
-		// systemAdminRole.setName("Systemadministrator");
-		// systemAdminRole.setId("systemadmin");
-		// systemAdminRole.setSystemRole(true);
-		// permissionSet.getRoles().add(systemAdminRole);
-		//
-		// Role catalogAdminRole = AccesscontrolFactory.eINSTANCE.createRole();
-		// catalogAdminRole.setDescription("");
-		// catalogAdminRole.setName("Catalog Admin");
-		// catalogAdminRole.setId("catalogadmin");
-		// catalogAdminRole.setSystemRole(true);
-		// permissionSet.getRoles().add(catalogAdminRole);
-		//
-		// PermissionType type = AccesscontrolFactory.eINSTANCE.createPermissionType();
-		// type.setId("test");
-		// type.setProjectPermission(true);
-		//
-		// Role projectMemberRole = AccesscontrolFactory.eINSTANCE.createRole();
-		// projectMemberRole.setDescription("member");
-		// projectMemberRole.setName("Projektteilnehmer");
-		// projectMemberRole.setId("projectmember");
-		// projectMemberRole.getPermissionTypes().add(type);
-		// permissionSet.getRoles().add(projectMemberRole);
-		//
-		// Role projectAdminRole = AccesscontrolFactory.eINSTANCE.createRole();
-		// projectAdminRole.setDescription("admin");
-		// projectAdminRole.setName("Projektadmin");
-		// projectAdminRole.setId("projectadmin");
-		// projectAdminRole.getPermissionTypes().add(type);
-		// permissionSet.getRoles().add(projectAdminRole);
-		//
-		// Role reviewerRole = AccesscontrolFactory.eINSTANCE.createRole();
-		// reviewerRole.setDescription("reviwer...");
-		// reviewerRole.setName("Reviewer");
-		// reviewerRole.setId("reviewer");
-		// reviewerRole.getPermissionTypes().add(type);
-		// permissionSet.getRoles().add(reviewerRole);
-		//
-		// // RoleAssignment roleAssignment = AccesscontrolFactory.eINSTANCE.createRoleAssignment();
-		// // roleAssignment.setRole(systemAdminRole);
-		// // userData.getRoles().add(roleAssignment);
-		//
-		// permissionSet.getUsers().add(createUser("aboehlke", "André", "Böhlke", projectMemberRole, systemAdminRole));
-		// permissionSet.getUsers().add(createUser("rrose", "Rudolf", "Rose", projectAdminRole));
-		// permissionSet.getUsers().add(createUser("mmuse", "Manuela", "Muse", reviewerRole, projectMemberRole));
-		//
-		// return permissionSet;
 	}
 
-	// private ACUser createUser(String name, String first, String last, Role... roles) {
-	// ACUser user = AccesscontrolFactory.eINSTANCE.createACUser();
-	//
-	// user.setName(name);
-	// user.setLastName(last);
-	// user.setFirstName(first);
-	//
-	// for (Role role : roles) {
-	// RoleAssignment assignment = AccesscontrolFactory.eINSTANCE.createRoleAssignment();
-	// user.getRoles().add(assignment);
-	// assignment.setRole(role);
-	// if (!role.isSystemRole()) {
-	// assignment.setProjectId(projectInfoMap.get("test").getProjectId());
-	// }
-	// }
-	//
-	// return user;
-	// }
+	public boolean canDeleteOrgUnit(ACOrgUnit object) {
+		return true;
+	}
 
 	public boolean canChangeOrgUnit(ACOrgUnit object) {
 		// TODO: ask permission helper
@@ -194,11 +158,11 @@ public class UserUiController {
 		}
 
 		PermissionSet newPermissionSet = getNewPermissionSet();
-		newUser = (ACUser) newPermissionSet.getOrgUnit(newUser.getName());
+		ACUser createdUser = (ACUser) newPermissionSet.getOrgUnit(newUser.getName());
 
 		for (RoleAssignment assignment : newUser.getRoles()) {
 			AssignRoleOperation assignRoleOperation = OperationFactory.eINSTANCE.createAssignRoleOperation();
-			assignRoleOperation.setOrgUnitId(newPermissionSet.getOrgUnit(newUser.getName()).getId().getId());
+			assignRoleOperation.setOrgUnitId(createdUser.getId().getId());
 			ProjectId projectId = assignment.getProjectId();
 			if (projectId != null) {
 				assignRoleOperation.setProjectId(projectId.getId());
@@ -215,4 +179,26 @@ public class UserUiController {
 		permissionSet.getUsers().add(newUser);
 	}
 
+	public Usersession getSession() {
+		try {
+			Usersession session = EMFStoreClientUtil.createUsersession("super", "super", "localhost", 8080);
+			session.logIn();
+			return session;
+		} catch (EmfStoreException e) {
+			ModelUtil.logException(e);
+		}
+		return null;
+	}
+
+	public boolean canExecute(Operation<?> op) {
+		try {
+			Permission[] permissions = getEmfStoreProxy().getOperationPermissions(new Operation<?>[] { op }).get(0);
+			return PermissionHelper.hasPermissions(getSession().getACUser(), permissions, getPermissionSet());
+		} catch (EmfStoreException e) {
+			// TODO: handle Input Errors
+			// TODO: handle this like all other server problems if server problem
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
