@@ -189,6 +189,7 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 			role.setDescription(roleData.getDescription());
 			role.setName(roleData.getName());
 			role.setId(roleData.getId());
+			role.setSystemRole(roleData.isSystemRole());
 			role.getPermissionTypes().addAll(permissionTypes);
 			getServerSpace().getPermissionSet().getRoles().add(role);
 		}
