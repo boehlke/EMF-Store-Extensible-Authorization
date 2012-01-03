@@ -140,7 +140,7 @@ public class RoleAssignmentItemProvider extends IdentifiableElementItemProvider 
 		RoleAssignment assignment = (RoleAssignment) object;
 		String projectString = "";
 		if (assignment.getProjectId() != null) {
-			projectString = " " + getString("_UI_RoleAssignment_infix") + " " + assignment.getProjectId();
+			projectString = " " + getString("_UI_RoleAssignment_infix") + " " + assignment.getProjectId().getId();
 		}
 		String label = assignment.getRole().getName() + projectString;
 		return label.length() == 0 ? getString("_UI_RoleAssignment_type") : label;
