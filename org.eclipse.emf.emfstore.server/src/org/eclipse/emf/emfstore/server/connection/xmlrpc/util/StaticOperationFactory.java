@@ -32,6 +32,7 @@ import org.eclipse.emf.emfstore.server.model.operation.OperationFactory;
 import org.eclipse.emf.emfstore.server.model.operation.ReadOrgUnitOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadProjectOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadPropertiesOperation;
+import org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RoleContainer;
 import org.eclipse.emf.emfstore.server.model.operation.WritePropertiesOperation;
@@ -223,5 +224,17 @@ public class StaticOperationFactory {
 		DeleteOrgUnitOperation op = OperationFactory.eINSTANCE.createDeleteOrgUnitOperation();
 		op.setOrgUnitId(id.getId());
 		return op;
+	}
+
+	public static Operation<Object> createRemoveRoleOperation(ACOrgUnitId orgUnitId, String roleId, ProjectId projectId)
+		throws InvalidInputException {
+		checkNotNull(roleId);
+		RemoveRoleOperation op = OperationFactory.eINSTANCE.createRemoveRoleOperation();
+		op.setOrgUnitId(orgUnitId.getId());
+		op.setRoleId(roleId);
+		if (projectId != null) {
+			op.setProjectId(projectId.getId());
+		}
+		return null;
 	}
 }
