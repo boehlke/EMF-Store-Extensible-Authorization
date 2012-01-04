@@ -16,6 +16,7 @@ package org.eclipse.emf.emfstore.server.model.operation;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation#getRoleId <em>Role Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation#getProjectId <em>Project Id</em>}</li>
  * </ul>
  * </p>
  *
@@ -49,5 +50,31 @@ public interface RemoveRoleOperation extends OrgUnitOperation<Void> {
 	 * @generated
 	 */
 	void setRoleId(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Project Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Project Id</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Project Id</em>' attribute.
+	 * @see #setProjectId(String)
+	 * @see org.eclipse.emf.emfstore.server.model.operation.OperationPackage#getRemoveRoleOperation_ProjectId()
+	 * @model
+	 * @generated
+	 */
+	String getProjectId();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation#getProjectId <em>Project Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Project Id</em>' attribute.
+	 * @see #getProjectId()
+	 * @generated
+	 */
+	void setProjectId(String value);
 
 } // RemoveRoleOperation

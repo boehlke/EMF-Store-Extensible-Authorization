@@ -776,13 +776,22 @@ public interface OperationPackage extends EPackage {
 	int REMOVE_ROLE_OPERATION__ROLE_ID = ORG_UNIT_OPERATION_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REMOVE_ROLE_OPERATION__PROJECT_ID = ORG_UNIT_OPERATION_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Remove Role Operation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REMOVE_ROLE_OPERATION_FEATURE_COUNT = ORG_UNIT_OPERATION_FEATURE_COUNT + 1;
+	int REMOVE_ROLE_OPERATION_FEATURE_COUNT = ORG_UNIT_OPERATION_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.RemoveTagOperationImpl <em>Remove Tag Operation</em>}' class.
@@ -1411,6 +1420,17 @@ public interface OperationPackage extends EPackage {
 	EAttribute getRemoveRoleOperation_RoleId();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation#getProjectId <em>Project Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Project Id</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation#getProjectId()
+	 * @see #getRemoveRoleOperation()
+	 * @generated
+	 */
+	EAttribute getRemoveRoleOperation_ProjectId();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation <em>Remove Tag Operation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1964,6 +1984,14 @@ public interface OperationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute REMOVE_ROLE_OPERATION__ROLE_ID = eINSTANCE.getRemoveRoleOperation_RoleId();
+
+		/**
+		 * The meta object literal for the '<em><b>Project Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REMOVE_ROLE_OPERATION__PROJECT_ID = eINSTANCE.getRemoveRoleOperation_ProjectId();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.RemoveTagOperationImpl <em>Remove Tag Operation</em>}' class.

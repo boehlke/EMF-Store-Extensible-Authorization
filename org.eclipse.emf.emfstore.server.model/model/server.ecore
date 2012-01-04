@@ -430,20 +430,45 @@
   <eSubpackages name="accesscontrol" nsURI="http://eclipse.org/emf/emfstore/server/model/accesscontrol"
       nsPrefix="org.eclipse.emf.emfstore.server.model.accesscontrol">
     <eClassifiers xsi:type="ecore:EClass" name="ACUser" eSuperTypes="#//accesscontrol/ACOrgUnit">
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eAnnotations source="org.eclipse.emf.ecp.editor">
+          <details key="priority" value="0"/>
+          <details key="position" value="top"/>
+        </eAnnotations>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eAnnotations source="org.eclipse.emf.ecp.editor">
+          <details key="priority" value="1"/>
+          <details key="position" value="top"/>
+        </eAnnotations>
+      </eStructuralFeatures>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ACOrgUnit" eSuperTypes="../../org.eclipse.emf.emfstore.common.model/model/common.ecore#//IdentifiableElement">
       <eOperations name="getId" eType="#//accesscontrol/ACOrgUnitId"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eAnnotations source="org.eclipse.emf.ecp.editor">
+          <details key="priority" value="10"/>
+          <details key="position" value="top"/>
+        </eAnnotations>
+      </eStructuralFeatures>
       <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
           eType="#//accesscontrol/OrgUnitProperty" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="roles" upperBound="-1"
-          eType="#//accesscontrol/RoleAssignment" containment="true"/>
+          eType="#//accesscontrol/RoleAssignment" containment="true">
+        <eAnnotations source="org.eclipse.emf.ecp.editor">
+          <details key="priority" value="0"/>
+          <details key="position" value="bottom"/>
+        </eAnnotations>
+      </eStructuralFeatures>
       <eStructuralFeatures xsi:type="ecore:EReference" name="groups" upperBound="-1"
-          eType="#//accesscontrol/ACGroup"/>
+          eType="#//accesscontrol/ACGroup">
+        <eAnnotations source="org.eclipse.emf.ecp.editor">
+          <details key="priority" value="0"/>
+          <details key="position" value="bottom"/>
+        </eAnnotations>
+      </eStructuralFeatures>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ACGroup" eSuperTypes="#//accesscontrol/ACOrgUnit">
       <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
@@ -685,6 +710,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="RemoveRoleOperation">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="roleId" lowerBound="1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="projectId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eGenericSuperTypes eClassifier="#//operation/OrgUnitOperation">
         <eTypeArguments eClassifier="#//operation/Void"/>
       </eGenericSuperTypes>
