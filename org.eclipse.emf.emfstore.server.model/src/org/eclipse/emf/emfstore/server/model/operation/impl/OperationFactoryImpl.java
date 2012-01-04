@@ -16,10 +16,8 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.emfstore.common.filetransfer.FileChunk;
 import org.eclipse.emf.emfstore.common.filetransfer.FileTransferInformation;
-import org.eclipse.emf.emfstore.server.model.operation.*;
 import org.eclipse.emf.emfstore.server.model.operation.AddGroupMemberOperation;
 import org.eclipse.emf.emfstore.server.model.operation.AddTagOperation;
-import org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateGroupOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateOrgUnitOperation;
@@ -35,13 +33,14 @@ import org.eclipse.emf.emfstore.server.model.operation.Operation;
 import org.eclipse.emf.emfstore.server.model.operation.OperationFactory;
 import org.eclipse.emf.emfstore.server.model.operation.OperationPackage;
 import org.eclipse.emf.emfstore.server.model.operation.OrgUnitOperation;
+import org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ProjectOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadOrgUnitOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadProjectOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadPropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveGroupMemberOperation;
-import org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation;
+import org.eclipse.emf.emfstore.server.model.operation.RoleContainer;
 import org.eclipse.emf.emfstore.server.model.operation.UserManagementOperation;
 import org.eclipse.emf.emfstore.server.model.operation.WritePropertiesOperation;
 
@@ -96,7 +95,6 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 			case OperationPackage.ADD_GROUP_MEMBER_OPERATION: return createAddGroupMemberOperation();
 			case OperationPackage.PROJECT_OPERATION: return createProjectOperation();
 			case OperationPackage.ADD_TAG_OPERATION: return createAddTagOperation();
-			case OperationPackage.ASSIGN_ROLE_OPERATION: return createAssignRoleOperation();
 			case OperationPackage.CREATE_GROUP_OPERATION: return createCreateGroupOperation();
 			case OperationPackage.CREATE_ORG_UNIT_OPERATION: return createCreateOrgUnitOperation();
 			case OperationPackage.CREATE_OR_UPDATE_ROLE_OPERATION: return createCreateOrUpdateRoleOperation();
@@ -110,11 +108,11 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 			case OperationPackage.READ_PROJECT_OPERATION: return createReadProjectOperation();
 			case OperationPackage.READ_PROPERTIES_OPERATION: return createReadPropertiesOperation();
 			case OperationPackage.REMOVE_GROUP_MEMBER_OPERATION: return createRemoveGroupMemberOperation();
-			case OperationPackage.REMOVE_ROLE_OPERATION: return createRemoveRoleOperation();
 			case OperationPackage.REMOVE_TAG_OPERATION: return createRemoveTagOperation();
 			case OperationPackage.WRITE_PROPERTIES_OPERATION: return createWritePropertiesOperation();
 			case OperationPackage.CREATE_PROJECT_OPERATION: return createCreateProjectOperation();
 			case OperationPackage.ROLE_CONTAINER: return createRoleContainer();
+			case OperationPackage.ORG_UNIT_ROLE_OPERATION: return createOrgUnitRoleOperation();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -226,16 +224,6 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 	public AddTagOperation createAddTagOperation() {
 		AddTagOperationImpl addTagOperation = new AddTagOperationImpl();
 		return addTagOperation;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public AssignRoleOperation createAssignRoleOperation() {
-		AssignRoleOperationImpl assignRoleOperation = new AssignRoleOperationImpl();
-		return assignRoleOperation;
 	}
 
 	/**
@@ -373,16 +361,6 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RemoveRoleOperation createRemoveRoleOperation() {
-		RemoveRoleOperationImpl removeRoleOperation = new RemoveRoleOperationImpl();
-		return removeRoleOperation;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public RemoveTagOperation createRemoveTagOperation() {
 		RemoveTagOperationImpl removeTagOperation = new RemoveTagOperationImpl();
 		return removeTagOperation;
@@ -416,6 +394,16 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 	public RoleContainer createRoleContainer() {
 		RoleContainerImpl roleContainer = new RoleContainerImpl();
 		return roleContainer;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public OrgUnitRoleOperation createOrgUnitRoleOperation() {
+		OrgUnitRoleOperationImpl orgUnitRoleOperation = new OrgUnitRoleOperationImpl();
+		return orgUnitRoleOperation;
 	}
 
 	/**

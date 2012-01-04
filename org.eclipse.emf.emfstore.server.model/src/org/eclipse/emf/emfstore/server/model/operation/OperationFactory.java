@@ -89,15 +89,6 @@ public interface OperationFactory extends EFactory {
 	AddTagOperation createAddTagOperation();
 
 	/**
-	 * Returns a new object of class '<em>Assign Role Operation</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Assign Role Operation</em>'.
-	 * @generated
-	 */
-	AssignRoleOperation createAssignRoleOperation();
-
-	/**
 	 * Returns a new object of class '<em>Create Group Operation</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -215,15 +206,6 @@ public interface OperationFactory extends EFactory {
 	RemoveGroupMemberOperation createRemoveGroupMemberOperation();
 
 	/**
-	 * Returns a new object of class '<em>Remove Role Operation</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Remove Role Operation</em>'.
-	 * @generated
-	 */
-	RemoveRoleOperation createRemoveRoleOperation();
-
-	/**
 	 * Returns a new object of class '<em>Remove Tag Operation</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -258,6 +240,15 @@ public interface OperationFactory extends EFactory {
 	 * @generated
 	 */
 	RoleContainer createRoleContainer();
+
+	/**
+	 * Returns a new object of class '<em>Org Unit Role Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Org Unit Role Operation</em>'.
+	 * @generated
+	 */
+	OrgUnitRoleOperation createOrgUnitRoleOperation();
 
 	/**
 	 * Returns the package supported by this factory.

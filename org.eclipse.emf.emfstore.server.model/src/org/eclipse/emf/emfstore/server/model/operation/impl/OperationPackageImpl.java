@@ -26,7 +26,6 @@ import org.eclipse.emf.emfstore.server.model.notification.NotificationPackage;
 import org.eclipse.emf.emfstore.server.model.notification.impl.NotificationPackageImpl;
 import org.eclipse.emf.emfstore.server.model.operation.AddGroupMemberOperation;
 import org.eclipse.emf.emfstore.server.model.operation.AddTagOperation;
-import org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateGroupOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateOrgUnitOperation;
@@ -42,12 +41,12 @@ import org.eclipse.emf.emfstore.server.model.operation.Operation;
 import org.eclipse.emf.emfstore.server.model.operation.OperationFactory;
 import org.eclipse.emf.emfstore.server.model.operation.OperationPackage;
 import org.eclipse.emf.emfstore.server.model.operation.OrgUnitOperation;
+import org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ProjectOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadOrgUnitOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadProjectOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadPropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveGroupMemberOperation;
-import org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RoleContainer;
 import org.eclipse.emf.emfstore.server.model.operation.UserManagementOperation;
@@ -120,13 +119,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 	 * @generated
 	 */
 	private EClass addTagOperationEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass assignRoleOperationEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -224,13 +216,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass removeRoleOperationEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass removeTagOperationEClass = null;
 
 	/**
@@ -253,6 +238,13 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 	 * @generated
 	 */
 	private EClass roleContainerEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass orgUnitRoleOperationEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -480,33 +472,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getAssignRoleOperation() {
-		return assignRoleOperationEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getAssignRoleOperation_ProjectId() {
-		return (EAttribute)assignRoleOperationEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getAssignRoleOperation_RoleId() {
-		return (EAttribute)assignRoleOperationEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getCreateGroupOperation() {
 		return createGroupOperationEClass;
 	}
@@ -723,24 +688,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getRemoveRoleOperation() {
-		return removeRoleOperationEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getRemoveRoleOperation_RoleId() {
-		return (EAttribute)removeRoleOperationEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getRemoveTagOperation() {
 		return removeTagOperationEClass;
 	}
@@ -849,6 +796,42 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getOrgUnitRoleOperation() {
+		return orgUnitRoleOperationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getOrgUnitRoleOperation_RoleId() {
+		return (EAttribute)orgUnitRoleOperationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getOrgUnitRoleOperation_Assign() {
+		return (EAttribute)orgUnitRoleOperationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getOrgUnitRoleOperation_ProjectId() {
+		return (EAttribute)orgUnitRoleOperationEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getVoid() {
 		return voidEDataType;
 	}
@@ -918,10 +901,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		createEReference(addTagOperationEClass, ADD_TAG_OPERATION__TAG);
 		createEReference(addTagOperationEClass, ADD_TAG_OPERATION__VERSION_SPEC);
 
-		assignRoleOperationEClass = createEClass(ASSIGN_ROLE_OPERATION);
-		createEAttribute(assignRoleOperationEClass, ASSIGN_ROLE_OPERATION__PROJECT_ID);
-		createEAttribute(assignRoleOperationEClass, ASSIGN_ROLE_OPERATION__ROLE_ID);
-
 		createGroupOperationEClass = createEClass(CREATE_GROUP_OPERATION);
 
 		createOrgUnitOperationEClass = createEClass(CREATE_ORG_UNIT_OPERATION);
@@ -959,9 +938,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		removeGroupMemberOperationEClass = createEClass(REMOVE_GROUP_MEMBER_OPERATION);
 		createEAttribute(removeGroupMemberOperationEClass, REMOVE_GROUP_MEMBER_OPERATION__MEMBER_ID);
 
-		removeRoleOperationEClass = createEClass(REMOVE_ROLE_OPERATION);
-		createEAttribute(removeRoleOperationEClass, REMOVE_ROLE_OPERATION__ROLE_ID);
-
 		removeTagOperationEClass = createEClass(REMOVE_TAG_OPERATION);
 		createEReference(removeTagOperationEClass, REMOVE_TAG_OPERATION__TAG);
 
@@ -977,6 +953,11 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		roleContainerEClass = createEClass(ROLE_CONTAINER);
 		createEReference(roleContainerEClass, ROLE_CONTAINER__ROLE);
 		createEReference(roleContainerEClass, ROLE_CONTAINER__PERMISSION_TYPES);
+
+		orgUnitRoleOperationEClass = createEClass(ORG_UNIT_ROLE_OPERATION);
+		createEAttribute(orgUnitRoleOperationEClass, ORG_UNIT_ROLE_OPERATION__ROLE_ID);
+		createEAttribute(orgUnitRoleOperationEClass, ORG_UNIT_ROLE_OPERATION__ASSIGN);
+		createEAttribute(orgUnitRoleOperationEClass, ORG_UNIT_ROLE_OPERATION__PROJECT_ID);
 
 		// Create data types
 		voidEDataType = createEDataType(VOID);
@@ -1047,10 +1028,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		g2 = createEGenericType(this.getVoid());
 		g1.getETypeArguments().add(g2);
 		addTagOperationEClass.getEGenericSuperTypes().add(g1);
-		g1 = createEGenericType(this.getOrgUnitOperation());
-		g2 = createEGenericType(this.getVoid());
-		g1.getETypeArguments().add(g2);
-		assignRoleOperationEClass.getEGenericSuperTypes().add(g1);
 		g1 = createEGenericType(this.getCreateOrgUnitOperation());
 		g2 = createEGenericType(this.getVoid());
 		g1.getETypeArguments().add(g2);
@@ -1105,10 +1082,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		g2 = createEGenericType(this.getVoid());
 		g1.getETypeArguments().add(g2);
 		removeGroupMemberOperationEClass.getEGenericSuperTypes().add(g1);
-		g1 = createEGenericType(this.getOrgUnitOperation());
-		g2 = createEGenericType(this.getVoid());
-		g1.getETypeArguments().add(g2);
-		removeRoleOperationEClass.getEGenericSuperTypes().add(g1);
 		g1 = createEGenericType(this.getProjectOperation());
 		g2 = createEGenericType(this.getVoid());
 		g1.getETypeArguments().add(g2);
@@ -1121,6 +1094,10 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		g2 = createEGenericType(theModelPackage_1.getProjectInfo());
 		g1.getETypeArguments().add(g2);
 		createProjectOperationEClass.getEGenericSuperTypes().add(g1);
+		g1 = createEGenericType(this.getOrgUnitOperation());
+		g2 = createEGenericType(this.getVoid());
+		g1.getETypeArguments().add(g2);
+		orgUnitRoleOperationEClass.getEGenericSuperTypes().add(g1);
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(operationEClass, Operation.class, "Operation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1141,10 +1118,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		initEClass(addTagOperationEClass, AddTagOperation.class, "AddTagOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAddTagOperation_Tag(), theVersioningPackage.getTagVersionSpec(), null, "tag", null, 1, 1, AddTagOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAddTagOperation_VersionSpec(), theVersioningPackage.getPrimaryVersionSpec(), null, "versionSpec", null, 1, 1, AddTagOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(assignRoleOperationEClass, AssignRoleOperation.class, "AssignRoleOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getAssignRoleOperation_ProjectId(), ecorePackage.getEString(), "projectId", null, 1, 1, AssignRoleOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getAssignRoleOperation_RoleId(), ecorePackage.getEString(), "roleId", null, 1, 1, AssignRoleOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(createGroupOperationEClass, CreateGroupOperation.class, "CreateGroupOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1183,9 +1156,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		initEClass(removeGroupMemberOperationEClass, RemoveGroupMemberOperation.class, "RemoveGroupMemberOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRemoveGroupMemberOperation_MemberId(), ecorePackage.getEString(), "memberId", null, 1, 1, RemoveGroupMemberOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(removeRoleOperationEClass, RemoveRoleOperation.class, "RemoveRoleOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getRemoveRoleOperation_RoleId(), ecorePackage.getEString(), "roleId", null, 1, 1, RemoveRoleOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
 		initEClass(removeTagOperationEClass, RemoveTagOperation.class, "RemoveTagOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRemoveTagOperation_Tag(), theVersioningPackage.getTagVersionSpec(), null, "tag", null, 1, 1, RemoveTagOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1201,6 +1171,11 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		initEClass(roleContainerEClass, RoleContainer.class, "RoleContainer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRoleContainer_Role(), theAccesscontrolPackage.getRole(), null, "role", null, 1, 1, RoleContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRoleContainer_PermissionTypes(), theAccesscontrolPackage.getPermissionType(), null, "permissionTypes", null, 0, -1, RoleContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(orgUnitRoleOperationEClass, OrgUnitRoleOperation.class, "OrgUnitRoleOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getOrgUnitRoleOperation_RoleId(), ecorePackage.getEString(), "roleId", null, 1, 1, OrgUnitRoleOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getOrgUnitRoleOperation_Assign(), ecorePackage.getEBoolean(), "assign", null, 1, 1, OrgUnitRoleOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getOrgUnitRoleOperation_ProjectId(), ecorePackage.getEString(), "projectId", null, 0, 1, OrgUnitRoleOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(voidEDataType, Void.class, "Void", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

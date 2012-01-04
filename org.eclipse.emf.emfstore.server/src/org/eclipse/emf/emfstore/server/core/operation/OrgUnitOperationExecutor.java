@@ -21,13 +21,12 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.emf.emfstore.server.model.operation.AddGroupMemberOperation;
-import org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateGroupOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateUserOperation;
 import org.eclipse.emf.emfstore.server.model.operation.DeleteOrgUnitOperation;
+import org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveGroupMemberOperation;
-import org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation;
 
 public class OrgUnitOperationExecutor extends OperationExecutor {
 
@@ -126,9 +125,9 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 		return false;
 	}
 
-	@OperationHandler(operationClass = AssignRoleOperation.class)
-	public void assignRole(OperationExecution<Void, AssignRoleOperation> execution) throws EmfStoreException {
-		AssignRoleOperation op = execution.getOperation();
+	@OperationHandler(operationClass = OrgUnitRoleOperation.class)
+	public void assignOrRemoveRole(OperationExecution<Void, OrgUnitRoleOperation> execution) throws EmfStoreException {
+		OrgUnitRoleOperation op = execution.getOperation();
 		ACOrgUnit unit = getOrgUnit(op.getOrgUnitId());
 
 		if (unit == null) {
@@ -142,6 +141,7 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 		}
 
 		String projectId = op.getProjectId();
+
 		ProjectHistory projectHistory = Util.getProjectHistoryOrNull(projectId, getServerSpace());
 		if (projectId != null && projectHistory == null) {
 			throw new InvalidInputException();
@@ -155,11 +155,6 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 
 		unit.getRoles().add(assignment);
 		save();
-	}
-
-	@OperationHandler(operationClass = RemoveRoleOperation.class)
-	public void removeRoleFromOrgUnit(OperationExecution<Void, RemoveRoleOperation> execution) {
-
 	}
 
 	@OperationHandler(operationClass = CreateOrUpdateRoleOperation.class)

@@ -100,10 +100,6 @@ public class OperationAdapterFactory extends AdapterFactoryImpl {
 				return createAddTagOperationAdapter();
 			}
 			@Override
-			public Adapter caseAssignRoleOperation(AssignRoleOperation object) {
-				return createAssignRoleOperationAdapter();
-			}
-			@Override
 			public Adapter caseCreateGroupOperation(CreateGroupOperation object) {
 				return createCreateGroupOperationAdapter();
 			}
@@ -156,10 +152,6 @@ public class OperationAdapterFactory extends AdapterFactoryImpl {
 				return createRemoveGroupMemberOperationAdapter();
 			}
 			@Override
-			public Adapter caseRemoveRoleOperation(RemoveRoleOperation object) {
-				return createRemoveRoleOperationAdapter();
-			}
-			@Override
 			public Adapter caseRemoveTagOperation(RemoveTagOperation object) {
 				return createRemoveTagOperationAdapter();
 			}
@@ -174,6 +166,10 @@ public class OperationAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseRoleContainer(RoleContainer object) {
 				return createRoleContainerAdapter();
+			}
+			@Override
+			public Adapter caseOrgUnitRoleOperation(OrgUnitRoleOperation object) {
+				return createOrgUnitRoleOperationAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -290,20 +286,6 @@ public class OperationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAddTagOperationAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation <em>Assign Role Operation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation
-	 * @generated
-	 */
-	public Adapter createAssignRoleOperationAdapter() {
 		return null;
 	}
 
@@ -490,20 +472,6 @@ public class OperationAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation <em>Remove Role Operation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation
-	 * @generated
-	 */
-	public Adapter createRemoveRoleOperationAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation <em>Remove Tag Operation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -556,6 +524,20 @@ public class OperationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createRoleContainerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation <em>Org Unit Role Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation
+	 * @generated
+	 */
+	public Adapter createOrgUnitRoleOperationAdapter() {
 		return null;
 	}
 

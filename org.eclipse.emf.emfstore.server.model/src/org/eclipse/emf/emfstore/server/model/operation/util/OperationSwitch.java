@@ -124,15 +124,6 @@ public class OperationSwitch<T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OperationPackage.ASSIGN_ROLE_OPERATION: {
-				AssignRoleOperation assignRoleOperation = (AssignRoleOperation)theEObject;
-				T1 result = caseAssignRoleOperation(assignRoleOperation);
-				if (result == null) result = caseOrgUnitOperation(assignRoleOperation);
-				if (result == null) result = caseUserManagementOperation(assignRoleOperation);
-				if (result == null) result = caseOperation(assignRoleOperation);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case OperationPackage.CREATE_GROUP_OPERATION: {
 				CreateGroupOperation createGroupOperation = (CreateGroupOperation)theEObject;
 				T1 result = caseCreateGroupOperation(createGroupOperation);
@@ -240,15 +231,6 @@ public class OperationSwitch<T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case OperationPackage.REMOVE_ROLE_OPERATION: {
-				RemoveRoleOperation removeRoleOperation = (RemoveRoleOperation)theEObject;
-				T1 result = caseRemoveRoleOperation(removeRoleOperation);
-				if (result == null) result = caseOrgUnitOperation(removeRoleOperation);
-				if (result == null) result = caseUserManagementOperation(removeRoleOperation);
-				if (result == null) result = caseOperation(removeRoleOperation);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case OperationPackage.REMOVE_TAG_OPERATION: {
 				RemoveTagOperation removeTagOperation = (RemoveTagOperation)theEObject;
 				T1 result = caseRemoveTagOperation(removeTagOperation);
@@ -275,6 +257,15 @@ public class OperationSwitch<T1> extends Switch<T1> {
 			case OperationPackage.ROLE_CONTAINER: {
 				RoleContainer roleContainer = (RoleContainer)theEObject;
 				T1 result = caseRoleContainer(roleContainer);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case OperationPackage.ORG_UNIT_ROLE_OPERATION: {
+				OrgUnitRoleOperation orgUnitRoleOperation = (OrgUnitRoleOperation)theEObject;
+				T1 result = caseOrgUnitRoleOperation(orgUnitRoleOperation);
+				if (result == null) result = caseOrgUnitOperation(orgUnitRoleOperation);
+				if (result == null) result = caseUserManagementOperation(orgUnitRoleOperation);
+				if (result == null) result = caseOperation(orgUnitRoleOperation);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -384,21 +375,6 @@ public class OperationSwitch<T1> extends Switch<T1> {
 	 * @generated
 	 */
 	public T1 caseAddTagOperation(AddTagOperation object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Assign Role Operation</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Assign Role Operation</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseAssignRoleOperation(AssignRoleOperation object) {
 		return null;
 	}
 
@@ -598,21 +574,6 @@ public class OperationSwitch<T1> extends Switch<T1> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Remove Role Operation</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Remove Role Operation</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T1 caseRemoveRoleOperation(RemoveRoleOperation object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Remove Tag Operation</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -669,6 +630,21 @@ public class OperationSwitch<T1> extends Switch<T1> {
 	 * @generated
 	 */
 	public T1 caseRoleContainer(RoleContainer object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Org Unit Role Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Org Unit Role Operation</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseOrgUnitRoleOperation(OrgUnitRoleOperation object) {
 		return null;
 	}
 

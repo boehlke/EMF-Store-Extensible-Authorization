@@ -16,7 +16,6 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.operation.AddTagOperation;
-import org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateGroupOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateProjectByImportOperation;
@@ -29,10 +28,10 @@ import org.eclipse.emf.emfstore.server.model.operation.FileDownloadOperation;
 import org.eclipse.emf.emfstore.server.model.operation.FileUploadOperation;
 import org.eclipse.emf.emfstore.server.model.operation.Operation;
 import org.eclipse.emf.emfstore.server.model.operation.OperationFactory;
+import org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadOrgUnitOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadProjectOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadPropertiesOperation;
-import org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RoleContainer;
 import org.eclipse.emf.emfstore.server.model.operation.WritePropertiesOperation;
@@ -169,10 +168,11 @@ public class StaticOperationFactory {
 		return op;
 	}
 
-	public static AssignRoleOperation createAssignRoleOperation(String orgUnitId, String roleId, String id)
+	public static OrgUnitRoleOperation createAssignRoleOperation(String orgUnitId, String roleId, String id)
 		throws InvalidInputException {
 		checkNotNull(orgUnitId, roleId, id);
-		AssignRoleOperation op = OperationFactory.eINSTANCE.createAssignRoleOperation();
+		OrgUnitRoleOperation op = OperationFactory.eINSTANCE.createOrgUnitRoleOperation();
+		op.setAssign(true);
 		op.setOrgUnitId(orgUnitId);
 		op.setProjectId(id);
 		op.setRoleId(roleId);
@@ -226,10 +226,11 @@ public class StaticOperationFactory {
 		return op;
 	}
 
-	public static Operation<Object> createRemoveRoleOperation(ACOrgUnitId orgUnitId, String roleId, ProjectId projectId)
-		throws InvalidInputException {
+	public static OrgUnitRoleOperation createRemoveRoleOperation(ACOrgUnitId orgUnitId, String roleId,
+		ProjectId projectId) throws InvalidInputException {
 		checkNotNull(roleId);
-		RemoveRoleOperation op = OperationFactory.eINSTANCE.createRemoveRoleOperation();
+		OrgUnitRoleOperation op = OperationFactory.eINSTANCE.createOrgUnitRoleOperation();
+		op.setAssign(false);
 		op.setOrgUnitId(orgUnitId.getId());
 		op.setRoleId(roleId);
 		if (projectId != null) {

@@ -266,52 +266,6 @@ public interface OperationPackage extends EPackage {
 	int ADD_TAG_OPERATION_FEATURE_COUNT = PROJECT_OPERATION_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.AssignRoleOperationImpl <em>Assign Role Operation</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.AssignRoleOperationImpl
-	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getAssignRoleOperation()
-	 * @generated
-	 */
-	int ASSIGN_ROLE_OPERATION = 7;
-
-	/**
-	 * The feature id for the '<em><b>Org Unit Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_ROLE_OPERATION__ORG_UNIT_ID = ORG_UNIT_OPERATION__ORG_UNIT_ID;
-
-	/**
-	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_ROLE_OPERATION__PROJECT_ID = ORG_UNIT_OPERATION_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Role Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_ROLE_OPERATION__ROLE_ID = ORG_UNIT_OPERATION_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Assign Role Operation</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ASSIGN_ROLE_OPERATION_FEATURE_COUNT = ORG_UNIT_OPERATION_FEATURE_COUNT + 2;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.CreateOrgUnitOperationImpl <em>Create Org Unit Operation</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -319,7 +273,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getCreateOrgUnitOperation()
 	 * @generated
 	 */
-	int CREATE_ORG_UNIT_OPERATION = 9;
+	int CREATE_ORG_UNIT_OPERATION = 8;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -347,7 +301,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getCreateGroupOperation()
 	 * @generated
 	 */
-	int CREATE_GROUP_OPERATION = 8;
+	int CREATE_GROUP_OPERATION = 7;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -375,7 +329,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getCreateOrUpdateRoleOperation()
 	 * @generated
 	 */
-	int CREATE_OR_UPDATE_ROLE_OPERATION = 10;
+	int CREATE_OR_UPDATE_ROLE_OPERATION = 9;
 
 	/**
 	 * The feature id for the '<em><b>Role</b></em>' containment reference.
@@ -403,7 +357,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getCreateProjectByImportOperation()
 	 * @generated
 	 */
-	int CREATE_PROJECT_BY_IMPORT_OPERATION = 11;
+	int CREATE_PROJECT_BY_IMPORT_OPERATION = 10;
 
 	/**
 	 * The feature id for the '<em><b>Project History</b></em>' containment reference.
@@ -431,7 +385,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getCreateUserOperation()
 	 * @generated
 	 */
-	int CREATE_USER_OPERATION = 12;
+	int CREATE_USER_OPERATION = 11;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -459,7 +413,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getCreateVersionOperation()
 	 * @generated
 	 */
-	int CREATE_VERSION_OPERATION = 13;
+	int CREATE_VERSION_OPERATION = 12;
 
 	/**
 	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
@@ -514,7 +468,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getDeleteProjectOperation()
 	 * @generated
 	 */
-	int DELETE_PROJECT_OPERATION = 14;
+	int DELETE_PROJECT_OPERATION = 13;
 
 	/**
 	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
@@ -551,7 +505,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getFileDownloadOperation()
 	 * @generated
 	 */
-	int FILE_DOWNLOAD_OPERATION = 15;
+	int FILE_DOWNLOAD_OPERATION = 14;
 
 	/**
 	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
@@ -588,7 +542,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getFileUploadOperation()
 	 * @generated
 	 */
-	int FILE_UPLOAD_OPERATION = 16;
+	int FILE_UPLOAD_OPERATION = 15;
 
 	/**
 	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
@@ -625,7 +579,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getReadOrgUnitOperation()
 	 * @generated
 	 */
-	int READ_ORG_UNIT_OPERATION = 17;
+	int READ_ORG_UNIT_OPERATION = 16;
 
 	/**
 	 * The feature id for the '<em><b>Org Unit Id</b></em>' attribute.
@@ -653,7 +607,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getReadProjectOperation()
 	 * @generated
 	 */
-	int READ_PROJECT_OPERATION = 18;
+	int READ_PROJECT_OPERATION = 17;
 
 	/**
 	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
@@ -690,7 +644,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getReadPropertiesOperation()
 	 * @generated
 	 */
-	int READ_PROPERTIES_OPERATION = 19;
+	int READ_PROPERTIES_OPERATION = 18;
 
 	/**
 	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
@@ -718,7 +672,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getRemoveGroupMemberOperation()
 	 * @generated
 	 */
-	int REMOVE_GROUP_MEMBER_OPERATION = 20;
+	int REMOVE_GROUP_MEMBER_OPERATION = 19;
 
 	/**
 	 * The feature id for the '<em><b>Org Unit Id</b></em>' attribute.
@@ -748,52 +702,6 @@ public interface OperationPackage extends EPackage {
 	int REMOVE_GROUP_MEMBER_OPERATION_FEATURE_COUNT = ORG_UNIT_OPERATION_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.RemoveRoleOperationImpl <em>Remove Role Operation</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.RemoveRoleOperationImpl
-	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getRemoveRoleOperation()
-	 * @generated
-	 */
-	int REMOVE_ROLE_OPERATION = 21;
-
-	/**
-	 * The feature id for the '<em><b>Org Unit Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REMOVE_ROLE_OPERATION__ORG_UNIT_ID = ORG_UNIT_OPERATION__ORG_UNIT_ID;
-
-	/**
-	 * The feature id for the '<em><b>Role Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REMOVE_ROLE_OPERATION__ROLE_ID = ORG_UNIT_OPERATION_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REMOVE_ROLE_OPERATION__PROJECT_ID = ORG_UNIT_OPERATION_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Remove Role Operation</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REMOVE_ROLE_OPERATION_FEATURE_COUNT = ORG_UNIT_OPERATION_FEATURE_COUNT + 2;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.RemoveTagOperationImpl <em>Remove Tag Operation</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -801,7 +709,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getRemoveTagOperation()
 	 * @generated
 	 */
-	int REMOVE_TAG_OPERATION = 22;
+	int REMOVE_TAG_OPERATION = 20;
 
 	/**
 	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
@@ -838,7 +746,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getWritePropertiesOperation()
 	 * @generated
 	 */
-	int WRITE_PROPERTIES_OPERATION = 23;
+	int WRITE_PROPERTIES_OPERATION = 21;
 
 	/**
 	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
@@ -875,7 +783,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getCreateProjectOperation()
 	 * @generated
 	 */
-	int CREATE_PROJECT_OPERATION = 24;
+	int CREATE_PROJECT_OPERATION = 22;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -930,7 +838,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getRoleContainer()
 	 * @generated
 	 */
-	int ROLE_CONTAINER = 25;
+	int ROLE_CONTAINER = 23;
 
 	/**
 	 * The feature id for the '<em><b>Role</b></em>' containment reference.
@@ -960,6 +868,61 @@ public interface OperationPackage extends EPackage {
 	int ROLE_CONTAINER_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.OrgUnitRoleOperationImpl <em>Org Unit Role Operation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OrgUnitRoleOperationImpl
+	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getOrgUnitRoleOperation()
+	 * @generated
+	 */
+	int ORG_UNIT_ROLE_OPERATION = 24;
+
+	/**
+	 * The feature id for the '<em><b>Org Unit Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORG_UNIT_ROLE_OPERATION__ORG_UNIT_ID = ORG_UNIT_OPERATION__ORG_UNIT_ID;
+
+	/**
+	 * The feature id for the '<em><b>Role Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORG_UNIT_ROLE_OPERATION__ROLE_ID = ORG_UNIT_OPERATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Assign</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORG_UNIT_ROLE_OPERATION__ASSIGN = ORG_UNIT_OPERATION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Project Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORG_UNIT_ROLE_OPERATION__PROJECT_ID = ORG_UNIT_OPERATION_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Org Unit Role Operation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORG_UNIT_ROLE_OPERATION_FEATURE_COUNT = ORG_UNIT_OPERATION_FEATURE_COUNT + 3;
+
+	/**
 	 * The meta object id for the '<em>Void</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -967,7 +930,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getVoid()
 	 * @generated
 	 */
-	int VOID = 26;
+	int VOID = 25;
 
 	/**
 	 * The meta object id for the '<em>File Transfer Information</em>' data type.
@@ -977,7 +940,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getFileTransferInformation()
 	 * @generated
 	 */
-	int FILE_TRANSFER_INFORMATION = 27;
+	int FILE_TRANSFER_INFORMATION = 26;
 
 	/**
 	 * The meta object id for the '<em>File Chunk</em>' data type.
@@ -987,7 +950,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getFileChunk()
 	 * @generated
 	 */
-	int FILE_CHUNK = 28;
+	int FILE_CHUNK = 27;
 
 
 	/**
@@ -1114,38 +1077,6 @@ public interface OperationPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getAddTagOperation_VersionSpec();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation <em>Assign Role Operation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Assign Role Operation</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation
-	 * @generated
-	 */
-	EClass getAssignRoleOperation();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation#getProjectId <em>Project Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Project Id</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation#getProjectId()
-	 * @see #getAssignRoleOperation()
-	 * @generated
-	 */
-	EAttribute getAssignRoleOperation_ProjectId();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation#getRoleId <em>Role Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Role Id</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation#getRoleId()
-	 * @see #getAssignRoleOperation()
-	 * @generated
-	 */
-	EAttribute getAssignRoleOperation_RoleId();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.operation.CreateGroupOperation <em>Create Group Operation</em>}'.
@@ -1399,38 +1330,6 @@ public interface OperationPackage extends EPackage {
 	EAttribute getRemoveGroupMemberOperation_MemberId();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation <em>Remove Role Operation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Remove Role Operation</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation
-	 * @generated
-	 */
-	EClass getRemoveRoleOperation();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation#getRoleId <em>Role Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Role Id</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation#getRoleId()
-	 * @see #getRemoveRoleOperation()
-	 * @generated
-	 */
-	EAttribute getRemoveRoleOperation_RoleId();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation#getProjectId <em>Project Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Project Id</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation#getProjectId()
-	 * @see #getRemoveRoleOperation()
-	 * @generated
-	 */
-	EAttribute getRemoveRoleOperation_ProjectId();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation <em>Remove Tag Operation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1557,6 +1456,49 @@ public interface OperationPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getRoleContainer_PermissionTypes();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation <em>Org Unit Role Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Org Unit Role Operation</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation
+	 * @generated
+	 */
+	EClass getOrgUnitRoleOperation();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation#getRoleId <em>Role Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Role Id</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation#getRoleId()
+	 * @see #getOrgUnitRoleOperation()
+	 * @generated
+	 */
+	EAttribute getOrgUnitRoleOperation_RoleId();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation#isAssign <em>Assign</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Assign</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation#isAssign()
+	 * @see #getOrgUnitRoleOperation()
+	 * @generated
+	 */
+	EAttribute getOrgUnitRoleOperation_Assign();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation#getProjectId <em>Project Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Project Id</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation#getProjectId()
+	 * @see #getOrgUnitRoleOperation()
+	 * @generated
+	 */
+	EAttribute getOrgUnitRoleOperation_ProjectId();
 
 	/**
 	 * Returns the meta object for data type '{@link java.lang.Void <em>Void</em>}'.
@@ -1722,32 +1664,6 @@ public interface OperationPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ADD_TAG_OPERATION__VERSION_SPEC = eINSTANCE.getAddTagOperation_VersionSpec();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.AssignRoleOperationImpl <em>Assign Role Operation</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.emfstore.server.model.operation.impl.AssignRoleOperationImpl
-		 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getAssignRoleOperation()
-		 * @generated
-		 */
-		EClass ASSIGN_ROLE_OPERATION = eINSTANCE.getAssignRoleOperation();
-
-		/**
-		 * The meta object literal for the '<em><b>Project Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ASSIGN_ROLE_OPERATION__PROJECT_ID = eINSTANCE.getAssignRoleOperation_ProjectId();
-
-		/**
-		 * The meta object literal for the '<em><b>Role Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ASSIGN_ROLE_OPERATION__ROLE_ID = eINSTANCE.getAssignRoleOperation_RoleId();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.CreateGroupOperationImpl <em>Create Group Operation</em>}' class.
@@ -1968,32 +1884,6 @@ public interface OperationPackage extends EPackage {
 		EAttribute REMOVE_GROUP_MEMBER_OPERATION__MEMBER_ID = eINSTANCE.getRemoveGroupMemberOperation_MemberId();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.RemoveRoleOperationImpl <em>Remove Role Operation</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.emfstore.server.model.operation.impl.RemoveRoleOperationImpl
-		 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getRemoveRoleOperation()
-		 * @generated
-		 */
-		EClass REMOVE_ROLE_OPERATION = eINSTANCE.getRemoveRoleOperation();
-
-		/**
-		 * The meta object literal for the '<em><b>Role Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute REMOVE_ROLE_OPERATION__ROLE_ID = eINSTANCE.getRemoveRoleOperation_RoleId();
-
-		/**
-		 * The meta object literal for the '<em><b>Project Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute REMOVE_ROLE_OPERATION__PROJECT_ID = eINSTANCE.getRemoveRoleOperation_ProjectId();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.RemoveTagOperationImpl <em>Remove Tag Operation</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2096,6 +1986,40 @@ public interface OperationPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ROLE_CONTAINER__PERMISSION_TYPES = eINSTANCE.getRoleContainer_PermissionTypes();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.OrgUnitRoleOperationImpl <em>Org Unit Role Operation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OrgUnitRoleOperationImpl
+		 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getOrgUnitRoleOperation()
+		 * @generated
+		 */
+		EClass ORG_UNIT_ROLE_OPERATION = eINSTANCE.getOrgUnitRoleOperation();
+
+		/**
+		 * The meta object literal for the '<em><b>Role Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ORG_UNIT_ROLE_OPERATION__ROLE_ID = eINSTANCE.getOrgUnitRoleOperation_RoleId();
+
+		/**
+		 * The meta object literal for the '<em><b>Assign</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ORG_UNIT_ROLE_OPERATION__ASSIGN = eINSTANCE.getOrgUnitRoleOperation_Assign();
+
+		/**
+		 * The meta object literal for the '<em><b>Project Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ORG_UNIT_ROLE_OPERATION__PROJECT_ID = eINSTANCE.getOrgUnitRoleOperation_ProjectId();
 
 		/**
 		 * The meta object literal for the '<em>Void</em>' data type.

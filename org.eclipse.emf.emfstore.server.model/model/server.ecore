@@ -607,15 +607,6 @@
         <eTypeArguments eClassifier="#//operation/Void"/>
       </eGenericSuperTypes>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="AssignRoleOperation">
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="projectId" lowerBound="1"
-          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="roleId" lowerBound="1"
-          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eGenericSuperTypes eClassifier="#//operation/OrgUnitOperation">
-        <eTypeArguments eClassifier="#//operation/Void"/>
-      </eGenericSuperTypes>
-    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="CreateGroupOperation">
       <eGenericSuperTypes eClassifier="#//operation/CreateOrgUnitOperation">
         <eTypeArguments eClassifier="#//operation/Void"/>
@@ -707,14 +698,6 @@
         <eTypeArguments eClassifier="#//operation/Void"/>
       </eGenericSuperTypes>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="RemoveRoleOperation">
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="roleId" lowerBound="1"
-          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="projectId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eGenericSuperTypes eClassifier="#//operation/OrgUnitOperation">
-        <eTypeArguments eClassifier="#//operation/Void"/>
-      </eGenericSuperTypes>
-    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="RemoveTagOperation">
       <eStructuralFeatures xsi:type="ecore:EReference" name="tag" lowerBound="1" eType="#//versioning/TagVersionSpec"
           containment="true"/>
@@ -746,6 +729,16 @@
           eType="#//accesscontrol/Role" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="permissionTypes" upperBound="-1"
           eType="#//accesscontrol/PermissionType" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="OrgUnitRoleOperation">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="roleId" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="assign" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="projectId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eGenericSuperTypes eClassifier="#//operation/OrgUnitOperation">
+        <eTypeArguments eClassifier="#//operation/Void"/>
+      </eGenericSuperTypes>
     </eClassifiers>
   </eSubpackages>
 </ecore:EPackage>
