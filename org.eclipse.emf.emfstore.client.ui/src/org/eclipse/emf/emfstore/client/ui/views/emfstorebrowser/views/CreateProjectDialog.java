@@ -66,16 +66,17 @@ public class CreateProjectDialog extends TitleAreaDialog {
 		Label name = new Label(contents, SWT.NULL);
 		name.setText("Name:");
 		txtProjectName = new Text(contents, SWT.SINGLE | SWT.BORDER);
-		txtProjectName.setSize(150, 20);
+		getTxtProjectName().setSize(150, 20);
 
 		Label desc = new Label(contents, SWT.NULL);
 		desc.setText("Description:");
 		txtProjectDesc = new Text(contents, SWT.MULTI | SWT.BORDER);
-		txtProjectDesc.setSize(150, 60);
+		getTxtProjectDesc().setSize(150, 60);
 
 		Point defaultMargins = LayoutConstants.getMargins();
-		GridLayoutFactory.fillDefaults().numColumns(2).margins(defaultMargins.x, defaultMargins.y)
-			.generateLayout(contents);
+		GridLayoutFactory.fillDefaults().numColumns(2)
+				.margins(defaultMargins.x, defaultMargins.y)
+				.generateLayout(contents);
 
 		return contents;
 	}
@@ -91,10 +92,15 @@ public class CreateProjectDialog extends TitleAreaDialog {
 				try {
 
 					if (session != null) {
-						session.createProject(txtProjectName.getText(), txtProjectDesc.getText());
+						session.createProject(getTxtProjectName().getText(),
+								getTxtProjectDesc().getText());
 					} else {
-						WorkspaceManager.getInstance().getCurrentWorkspace()
-							.createLocalProject(txtProjectName.getText(), txtProjectDesc.getText());
+						WorkspaceManager
+								.getInstance()
+								.getCurrentWorkspace()
+								.createLocalProject(
+										getTxtProjectName().getText(),
+										getTxtProjectDesc().getText());
 					}
 
 				} catch (AccessControlException e) {
@@ -115,4 +121,17 @@ public class CreateProjectDialog extends TitleAreaDialog {
 	public void cancelPressed() {
 		close();
 	}
+
+	protected Usersession getSession() {
+		return session;
+	}
+
+	protected Text getTxtProjectName() {
+		return txtProjectName;
+	}
+
+	protected Text getTxtProjectDesc() {
+		return txtProjectDesc;
+	}
+
 }

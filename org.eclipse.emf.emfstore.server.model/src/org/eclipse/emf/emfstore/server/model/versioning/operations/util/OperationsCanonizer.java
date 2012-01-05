@@ -142,9 +142,13 @@ public final class OperationsCanonizer {
 					if (containsAttributeChangeTo((CompositeOperation) opRight, createOp.getModelElementId())) {
 						break;
 					}
+
 				}
+
 			}
+
 		}
+
 	}
 
 	private static void foldAttributesIntoDeletes(List<AbstractOperation> operations) {
