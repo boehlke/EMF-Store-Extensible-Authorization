@@ -1,6 +1,5 @@
 package org.eclipse.emf.emfstore.client.ui;
 
-import org.eclipse.emf.emfstore.client.ui.views.users.UserPropertiesView;
 import org.eclipse.emf.emfstore.client.ui.views.users.UsersView;
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
@@ -33,16 +32,17 @@ public class AdminPerspective implements IPerspectiveFactory {
 		// Creates the overall folder layout.
 		// Note that each new Folder uses a percentage of the remaining
 		// EditorArea.
-		layout.setEditorAreaVisible(false);
+
+		layout.setEditorAreaVisible(true);
 		IFolderLayout topLeft = layout.createFolder("topLeft", // NON-NLS-1
 			IPageLayout.LEFT, 0.25f, layout.getEditorArea());
 
 		topLeft.addView(UsersView.ID); // NON-NLS-1
 
-		IFolderLayout bottom = layout.createFolder("bottomRight", // NON-NLS-1
-			IPageLayout.BOTTOM, 0.0f, layout.getEditorArea());
+		// IFolderLayout bottom = layout.createFolder("bottomRight", // NON-NLS-1
+		// IPageLayout.BOTTOM, 0.5f, layout.getEditorArea());
 
-		bottom.addView(UserPropertiesView.ID);
+		// bottom.addView(UserPropertiesView.ID);
 	}
 
 	/**

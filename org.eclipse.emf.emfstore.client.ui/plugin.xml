@@ -3,6 +3,15 @@
 <plugin>
    <extension-point id="org.eclipse.emf.emfstore.client.ui.merge.customoption" name="customoption" schema="schema/org.eclipse.emf.emfstore.client.ui.customoption.exsd"/>
   <extension-point id="org.eclipse.emf.emfstore.client.ui.commitdialog.tray" name="org.eclipse.emf.emfstore.client.ui.commitdialog.tray" schema="schema/org.eclipse.emf.emfstore.client.ui.commitdialog.tray.exsd"/>
+
+   <extension
+         point="org.eclipse.emf.ecp.common.modelelementopener">
+      <ModelElementOpener
+            class="org.eclipse.emfstore.client.ui.views.users.EcpModelElementOpener"
+            name="org.eclipse.emfstore.client.ui.views.users.EcpModelElementOpener">
+      </ModelElementOpener>
+   </extension>
+
   <extension
         point="org.eclipse.ui.handlers">
       <handler
@@ -1190,6 +1199,58 @@
                 </visibleWhen>
              </command>
           </menuContribution>
+          <menuContribution
+                locationURI="toolbar:org.eclipse.emf.emfstore.client.ui.views.users.UsersView">
+             <separator
+                   name="beforeDeleteSeparator"
+                   visible="false">
+             </separator>
+             <command
+                   commandId="org.eclipse.emf.emfstore.client.ui.admin.DeleteUser"
+                   icon="icons/delete.gif"
+                   label="Delete"
+                   style="push">
+                <visibleWhen
+                      checkEnabled="false">
+                   <and>
+                      <iterate
+                            ifEmpty="false"
+                            operator="and">
+                         <and>
+                            <instanceof
+                                  value="org.eclipse.emf.ecore.EObject">
+                            </instanceof>
+                            <not>
+                               <instanceof
+                                     value="org.eclipse.emf.emfstore.client.model.ProjectSpace">
+                               </instanceof>
+                            </not>
+                            <not>
+                               <instanceof
+                                     value="org.eclipse.emf.emfstore.common.model.Project">
+                               </instanceof>
+                            </not>
+                         </and>
+                      </iterate>
+                      <test
+                            args="org.eclipse.emf.ecp.common.deleteModelelement"
+                            property="org.eclipse.emf.ecp.common.menuContributionsEnablement"
+                            value="true">
+                      </test>
+                   </and>
+                </visibleWhen>
+             </command>
+          </menuContribution>
+          <menuContribution
+                allPopups="false"
+                locationURI="toolbar:org.eclipse.emf.ecp.editor.MEEditorPage">
+             <command
+                   commandId="org.eclipse.ui.file.save"
+                   icon="icons/sample.gif"
+                   label="Save"
+                   style="push">
+             </command>
+          </menuContribution>
   </extension>
   
  
@@ -1441,6 +1502,23 @@
             id="org.eclipse.emf.emfstore.client.ui.page1"
             name="name">
       </page>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecp.editor.referencecontrols">
+      <widget
+            class="org.eclipse.emf.emfstore.client.ui.views.users.EcpRoleAssignmentWidget"
+            name="org.eclipse.emf.emfstore.client.ui.views.users.roleAssignment"
+            type="org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment">
+      </widget>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecp.common.menuContributionEnablement">
+      <MenuContributionEnablement
+            enabled="false">
+         <Command
+               commandID="org.eclipse.emf.ecp.common.handlers.open_me_ID">
+         </Command>
+      </MenuContributionEnablement>
    </extension>
 
 </plugin>

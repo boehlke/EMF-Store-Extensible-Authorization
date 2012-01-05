@@ -1,10 +1,21 @@
 package org.eclipse.emf.emfstore.client.ui.views.users;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.emfstore.client.model.Usersession;
 import org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreClientUtil;
@@ -12,16 +23,18 @@ import org.eclipse.emf.emfstore.client.model.util.EmfStoreInterface;
 import org.eclipse.emf.emfstore.client.model.util.PermissionHelper;
 import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
 import org.eclipse.emf.emfstore.server.accesscontrol.Permission;
+import org.eclipse.emf.emfstore.server.connection.xmlrpc.util.StaticOperationFactory;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
+import org.eclipse.emf.emfstore.server.exceptions.InvalidInputException;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
-import org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateUserOperation;
 import org.eclipse.emf.emfstore.server.model.operation.Operation;
@@ -37,9 +50,12 @@ import org.eclipse.emf.emfstore.server.model.operation.RoleContainer;
 public class UserUiController {
 
 	private static UserUiController instance;
-	private Map<String, ProjectInfo> projectInfoMap;
+	private Map<String, ProjectInfo> projectInfoMap = new HashMap<String, ProjectInfo>();
 	private PermissionSet permissionSet;
-	private Map<Operation<?>, Permission[]> operationPermissionCache = new HashMap<Operation<?>, Permission[]>();
+	private List<Operation<?>> permittedOperationList = new ArrayList<Operation<?>>();
+	private List<Operation<?>> forbiddenOperationList = new ArrayList<Operation<?>>();
+
+	private AdapterFactoryEditingDomain editingDomain;
 
 	private UserUiController() {
 		try {
@@ -51,6 +67,9 @@ public class UserUiController {
 			// TODO: handle this like all other server problems if server problem
 			e.printStackTrace();
 		}
+
+		editingDomain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE), new BasicCommandStack());
 	}
 
 	public static UserUiController getInstance() {
@@ -125,8 +144,76 @@ public class UserUiController {
 
 	public PermissionSet getPermissionSet() {
 		if (permissionSet == null) {
+			Resource resource = editingDomain.getResourceSet().createResource(URI.createURI("dummy"));
 			permissionSet = getPermissionSetFromServer();
+			resource.getContents().add(permissionSet);
+			List<Operation<?>> operations = new ArrayList<Operation<?>>();
+			for (ACUser user : permissionSet.getUsers()) {
+				try {
+					operations.add(StaticOperationFactory.createDeleteOrgUnitOperation(user.getId()));
+				} catch (InvalidInputException e) {
+				}
+			}
+			try {
+				int i = 0;
+				ACUser currentUser = getSession().getACUser();
+				for (Permission[] permissions : getEmfStoreProxy().getOperationPermissions(
+					operations.toArray(new Operation<?>[0]))) {
+					Operation<?> op = operations.get(i);
+					if (PermissionHelper.hasPermissions(currentUser, permissions, permissionSet)) {
+						permittedOperationList.add(op);
+					} else {
+						forbiddenOperationList.add(op);
+					}
+					i++;
+				}
+			} catch (EmfStoreException e) {
+			}
 		}
+		permissionSet.eAdapters().add(new EContentAdapter() {
+			@Override
+			public void notifyChanged(Notification notification) {
+				int eventType = notification.getEventType();
+				if (notification.getFeatureID(ACUser.class) == AccesscontrolPackage.AC_ORG_UNIT__ROLES) {
+					Set<RoleAssignment> added = new HashSet<RoleAssignment>();
+					Set<RoleAssignment> removed = new HashSet<RoleAssignment>();
+
+					if (eventType == Notification.ADD_MANY) {
+						added.addAll((Collection<? extends RoleAssignment>) notification.getNewValue());
+					} else if (eventType == Notification.REMOVE) {
+						removed.add((RoleAssignment) notification.getOldValue());
+					} else if (eventType == Notification.ADD) {
+						added.add((RoleAssignment) notification.getNewValue());
+					}
+
+					for (RoleAssignment roleAssignment : removed) {
+						try {
+							Role role = roleAssignment.getRole();
+							ACUser user = (ACUser) notification.getNotifier();
+							getEmfStoreProxy().executeOperation(
+								StaticOperationFactory.createRemoveRoleOperation(user.getId(), role.getId(),
+									roleAssignment.getProjectId()));
+						} catch (InvalidInputException e) {
+						} catch (EmfStoreException e) {
+						}
+					}
+
+					for (RoleAssignment roleAssignment : added) {
+						try {
+							Role role = roleAssignment.getRole();
+							ACUser user = (ACUser) notification.getNotifier();
+							getEmfStoreProxy().executeOperation(
+								StaticOperationFactory.createAssignRoleOperation(user.getId().getId(), role.getId(),
+									roleAssignment.getProjectId()));
+						} catch (InvalidInputException e) {
+						} catch (EmfStoreException e) {
+						}
+					}
+
+				}
+				super.notifyChanged(notification);
+			}
+		});
 		return permissionSet;
 	}
 
@@ -161,15 +248,10 @@ public class UserUiController {
 		ACUser createdUser = (ACUser) newPermissionSet.getOrgUnit(newUser.getName());
 
 		for (RoleAssignment assignment : newUser.getRoles()) {
-			AssignRoleOperation assignRoleOperation = OperationFactory.eINSTANCE.createAssignRoleOperation();
-			assignRoleOperation.setOrgUnitId(createdUser.getId().getId());
-			ProjectId projectId = assignment.getProjectId();
-			if (projectId != null) {
-				assignRoleOperation.setProjectId(projectId.getId());
-			}
-			assignRoleOperation.setRoleId(assignment.getRole().getId());
 			try {
-				getEmfStoreProxy().executeOperation(assignRoleOperation);
+				getEmfStoreProxy().executeOperation(
+					StaticOperationFactory.createAssignRoleOperation(createdUser.getId().getId(), assignment.getRole()
+						.getId(), assignment.getProjectId()));
 			} catch (EmfStoreException e) {
 				ModelUtil.logException("YOUR MESSAGE HERE", e);
 				return;
@@ -191,14 +273,31 @@ public class UserUiController {
 	}
 
 	public boolean canExecute(Operation<?> op) {
+		if (permittedOperationList.contains(op)) {
+			return true;
+		} else if (forbiddenOperationList.contains(op)) {
+			return false;
+		}
+
 		try {
 			Permission[] permissions = getEmfStoreProxy().getOperationPermissions(new Operation<?>[] { op }).get(0);
-			return PermissionHelper.hasPermissions(getSession().getACUser(), permissions, getPermissionSet());
+			boolean permitted = PermissionHelper.hasPermissions(getSession().getACUser(), permissions,
+				getPermissionSet());
+			if (permitted) {
+				permittedOperationList.add(op);
+			} else {
+				forbiddenOperationList.add(op);
+			}
+			return permitted;
 		} catch (EmfStoreException e) {
 			// TODO: handle Input Errors
 			// TODO: handle this like all other server problems if server problem
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public AdapterFactoryEditingDomain getEditingDomain() {
+		return this.editingDomain;
 	}
 }

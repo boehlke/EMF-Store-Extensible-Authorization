@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecp.navigator.commands.AltKeyDoubleClickAction;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emf.emfstore.client.ui.Activator;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -89,6 +92,8 @@ public class UsersView extends ViewPart {
 
 		AdapterFactory adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
+		AltKeyDoubleClickAction listener = new AltKeyDoubleClickAction(userTreeViewer, UsersView.ID);
+
 		userTreeViewer.setLabelProvider(new WorkbenchLabelProvider());
 		userTreeViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory) {
 
@@ -116,24 +121,23 @@ public class UsersView extends ViewPart {
 		IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
 
 		toolbarManager.add(createCommandContributionItem(COMMANDID_CREATEUSER));
-		toolbarManager.add(createCommandContributionItem(COMMANDID_DELETEUSER));
-		toolbarManager.add(new Action() {
-
-			@Override
-			public boolean isEnabled() {
-				return true;
-			}
-
-			@Override
-			public String getText() {
-				return "Create Enco Roles";
-			}
-
-			@Override
-			public void run() {
-				contoller.createStandardEnCoRoles();
-			}
-		});
+		// toolbarManager.add(new Action() {
+		//
+		// @Override
+		// public boolean isEnabled() {
+		// return true;
+		// }
+		//
+		// @Override
+		// public String getText() {
+		// return "Create Enco Roles";
+		// }
+		//
+		// @Override
+		// public void run() {
+		// contoller.createStandardEnCoRoles();
+		// }
+		// });
 
 		toolbarManager.add(new Action() {
 
@@ -145,6 +149,11 @@ public class UsersView extends ViewPart {
 			@Override
 			public String getText() {
 				return "Update";
+			}
+
+			@Override
+			public ImageDescriptor getImageDescriptor() {
+				return Activator.getImageDescriptor("icons/refresh.png");
 			}
 
 			@Override

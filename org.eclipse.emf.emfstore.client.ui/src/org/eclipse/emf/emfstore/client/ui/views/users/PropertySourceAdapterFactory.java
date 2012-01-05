@@ -6,14 +6,10 @@
 package org.eclipse.emf.emfstore.client.ui.views.users;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -22,18 +18,13 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor.PropertyValueWrapper
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.PropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.PropertySource;
-import org.eclipse.emf.emfstore.server.model.ModelFactory;
-import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.DialogCellEditor;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.dialogs.CheckedTreeSelectionDialog;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -58,77 +49,7 @@ public class PropertySourceAdapterFactory implements IAdapterFactory {
 
 				@Override
 				protected Object openDialogBox(Control cellEditorWindow) {
-					CheckedTreeSelectionDialog checkedTreeSelectionDialog = new CheckedTreeRoleSelectionDialog(
-						cellEditorWindow.getShell(), controller);
-					EList<RoleAssignment> roles = ((ACOrgUnit) object).getRoles();
-					checkedTreeSelectionDialog.setInput(roles);
-					checkedTreeSelectionDialog.open();
-					Object[] result = checkedTreeSelectionDialog.getResult();
-
-					if (result == null) {
-						return null;
-					}
-
-					List<RoleAssignment> added = new ArrayList<RoleAssignment>();
-					Set<RoleAssignment> removed = new HashSet<RoleAssignment>();
-
-					removed.addAll(roles);
-
-					RESULT: for (Object object : result) {
-						RoleSelection sel = (RoleSelection) object;
-
-						if (sel.getRole() == null) {
-							continue;
-						}
-
-						String projectId = null;
-						if (sel.getProject() != null) {
-							projectId = sel.getProject().getProjectId().getId();
-						}
-						for (RoleAssignment assignmentData : roles) {
-							ProjectId projectId2 = assignmentData.getProjectId();
-							if (projectId2 != null && projectId2.equals(projectId)
-								&& assignmentData.getRole().equals(sel.getRole())) {
-								removed.remove(assignmentData);
-								continue RESULT;
-							}
-						}
-
-						// TODO: send to server
-						RoleAssignment newAssignment = AccesscontrolFactory.eINSTANCE.createRoleAssignment();
-
-						if (projectId != null) {
-							ProjectId id = ModelFactory.eINSTANCE.createProjectId();
-							id.setId(projectId);
-							newAssignment.setProjectId(id);
-						}
-						newAssignment.setRole(sel.getRole());
-						added.add(newAssignment);
-					}
-
-					// for (RoleAssignment RoleAssignment : added) {
-					// userData.getRoles().add(RoleAssignment);
-					// }
-					//
-					// for (RoleAssignment roleAssignment : removed) {
-					// userData.getRoles().remove(roleAssignment);
-					// }
-
-					List<RoleAssignment> assignments = new ArrayList<RoleAssignment>();
-					for (Object object : result) {
-						RoleSelection sel = (RoleSelection) object;
-						if (sel.getRole() == null) {
-							continue;
-						}
-						RoleAssignment assignment = AccesscontrolFactory.eINSTANCE.createRoleAssignment();
-						assignment.setRole(sel.getRole());
-						if (sel.getProject() != null) {
-							assignment.setProjectId(sel.getProject().getProjectId());
-						}
-						assignments.add(assignment);
-					}
-
-					return new BasicEList<Object>(assignments);
+					return null;
 				}
 			};
 		}
