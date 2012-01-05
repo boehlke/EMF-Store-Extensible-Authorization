@@ -7,9 +7,8 @@
 package org.eclipse.emf.emfstore.server.model.operation.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.emfstore.server.model.operation.Operation;
 import org.eclipse.emf.emfstore.server.model.operation.OperationPackage;
 
@@ -40,6 +39,15 @@ public class OperationImpl<T> extends EObjectImpl implements Operation<T> {
 	@Override
 	protected EClass eStaticClass() {
 		return OperationPackage.Literals.OPERATION;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Operation<?>) {
+			Operation<?> op = (Operation<?>) obj;
+			return EcoreUtil.equals(this, op);
+		}
+		return super.equals(obj);
 	}
 
 } //OperationImpl
