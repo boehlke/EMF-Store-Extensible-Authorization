@@ -69,6 +69,7 @@ public interface ACOrgUnit extends IdentifiableElement {
 	 * @return the value of the '<em>Roles</em>' containment reference list.
 	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getACOrgUnit_Roles()
 	 * @model containment="true" resolveProxies="true"
+	 *        annotation="org.eclipse.emf.ecp.editor priority='0' position='bottom'"
 	 * @generated
 	 */
 	EList<RoleAssignment> getRoles();
@@ -84,7 +85,7 @@ public interface ACOrgUnit extends IdentifiableElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Groups</em>' reference list.
 	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getACOrgUnit_Groups()
-	 * @model
+	 * @model annotation="org.eclipse.emf.ecp.editor priority='0' position='bottom'"
 	 * @generated
 	 */
 	EList<ACGroup> getGroups();
@@ -111,7 +112,7 @@ public interface ACOrgUnit extends IdentifiableElement {
 	 * @return the value of the '<em>Description</em>' attribute.
 	 * @see #setDescription(String)
 	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getACOrgUnit_Description()
-	 * @model
+	 * @model annotation="org.eclipse.emf.ecp.editor priority='10' position='top'"
 	 * @generated
 	 */
 	String getDescription();

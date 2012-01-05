@@ -39,7 +39,7 @@ public interface ACUser extends ACOrgUnit {
 	 * @return the value of the '<em>First Name</em>' attribute.
 	 * @see #setFirstName(String)
 	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getACUser_FirstName()
-	 * @model
+	 * @model annotation="org.eclipse.emf.ecp.editor priority='0' position='top'"
 	 * @generated
 	 */
 	String getFirstName();
@@ -64,7 +64,7 @@ public interface ACUser extends ACOrgUnit {
 	 * @return the value of the '<em>Last Name</em>' attribute.
 	 * @see #setLastName(String)
 	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getACUser_LastName()
-	 * @model
+	 * @model annotation="org.eclipse.emf.ecp.editor priority='1' position='top'"
 	 * @generated
 	 */
 	String getLastName();

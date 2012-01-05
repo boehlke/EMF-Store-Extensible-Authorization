@@ -643,6 +643,55 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		initEReference(getPermissionSet_Roles(), this.getRole(), null, "roles", null, 0, -1, PermissionSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPermissionSet_Groups(), this.getACGroup(), null, "groups", null, 0, -1, PermissionSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPermissionSet_Users(), this.getACUser(), null, "users", null, 0, -1, PermissionSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Create annotations
+		// org.eclipse.emf.ecp.editor
+		createOrgAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>org.eclipse.emf.ecp.editor</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createOrgAnnotations() {
+		String source = "org.eclipse.emf.ecp.editor";		
+		addAnnotation
+		  (getACUser_FirstName(), 
+		   source, 
+		   new String[] {
+			 "priority", "0",
+			 "position", "top"
+		   });		
+		addAnnotation
+		  (getACUser_LastName(), 
+		   source, 
+		   new String[] {
+			 "priority", "1",
+			 "position", "top"
+		   });		
+		addAnnotation
+		  (getACOrgUnit_Description(), 
+		   source, 
+		   new String[] {
+			 "priority", "10",
+			 "position", "top"
+		   });		
+		addAnnotation
+		  (getACOrgUnit_Roles(), 
+		   source, 
+		   new String[] {
+			 "priority", "0",
+			 "position", "bottom"
+		   });		
+		addAnnotation
+		  (getACOrgUnit_Groups(), 
+		   source, 
+		   new String[] {
+			 "priority", "0",
+			 "position", "bottom"
+		   });
 	}
 
 } // AccesscontrolPackageImpl
