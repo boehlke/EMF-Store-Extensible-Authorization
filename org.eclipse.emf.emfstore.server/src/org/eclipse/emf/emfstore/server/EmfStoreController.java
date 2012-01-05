@@ -54,6 +54,7 @@ import org.eclipse.emf.emfstore.server.startup.ExtensionManager;
 import org.eclipse.emf.emfstore.server.startup.MigrationManager;
 import org.eclipse.emf.emfstore.server.storage.ResourceStorage;
 import org.eclipse.emf.emfstore.server.taskmanager.TaskManager;
+import org.eclipse.emf.emfstore.server.taskmanager.tasks.CleanMemoryTask;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 
@@ -141,7 +142,8 @@ public class EmfStoreController implements IApplication, Runnable {
 		connectionHandlers = initConnectionHandlers();
 
 		TaskManager taskManager = TaskManager.getInstance();
-		// taskManager.addTask(new CleanMemoryTask(serverSpace));
+		taskManager.addTask(new CleanMemoryTask(serverSpace.eResource()
+				.getResourceSet()));
 		// taskManager.addTask(new MemoryPlotter(new Date(), 20 * 1000));
 		taskManager.start();
 
