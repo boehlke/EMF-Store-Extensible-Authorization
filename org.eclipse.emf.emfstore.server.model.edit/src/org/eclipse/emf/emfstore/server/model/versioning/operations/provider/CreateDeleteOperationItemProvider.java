@@ -658,11 +658,6 @@ public class CreateDeleteOperationItemProvider extends AbstractOperationItemProv
 		newChildDescriptors.add
 			(createChildParameter
 				(OperationsPackage.Literals.CREATE_DELETE_OPERATION__MODEL_ELEMENT,
-				 OperationFactory.eINSTANCE.createAssignRoleOperation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(OperationsPackage.Literals.CREATE_DELETE_OPERATION__MODEL_ELEMENT,
 				 OperationFactory.eINSTANCE.createCreateOrgUnitOperation()));
 
 		newChildDescriptors.add
@@ -728,11 +723,6 @@ public class CreateDeleteOperationItemProvider extends AbstractOperationItemProv
 		newChildDescriptors.add
 			(createChildParameter
 				(OperationsPackage.Literals.CREATE_DELETE_OPERATION__MODEL_ELEMENT,
-				 OperationFactory.eINSTANCE.createRemoveRoleOperation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(OperationsPackage.Literals.CREATE_DELETE_OPERATION__MODEL_ELEMENT,
 				 OperationFactory.eINSTANCE.createRemoveTagOperation()));
 
 		newChildDescriptors.add
@@ -749,6 +739,11 @@ public class CreateDeleteOperationItemProvider extends AbstractOperationItemProv
 			(createChildParameter
 				(OperationsPackage.Literals.CREATE_DELETE_OPERATION__MODEL_ELEMENT,
 				 OperationFactory.eINSTANCE.createRoleContainer()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(OperationsPackage.Literals.CREATE_DELETE_OPERATION__MODEL_ELEMENT,
+				 OperationFactory.eINSTANCE.createOrgUnitRoleOperation()));
 
 		newChildDescriptors.add
 			(createChildParameter

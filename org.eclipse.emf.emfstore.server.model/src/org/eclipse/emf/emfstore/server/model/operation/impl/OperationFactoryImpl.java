@@ -8,6 +8,8 @@
  */
 package org.eclipse.emf.emfstore.server.model.operation.impl;
 
+import java.util.Map;
+import java.util.HashMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -16,6 +18,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.emfstore.common.filetransfer.FileChunk;
 import org.eclipse.emf.emfstore.common.filetransfer.FileTransferInformation;
+import org.eclipse.emf.emfstore.server.model.operation.*;
 import org.eclipse.emf.emfstore.server.model.operation.AddGroupMemberOperation;
 import org.eclipse.emf.emfstore.server.model.operation.AddTagOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateGroupOperation;
@@ -113,6 +116,7 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 			case OperationPackage.CREATE_PROJECT_OPERATION: return createCreateProjectOperation();
 			case OperationPackage.ROLE_CONTAINER: return createRoleContainer();
 			case OperationPackage.ORG_UNIT_ROLE_OPERATION: return createOrgUnitRoleOperation();
+			case OperationPackage.SET_ORG_UNIT_PROPERTY_OPERATION: return createSetOrgUnitPropertyOperation();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -132,6 +136,8 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 				return createFileTransferInformationFromString(eDataType, initialValue);
 			case OperationPackage.FILE_CHUNK:
 				return createFileChunkFromString(eDataType, initialValue);
+			case OperationPackage.MAP:
+				return createMapFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -151,6 +157,8 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 				return convertFileTransferInformationToString(eDataType, instanceValue);
 			case OperationPackage.FILE_CHUNK:
 				return convertFileChunkToString(eDataType, instanceValue);
+			case OperationPackage.MAP:
+				return convertMapToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -411,6 +419,16 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public SetOrgUnitPropertyOperation createSetOrgUnitPropertyOperation() {
+		SetOrgUnitPropertyOperationImpl setOrgUnitPropertyOperation = new SetOrgUnitPropertyOperationImpl();
+		return setOrgUnitPropertyOperation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Void createVoidFromString(EDataType eDataType, String initialValue) {
 		return (Void)super.createFromString(eDataType, initialValue);
 	}
@@ -458,6 +476,25 @@ public class OperationFactoryImpl extends EFactoryImpl implements OperationFacto
 	 */
 	public String convertFileChunkToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	public Map<?, ?> createMapFromString(EDataType eDataType, String initialValue) {
+		return (Map<?, ?>)super.createFromString(initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertMapToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(instanceValue);
 	}
 
 	/**

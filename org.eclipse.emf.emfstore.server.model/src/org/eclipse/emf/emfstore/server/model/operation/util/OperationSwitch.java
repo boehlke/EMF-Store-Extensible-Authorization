@@ -269,6 +269,15 @@ public class OperationSwitch<T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case OperationPackage.SET_ORG_UNIT_PROPERTY_OPERATION: {
+				SetOrgUnitPropertyOperation setOrgUnitPropertyOperation = (SetOrgUnitPropertyOperation)theEObject;
+				T1 result = caseSetOrgUnitPropertyOperation(setOrgUnitPropertyOperation);
+				if (result == null) result = caseOrgUnitOperation(setOrgUnitPropertyOperation);
+				if (result == null) result = caseUserManagementOperation(setOrgUnitPropertyOperation);
+				if (result == null) result = caseOperation(setOrgUnitPropertyOperation);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -645,6 +654,21 @@ public class OperationSwitch<T1> extends Switch<T1> {
 	 * @generated
 	 */
 	public T1 caseOrgUnitRoleOperation(OrgUnitRoleOperation object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Set Org Unit Property Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Set Org Unit Property Operation</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T1 caseSetOrgUnitPropertyOperation(SetOrgUnitPropertyOperation object) {
 		return null;
 	}
 

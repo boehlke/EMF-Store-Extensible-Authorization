@@ -8,6 +8,8 @@
  */
 package org.eclipse.emf.emfstore.server.model.operation.impl;
 
+import java.util.Map;
+import java.util.HashMap;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -49,6 +51,7 @@ import org.eclipse.emf.emfstore.server.model.operation.ReadPropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveGroupMemberOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RoleContainer;
+import org.eclipse.emf.emfstore.server.model.operation.SetOrgUnitPropertyOperation;
 import org.eclipse.emf.emfstore.server.model.operation.UserManagementOperation;
 import org.eclipse.emf.emfstore.server.model.operation.WritePropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.url.UrlPackage;
@@ -251,6 +254,13 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass setOrgUnitPropertyOperationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EDataType voidEDataType = null;
 
 	/**
@@ -266,6 +276,13 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 	 * @generated
 	 */
 	private EDataType fileChunkEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType mapEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -832,6 +849,24 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getSetOrgUnitPropertyOperation() {
+		return setOrgUnitPropertyOperationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSetOrgUnitPropertyOperation_Properties() {
+		return (EAttribute)setOrgUnitPropertyOperationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getVoid() {
 		return voidEDataType;
 	}
@@ -852,6 +887,15 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 	 */
 	public EDataType getFileChunk() {
 		return fileChunkEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getMap() {
+		return mapEDataType;
 	}
 
 	/**
@@ -959,10 +1003,14 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		createEAttribute(orgUnitRoleOperationEClass, ORG_UNIT_ROLE_OPERATION__ASSIGN);
 		createEAttribute(orgUnitRoleOperationEClass, ORG_UNIT_ROLE_OPERATION__PROJECT_ID);
 
+		setOrgUnitPropertyOperationEClass = createEClass(SET_ORG_UNIT_PROPERTY_OPERATION);
+		createEAttribute(setOrgUnitPropertyOperationEClass, SET_ORG_UNIT_PROPERTY_OPERATION__PROPERTIES);
+
 		// Create data types
 		voidEDataType = createEDataType(VOID);
 		fileTransferInformationEDataType = createEDataType(FILE_TRANSFER_INFORMATION);
 		fileChunkEDataType = createEDataType(FILE_CHUNK);
+		mapEDataType = createEDataType(MAP);
 	}
 
 	/**
@@ -1000,6 +1048,8 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		ETypeParameter orgUnitOperationEClass_T = addETypeParameter(orgUnitOperationEClass, "T");
 		ETypeParameter projectOperationEClass_T = addETypeParameter(projectOperationEClass, "T");
 		ETypeParameter createOrgUnitOperationEClass_T = addETypeParameter(createOrgUnitOperationEClass, "T");
+		addETypeParameter(mapEDataType, "K");
+		addETypeParameter(mapEDataType, "V");
 
 		// Set bounds for type parameters
 
@@ -1098,6 +1148,10 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		g2 = createEGenericType(this.getVoid());
 		g1.getETypeArguments().add(g2);
 		orgUnitRoleOperationEClass.getEGenericSuperTypes().add(g1);
+		g1 = createEGenericType(this.getOrgUnitOperation());
+		g2 = createEGenericType(this.getVoid());
+		g1.getETypeArguments().add(g2);
+		setOrgUnitPropertyOperationEClass.getEGenericSuperTypes().add(g1);
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(operationEClass, Operation.class, "Operation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1177,10 +1231,19 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		initEAttribute(getOrgUnitRoleOperation_Assign(), ecorePackage.getEBoolean(), "assign", null, 1, 1, OrgUnitRoleOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getOrgUnitRoleOperation_ProjectId(), ecorePackage.getEString(), "projectId", null, 0, 1, OrgUnitRoleOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(setOrgUnitPropertyOperationEClass, SetOrgUnitPropertyOperation.class, "SetOrgUnitPropertyOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		g1 = createEGenericType(this.getMap());
+		g2 = createEGenericType(ecorePackage.getEString());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEString());
+		g1.getETypeArguments().add(g2);
+		initEAttribute(getSetOrgUnitPropertyOperation_Properties(), g1, "properties", null, 0, 1, SetOrgUnitPropertyOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		// Initialize data types
 		initEDataType(voidEDataType, Void.class, "Void", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(fileTransferInformationEDataType, FileTransferInformation.class, "FileTransferInformation", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(fileChunkEDataType, FileChunk.class, "FileChunk", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(mapEDataType, Map.class, "Map", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 	}
 
 } // OperationPackageImpl

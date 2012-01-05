@@ -19,5 +19,10 @@ import org.eclipse.emf.emfstore.server.model.operation.Operation;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface OperationHandler {
-	Class<? extends Operation<?>> operationClass();
+	Class<? extends Operation<?>> operationClass() default DEFAULT.class;
+
+	static interface DEFAULT extends Operation<Void> {
+	}
+
+	Class<? extends Operation<?>>[] operationClasses() default {};
 }

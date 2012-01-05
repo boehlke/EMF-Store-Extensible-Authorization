@@ -229,29 +229,6 @@ public class OperationItemProviderAdapterFactory extends OperationAdapterFactory
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected AssignRoleOperationItemProvider assignRoleOperationItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.emfstore.server.model.operation.AssignRoleOperation}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createAssignRoleOperationAdapter() {
-		if (assignRoleOperationItemProvider == null) {
-			assignRoleOperationItemProvider = new AssignRoleOperationItemProvider(this);
-		}
-
-		return assignRoleOperationItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.emfstore.server.model.operation.CreateGroupOperation} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -551,29 +528,6 @@ public class OperationItemProviderAdapterFactory extends OperationAdapterFactory
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected RemoveRoleOperationItemProvider removeRoleOperationItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.emfstore.server.model.operation.RemoveRoleOperation}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createRemoveRoleOperationAdapter() {
-		if (removeRoleOperationItemProvider == null) {
-			removeRoleOperationItemProvider = new RemoveRoleOperationItemProvider(this);
-		}
-
-		return removeRoleOperationItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -663,6 +617,29 @@ public class OperationItemProviderAdapterFactory extends OperationAdapterFactory
 		}
 
 		return roleContainerItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected OrgUnitRoleOperationItemProvider orgUnitRoleOperationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createOrgUnitRoleOperationAdapter() {
+		if (orgUnitRoleOperationItemProvider == null) {
+			orgUnitRoleOperationItemProvider = new OrgUnitRoleOperationItemProvider(this);
+		}
+
+		return orgUnitRoleOperationItemProvider;
 	}
 
 	/**
@@ -771,7 +748,6 @@ public class OperationItemProviderAdapterFactory extends OperationAdapterFactory
 		if (addGroupMemberOperationItemProvider != null) addGroupMemberOperationItemProvider.dispose();
 		if (projectOperationItemProvider != null) projectOperationItemProvider.dispose();
 		if (addTagOperationItemProvider != null) addTagOperationItemProvider.dispose();
-		if (assignRoleOperationItemProvider != null) assignRoleOperationItemProvider.dispose();
 		if (createGroupOperationItemProvider != null) createGroupOperationItemProvider.dispose();
 		if (createOrgUnitOperationItemProvider != null) createOrgUnitOperationItemProvider.dispose();
 		if (createOrUpdateRoleOperationItemProvider != null) createOrUpdateRoleOperationItemProvider.dispose();
@@ -785,11 +761,11 @@ public class OperationItemProviderAdapterFactory extends OperationAdapterFactory
 		if (readProjectOperationItemProvider != null) readProjectOperationItemProvider.dispose();
 		if (readPropertiesOperationItemProvider != null) readPropertiesOperationItemProvider.dispose();
 		if (removeGroupMemberOperationItemProvider != null) removeGroupMemberOperationItemProvider.dispose();
-		if (removeRoleOperationItemProvider != null) removeRoleOperationItemProvider.dispose();
 		if (removeTagOperationItemProvider != null) removeTagOperationItemProvider.dispose();
 		if (writePropertiesOperationItemProvider != null) writePropertiesOperationItemProvider.dispose();
 		if (createProjectOperationItemProvider != null) createProjectOperationItemProvider.dispose();
 		if (roleContainerItemProvider != null) roleContainerItemProvider.dispose();
+		if (orgUnitRoleOperationItemProvider != null) orgUnitRoleOperationItemProvider.dispose();
 	}
 
 }

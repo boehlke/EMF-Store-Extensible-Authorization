@@ -41,6 +41,7 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.ACGroup;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
@@ -327,6 +328,12 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 					return null;
 				}
 				return projectHistoryOrNull.getProjectId();
+			}
+
+			public ACOrgUnit resolveOrgUnit(String orgUnitId) {
+				ACOrgUnitId id = AccesscontrolFactory.eINSTANCE.createACOrgUnitId();
+				id.setId(orgUnitId);
+				return permissionSet.getOrgUnit(id);
 			}
 		};
 	}

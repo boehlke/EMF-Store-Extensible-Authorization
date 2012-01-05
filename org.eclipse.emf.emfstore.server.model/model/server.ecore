@@ -740,5 +740,20 @@
         <eTypeArguments eClassifier="#//operation/Void"/>
       </eGenericSuperTypes>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SetOrgUnitPropertyOperation">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="properties">
+        <eGenericType eClassifier="#//operation/Map">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eGenericSuperTypes eClassifier="#//operation/OrgUnitOperation">
+        <eTypeArguments eClassifier="#//operation/Void"/>
+      </eGenericSuperTypes>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EDataType" name="Map" instanceClassName="java.util.Map">
+      <eTypeParameters name="K"/>
+      <eTypeParameters name="V"/>
+    </eClassifiers>
   </eSubpackages>
 </ecore:EPackage>

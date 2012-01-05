@@ -30,11 +30,9 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.emf.emfstore.server.model.provider.ServerEditPlugin;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment}
- * object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
  * @generated
  */
 public class RoleAssignmentItemProvider extends IdentifiableElementItemProvider implements IEditingDomainItemProvider,
@@ -43,7 +41,6 @@ public class RoleAssignmentItemProvider extends IdentifiableElementItemProvider 
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public RoleAssignmentItemProvider(AdapterFactory adapterFactory) {
@@ -54,7 +51,6 @@ public class RoleAssignmentItemProvider extends IdentifiableElementItemProvider 
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -71,17 +67,22 @@ public class RoleAssignmentItemProvider extends IdentifiableElementItemProvider 
 	 * This adds a property descriptor for the Role feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected void addRolePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add(createItemPropertyDescriptor(
-			((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-			getResourceLocator(),
-			getString("_UI_RoleAssignment_role_feature"),
-			getString("_UI_PropertyDescriptor_description", "_UI_RoleAssignment_role_feature",
-				"_UI_RoleAssignment_type"), AccesscontrolPackage.Literals.ROLE_ASSIGNMENT__ROLE, true, false, true,
-			null, null, null));
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RoleAssignment_role_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RoleAssignment_role_feature", "_UI_RoleAssignment_type"),
+				 AccesscontrolPackage.Literals.ROLE_ASSIGNMENT__ROLE,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -90,7 +91,6 @@ public class RoleAssignmentItemProvider extends IdentifiableElementItemProvider 
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -105,7 +105,6 @@ public class RoleAssignmentItemProvider extends IdentifiableElementItemProvider 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -120,7 +119,6 @@ public class RoleAssignmentItemProvider extends IdentifiableElementItemProvider 
 	 * This returns RoleAssignment.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -151,7 +149,6 @@ public class RoleAssignmentItemProvider extends IdentifiableElementItemProvider 
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -159,9 +156,9 @@ public class RoleAssignmentItemProvider extends IdentifiableElementItemProvider 
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(RoleAssignment.class)) {
-		case AccesscontrolPackage.ROLE_ASSIGNMENT__PROJECT_ID:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-			return;
+			case AccesscontrolPackage.ROLE_ASSIGNMENT__PROJECT_ID:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -171,22 +168,22 @@ public class RoleAssignmentItemProvider extends IdentifiableElementItemProvider 
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add(createChildParameter(AccesscontrolPackage.Literals.ROLE_ASSIGNMENT__PROJECT_ID,
-			ModelFactory.eINSTANCE.createProjectId()));
+		newChildDescriptors.add
+			(createChildParameter
+				(AccesscontrolPackage.Literals.ROLE_ASSIGNMENT__PROJECT_ID,
+				 ModelFactory.eINSTANCE.createProjectId()));
 	}
 
 	/**
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override

@@ -13,8 +13,11 @@ package org.eclipse.emf.emfstore.server.core;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.emfstore.common.filetransfer.FileChunk;
@@ -454,19 +457,28 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 		for (OperationExecutor executor : executors) {
 			for (Method method : executor.getClass().getMethods()) {
 				OperationHandler annotation = method.getAnnotation(OperationHandler.class);
-				if (annotation != null && annotation.operationClass().isAssignableFrom(type)) {
-					try {
-						method.invoke(executor, execution);
-					} catch (InvocationTargetException e) {
-						if (e.getTargetException() instanceof EmfStoreException) {
-							throw (EmfStoreException) e.getTargetException();
-						}
-					} catch (Exception e) {
-						// this is fatal, because execution method signature is wrong
-						// TODO: report in more detail, perhaps decicated Exception
-						throw new RuntimeException(e);
+				if (annotation != null) {
+					Set<Class<? extends Operation<?>>> classes = new HashSet<Class<? extends Operation<?>>>();
+					if (annotation.operationClass() != OperationHandler.DEFAULT.class) {
+						classes.add(annotation.operationClass());
 					}
-					return;
+					classes.addAll(Arrays.asList(annotation.operationClasses()));
+					for (Class<? extends Operation<?>> clazz : classes) {
+						if (clazz.isAssignableFrom(type)) {
+							try {
+								method.invoke(executor, execution);
+							} catch (InvocationTargetException e) {
+								if (e.getTargetException() instanceof EmfStoreException) {
+									throw (EmfStoreException) e.getTargetException();
+								}
+							} catch (Exception e) {
+								// this is fatal, because execution method signature is wrong
+								// TODO: report in more detail, perhaps decicated Exception
+								throw new RuntimeException(e);
+							}
+							return;
+						}
+					}
 				}
 			}
 		}

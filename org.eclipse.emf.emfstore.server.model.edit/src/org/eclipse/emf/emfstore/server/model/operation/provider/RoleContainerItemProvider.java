@@ -69,31 +69,8 @@ public class RoleContainerItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addPermissionTypesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Permission Types feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addPermissionTypesPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_RoleContainer_permissionTypes_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RoleContainer_permissionTypes_feature", "_UI_RoleContainer_type"),
-				 OperationPackage.Literals.ROLE_CONTAINER__PERMISSION_TYPES,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
 	}
 
 	/**
@@ -109,6 +86,7 @@ public class RoleContainerItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(OperationPackage.Literals.ROLE_CONTAINER__ROLE);
+			childrenFeatures.add(OperationPackage.Literals.ROLE_CONTAINER__PERMISSION_TYPES);
 		}
 		return childrenFeatures;
 	}
@@ -161,6 +139,7 @@ public class RoleContainerItemProvider
 
 		switch (notification.getFeatureID(RoleContainer.class)) {
 			case OperationPackage.ROLE_CONTAINER__ROLE:
+			case OperationPackage.ROLE_CONTAINER__PERMISSION_TYPES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -182,6 +161,11 @@ public class RoleContainerItemProvider
 			(createChildParameter
 				(OperationPackage.Literals.ROLE_CONTAINER__ROLE,
 				 AccesscontrolFactory.eINSTANCE.createRole()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(OperationPackage.Literals.ROLE_CONTAINER__PERMISSION_TYPES,
+				 AccesscontrolFactory.eINSTANCE.createPermissionType()));
 	}
 
 	/**

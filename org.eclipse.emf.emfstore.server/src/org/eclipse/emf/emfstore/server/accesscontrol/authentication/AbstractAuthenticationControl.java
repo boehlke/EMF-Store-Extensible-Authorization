@@ -48,18 +48,22 @@ public abstract class AbstractAuthenticationControl implements AuthenticationCon
 		throws AccessControlException {
 		checkClientVersion(clientVersionInfo);
 		password = preparePassword(password);
-		if (verifySuperUser(username, password) || verifyPassword(username, password)) {
+		if (verifySuperUser(username, password) || verifyPassword(username, password)
+			|| ServerConfiguration.isTesting()) {
 			return ModelFactory.eINSTANCE.createSessionId();
 		}
 		throw new AccessControlException();
 	}
 
 	/**
-	 * Prepares password before it is used for authentication. Normally this includes decrypting the password
+	 * Prepares password before it is used for authentication. Normally this
+	 * includes decrypting the password
 	 * 
-	 * @param password password
+	 * @param password
+	 *            password
 	 * @return prepared password
-	 * @throws ServerKeyStoreException in case of an exception
+	 * @throws ServerKeyStoreException
+	 *             in case of an exception
 	 */
 	protected String preparePassword(String password) throws ServerKeyStoreException {
 		return ServerKeyStoreManager.getInstance().decrypt(password);
@@ -68,8 +72,10 @@ public abstract class AbstractAuthenticationControl implements AuthenticationCon
 	/**
 	 * Check username and password against superuser.
 	 * 
-	 * @param username username
-	 * @param password password
+	 * @param username
+	 *            username
+	 * @param password
+	 *            password
 	 * @return true if super user
 	 */
 	protected boolean verifySuperUser(String username, String password) {
@@ -83,13 +89,18 @@ public abstract class AbstractAuthenticationControl implements AuthenticationCon
 	}
 
 	/**
-	 * This method must be implemented by subclasses in order to verify a pair of username and password. When using
-	 * authentication you should use {@link AuthenticationControl#logIn(String, String)} in order to gain a session id.
+	 * This method must be implemented by subclasses in order to verify a pair
+	 * of username and password. When using authentication you should use
+	 * {@link AuthenticationControl#logIn(String, String)} in order to gain a
+	 * session id.
 	 * 
-	 * @param username the username
-	 * @param password the password
+	 * @param username
+	 *            the username
+	 * @param password
+	 *            the password
 	 * @return boolean true if authentication was successful, false if not
-	 * @throws AccessControlException an exception
+	 * @throws AccessControlException
+	 *             an exception
 	 */
 	protected abstract boolean verifyPassword(String username, String password) throws AccessControlException;
 

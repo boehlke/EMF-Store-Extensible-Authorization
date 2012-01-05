@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFStore Server  (Incubation)
 Bundle-SymbolicName: org.eclipse.emf.emfstore.server;singleton:=true
-Bundle-Version: 0.8.9.M908
+Bundle-Version: 0.8.9.M911
 Bundle-Activator: org.eclipse.emf.emfstore.server.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.eclipse.emf.emfstore.server.model;visibility:=reexport,
@@ -30,7 +30,6 @@ Export-Package:
  org.eclipse.emf.emfstore.server.accesscontrol,
  org.eclipse.emf.emfstore.server.accesscontrol.authentication,
  org.eclipse.emf.emfstore.server.accesscontrol.authentication.factory,
- org.eclipse.emf.emfstore.server.accesscontrol.simple,
  org.eclipse.emf.emfstore.server.accesscontrol.util,
  org.eclipse.emf.emfstore.server.conflictDetection,
  org.eclipse.emf.emfstore.server.connection,

@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.emfstore.server.model.ProjectHistory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.operation.Operation;
@@ -28,6 +29,8 @@ public interface PermissionProvider {
 		ProjectHistory resolveProjectHistory(String projectId);
 
 		ProjectId resolveProjectId(String projectId);
+
+		ACOrgUnit resolveOrgUnit(String orgUnitId);
 	}
 
 	public static class PermissionTypeData {

@@ -1,9 +1,12 @@
 package org.eclipse.emf.emfstore.server.core.operation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.emfstore.server.OperationExecution;
 import org.eclipse.emf.emfstore.server.accesscontrol.AuthorizationControl;
@@ -27,16 +30,20 @@ import org.eclipse.emf.emfstore.server.model.operation.CreateUserOperation;
 import org.eclipse.emf.emfstore.server.model.operation.DeleteOrgUnitOperation;
 import org.eclipse.emf.emfstore.server.model.operation.OrgUnitRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveGroupMemberOperation;
+import org.eclipse.emf.emfstore.server.model.operation.SetOrgUnitPropertyOperation;
 
 public class OrgUnitOperationExecutor extends OperationExecutor {
 
-	public OrgUnitOperationExecutor(ServerSpace serverSpace, AuthorizationControl authorizationControl)
-		throws FatalEmfStoreException {
+	public OrgUnitOperationExecutor(ServerSpace serverSpace,
+			AuthorizationControl authorizationControl)
+			throws FatalEmfStoreException {
 		super(serverSpace, authorizationControl);
 	}
 
 	@OperationHandler(operationClass = CreateGroupOperation.class)
-	public void createGroup(OperationExecution<Void, CreateGroupOperation> execution) throws EmfStoreException {
+	public void createGroup(
+			OperationExecution<Void, CreateGroupOperation> execution)
+			throws EmfStoreException {
 		CreateGroupOperation operation = execution.getOperation();
 		String name = operation.getName();
 
@@ -60,11 +67,14 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 	}
 
 	@OperationHandler(operationClass = DeleteOrgUnitOperation.class)
-	public void deleteOrgUnit(OperationExecution<Void, DeleteOrgUnitOperation> execution) throws EmfStoreException {
+	public void deleteOrgUnit(
+			OperationExecution<Void, DeleteOrgUnitOperation> execution)
+			throws EmfStoreException {
 		DeleteOrgUnitOperation op = execution.getOperation();
 		String orgUnitId = op.getOrgUnitId();
 
-		for (Iterator<ACGroup> iter = getServerSpace().getGroups().iterator(); iter.hasNext();) {
+		for (Iterator<ACGroup> iter = getServerSpace().getGroups().iterator(); iter
+				.hasNext();) {
 			ACGroup next = iter.next();
 			if (next.getId().getId().equals(orgUnitId)) {
 				EcoreUtil.delete(next);
@@ -72,7 +82,8 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 				return;
 			}
 		}
-		for (Iterator<ACUser> iter = getServerSpace().getUsers().iterator(); iter.hasNext();) {
+		for (Iterator<ACUser> iter = getServerSpace().getUsers().iterator(); iter
+				.hasNext();) {
 			ACUser next = iter.next();
 			if (next.getId().getId().equals(orgUnitId)) {
 				EcoreUtil.delete(next);
@@ -84,7 +95,9 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 	}
 
 	@OperationHandler(operationClass = AddGroupMemberOperation.class)
-	public void addMember(OperationExecution<Void, AddGroupMemberOperation> execution) throws EmfStoreException {
+	public void addMember(
+			OperationExecution<Void, AddGroupMemberOperation> execution)
+			throws EmfStoreException {
 		AddGroupMemberOperation op = execution.getOperation();
 		String group = op.getOrgUnitId();
 		ACGroup acGroup = getGroup(group);
@@ -94,7 +107,9 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 	}
 
 	@OperationHandler(operationClass = RemoveGroupMemberOperation.class)
-	public void removeMember(OperationExecution<Void, RemoveGroupMemberOperation> execution) throws EmfStoreException {
+	public void removeMember(
+			OperationExecution<Void, RemoveGroupMemberOperation> execution)
+			throws EmfStoreException {
 		RemoveGroupMemberOperation operation = execution.getOperation();
 		ACGroup acGroup = getGroup(operation.getOrgUnitId());
 		ACOrgUnit acMember = getOrgUnit(operation.getMemberId());
@@ -105,10 +120,13 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 	}
 
 	@OperationHandler(operationClass = CreateUserOperation.class)
-	public void createUser(OperationExecution<Void, CreateUserOperation> execution) throws EmfStoreException {
+	public void createUser(
+			OperationExecution<Void, CreateUserOperation> execution)
+			throws EmfStoreException {
 		String name = execution.getOperation().getName();
 		if (userExists(name)) {
-			throw new InvalidInputException("username '" + name + "' already exists.");
+			throw new InvalidInputException("username '" + name
+					+ "' already exists.");
 		}
 		ACUser acUser = AccesscontrolFactory.eINSTANCE.createACUser();
 		acUser.setName(name);
@@ -126,49 +144,68 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 	}
 
 	@OperationHandler(operationClass = OrgUnitRoleOperation.class)
-	public void assignOrRemoveRole(OperationExecution<Void, OrgUnitRoleOperation> execution) throws EmfStoreException {
+	public void assignOrRemoveRole(
+			OperationExecution<Void, OrgUnitRoleOperation> execution)
+			throws EmfStoreException {
 		OrgUnitRoleOperation op = execution.getOperation();
 		ACOrgUnit unit = getOrgUnit(op.getOrgUnitId());
-
-		if (unit == null) {
-			throw new InvalidInputException("org unit does not exist");
-		}
 
 		Role role = Util.getRoleOrNull(op.getRoleId(), getServerSpace());
 
 		if (role == null) {
-			throw new InvalidInputException("role " + op.getRoleId() + " does not exist");
+			throw new InvalidInputException("role " + op.getRoleId()
+					+ " does not exist");
 		}
 
 		String projectId = op.getProjectId();
 
-		ProjectHistory projectHistory = Util.getProjectHistoryOrNull(projectId, getServerSpace());
+		ProjectHistory projectHistory = Util.getProjectHistoryOrNull(projectId,
+				getServerSpace());
 		if (projectId != null && projectHistory == null) {
-			throw new InvalidInputException();
+			throw new InvalidInputException("invalid project");
 		}
 
-		RoleAssignment assignment = AccesscontrolFactory.eINSTANCE.createRoleAssignment();
-		if (projectHistory != null) {
-			assignment.setProjectId(EcoreUtil.copy(projectHistory.getProjectId()));
-		}
-		assignment.setRole(role);
+		if (op.isAssign()) {
+			RoleAssignment assignment = AccesscontrolFactory.eINSTANCE
+					.createRoleAssignment();
+			if (projectHistory != null) {
+				assignment.setProjectId(EcoreUtil.copy(projectHistory
+						.getProjectId()));
+			}
+			assignment.setRole(role);
 
-		unit.getRoles().add(assignment);
+			unit.getRoles().add(assignment);
+		} else {
+			Iterator<RoleAssignment> i = unit.getRoles().iterator();
+			while (i.hasNext()) {
+				RoleAssignment assignment = i.next();
+				if (assignment.getRole() == role
+						&& ((projectId == null && assignment.getProjectId() == null) || assignment
+								.getProjectId() != null
+								&& assignment.getProjectId().getId()
+										.equals(projectId))) {
+					i.remove();
+				}
+			}
+		}
 		save();
 	}
 
 	@OperationHandler(operationClass = CreateOrUpdateRoleOperation.class)
-	public void changeOrCreateRole(OperationExecution<Void, CreateOrUpdateRoleOperation> execution)
-		throws EmfStoreException {
+	public void changeOrCreateRole(
+			OperationExecution<Void, CreateOrUpdateRoleOperation> execution)
+			throws EmfStoreException {
 		Role roleData = execution.getOperation().getRole().getRole();
 		Role role = Util.getRoleOrNull(roleData.getId(), getServerSpace());
 
 		List<PermissionType> permissionTypes = new ArrayList<PermissionType>();
 		for (PermissionType permissionType : roleData.getPermissionTypes()) {
-			PermissionType resolvedPermissionType = getServerSpace().getPermissionSet().getPermissionType(
-				permissionType.getId());
+			PermissionType resolvedPermissionType = getServerSpace()
+					.getPermissionSet().getPermissionType(
+							permissionType.getId());
 			if (resolvedPermissionType == null) {
-				throw new InvalidInputException("invalid permission type: " + permissionType.getId());
+				throw new InvalidInputException("invalid permission type: "
+						+ permissionType.getId());
 			}
 			permissionTypes.add(resolvedPermissionType);
 		}
@@ -188,6 +225,43 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 			role.getPermissionTypes().addAll(permissionTypes);
 			getServerSpace().getPermissionSet().getRoles().add(role);
 		}
+		save();
+	}
+
+	@OperationHandler(operationClass = SetOrgUnitPropertyOperation.class)
+	public void setOrgUnitProperties(
+			OperationExecution<Void, SetOrgUnitPropertyOperation> execution)
+			throws EmfStoreException {
+		SetOrgUnitPropertyOperation op = execution.getOperation();
+		Map<String, String> properties = op.getProperties();
+		if (properties == null) {
+			throw new InvalidInputException("properties must be set");
+		}
+
+		ACOrgUnit unit = getOrgUnit(op.getOrgUnitId());
+
+		Map<String, EAttribute> attributeMap = new HashMap<String, EAttribute>();
+		for (EAttribute attr : unit.eClass().getEAllAttributes()) {
+			attributeMap.put(attr.getName(), attr);
+		}
+
+		Map<EAttribute, String> attributesToSet = new HashMap<EAttribute, String>();
+
+		for (Map.Entry<String, String> e : properties.entrySet()) {
+			if (attributeMap.containsKey(e.getKey())) {
+				attributesToSet.put(attributeMap.get(e.getKey()), e.getValue());
+			} else if (e.getKey().equals("password")) {
+				// TODO: if SPFV is configured, write password to file
+			} else {
+				throw new InvalidInputException("invalid attribute: "
+						+ e.getKey());
+			}
+		}
+
+		for (Map.Entry<EAttribute, String> e : attributesToSet.entrySet()) {
+			unit.eSet(e.getKey(), e.getValue());
+		}
+
 		save();
 	}
 
@@ -211,7 +285,7 @@ public class OrgUnitOperationExecutor extends OperationExecutor {
 				return unit;
 			}
 		}
-		throw new EmfStoreException("Given OrgUnit doesn't exist.");
+		throw new InvalidInputException("org unit does not exist");
 	}
 
 }

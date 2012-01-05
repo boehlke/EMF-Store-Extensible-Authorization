@@ -923,6 +923,43 @@ public interface OperationPackage extends EPackage {
 	int ORG_UNIT_ROLE_OPERATION_FEATURE_COUNT = ORG_UNIT_OPERATION_FEATURE_COUNT + 3;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.SetOrgUnitPropertyOperationImpl <em>Set Org Unit Property Operation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.SetOrgUnitPropertyOperationImpl
+	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getSetOrgUnitPropertyOperation()
+	 * @generated
+	 */
+	int SET_ORG_UNIT_PROPERTY_OPERATION = 25;
+
+	/**
+	 * The feature id for the '<em><b>Org Unit Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SET_ORG_UNIT_PROPERTY_OPERATION__ORG_UNIT_ID = ORG_UNIT_OPERATION__ORG_UNIT_ID;
+
+	/**
+	 * The feature id for the '<em><b>Properties</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SET_ORG_UNIT_PROPERTY_OPERATION__PROPERTIES = ORG_UNIT_OPERATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Set Org Unit Property Operation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SET_ORG_UNIT_PROPERTY_OPERATION_FEATURE_COUNT = ORG_UNIT_OPERATION_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '<em>Void</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -930,7 +967,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getVoid()
 	 * @generated
 	 */
-	int VOID = 25;
+	int VOID = 26;
 
 	/**
 	 * The meta object id for the '<em>File Transfer Information</em>' data type.
@@ -940,7 +977,7 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getFileTransferInformation()
 	 * @generated
 	 */
-	int FILE_TRANSFER_INFORMATION = 26;
+	int FILE_TRANSFER_INFORMATION = 27;
 
 	/**
 	 * The meta object id for the '<em>File Chunk</em>' data type.
@@ -950,7 +987,18 @@ public interface OperationPackage extends EPackage {
 	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getFileChunk()
 	 * @generated
 	 */
-	int FILE_CHUNK = 27;
+	int FILE_CHUNK = 28;
+
+
+	/**
+	 * The meta object id for the '<em>Map</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.util.Map
+	 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getMap()
+	 * @generated
+	 */
+	int MAP = 29;
 
 
 	/**
@@ -1501,6 +1549,27 @@ public interface OperationPackage extends EPackage {
 	EAttribute getOrgUnitRoleOperation_ProjectId();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.operation.SetOrgUnitPropertyOperation <em>Set Org Unit Property Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Set Org Unit Property Operation</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.operation.SetOrgUnitPropertyOperation
+	 * @generated
+	 */
+	EClass getSetOrgUnitPropertyOperation();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.operation.SetOrgUnitPropertyOperation#getProperties <em>Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Properties</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.operation.SetOrgUnitPropertyOperation#getProperties()
+	 * @see #getSetOrgUnitPropertyOperation()
+	 * @generated
+	 */
+	EAttribute getSetOrgUnitPropertyOperation_Properties();
+
+	/**
 	 * Returns the meta object for data type '{@link java.lang.Void <em>Void</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1532,6 +1601,17 @@ public interface OperationPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getFileChunk();
+
+	/**
+	 * Returns the meta object for data type '{@link java.util.Map <em>Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Map</em>'.
+	 * @see java.util.Map
+	 * @model instanceClass="java.util.Map" typeParameters="K V"
+	 * @generated
+	 */
+	EDataType getMap();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2022,6 +2102,24 @@ public interface OperationPackage extends EPackage {
 		EAttribute ORG_UNIT_ROLE_OPERATION__PROJECT_ID = eINSTANCE.getOrgUnitRoleOperation_ProjectId();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.server.model.operation.impl.SetOrgUnitPropertyOperationImpl <em>Set Org Unit Property Operation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.emfstore.server.model.operation.impl.SetOrgUnitPropertyOperationImpl
+		 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getSetOrgUnitPropertyOperation()
+		 * @generated
+		 */
+		EClass SET_ORG_UNIT_PROPERTY_OPERATION = eINSTANCE.getSetOrgUnitPropertyOperation();
+
+		/**
+		 * The meta object literal for the '<em><b>Properties</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SET_ORG_UNIT_PROPERTY_OPERATION__PROPERTIES = eINSTANCE.getSetOrgUnitPropertyOperation_Properties();
+
+		/**
 		 * The meta object literal for the '<em>Void</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2050,6 +2148,16 @@ public interface OperationPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType FILE_CHUNK = eINSTANCE.getFileChunk();
+
+		/**
+		 * The meta object literal for the '<em>Map</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.Map
+		 * @see org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl#getMap()
+		 * @generated
+		 */
+		EDataType MAP = eINSTANCE.getMap();
 
 	}
 
