@@ -1,6 +1,7 @@
 package org.eclipse.emf.emfstore.server.connection.xmlrpc.util;
 
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.emfstore.common.filetransfer.FileChunk;
@@ -15,6 +16,7 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
+import org.eclipse.emf.emfstore.server.model.operation.AddGroupMemberOperation;
 import org.eclipse.emf.emfstore.server.model.operation.AddTagOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateGroupOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation;
@@ -34,6 +36,7 @@ import org.eclipse.emf.emfstore.server.model.operation.ReadProjectOperation;
 import org.eclipse.emf.emfstore.server.model.operation.ReadPropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RemoveTagOperation;
 import org.eclipse.emf.emfstore.server.model.operation.RoleContainer;
+import org.eclipse.emf.emfstore.server.model.operation.SetOrgUnitPropertyOperation;
 import org.eclipse.emf.emfstore.server.model.operation.WritePropertiesOperation;
 import org.eclipse.emf.emfstore.server.model.versioning.ChangePackage;
 import org.eclipse.emf.emfstore.server.model.versioning.LogMessage;
@@ -41,10 +44,15 @@ import org.eclipse.emf.emfstore.server.model.versioning.PrimaryVersionSpec;
 import org.eclipse.emf.emfstore.server.model.versioning.TagVersionSpec;
 import org.eclipse.emf.emfstore.server.model.versioning.VersionSpec;
 
+/**
+ * helper methods for creating operations
+ * 
+ * @author boehlke
+ * 
+ */
 public class StaticOperationFactory {
 
-	private static void checkNotNull(Object... params)
-			throws InvalidInputException {
+	private static void checkNotNull(Object... params) throws InvalidInputException {
 		for (Object object : params) {
 			if (object == null) {
 				throw new InvalidInputException();
@@ -52,19 +60,17 @@ public class StaticOperationFactory {
 		}
 	}
 
-	public static Operation<?> createReadProjectOperation(ProjectId projectId,
-			PrimaryVersionSpec target) throws InvalidInputException {
+	public static Operation<?> createReadProjectOperation(ProjectId projectId, PrimaryVersionSpec target)
+		throws InvalidInputException {
 		checkNotNull(projectId);
-		ReadProjectOperation op = OperationFactory.eINSTANCE
-				.createReadProjectOperation();
+		ReadProjectOperation op = OperationFactory.eINSTANCE.createReadProjectOperation();
 		op.setProjectId(projectId.getId());
 		op.setVersionSpec(EcoreUtil.copy(target));
 		return op;
 	}
 
-	public static AddTagOperation createAddTagOperation(ProjectId projectId,
-			PrimaryVersionSpec versionSpec, TagVersionSpec tag)
-			throws InvalidInputException {
+	public static AddTagOperation createAddTagOperation(ProjectId projectId, PrimaryVersionSpec versionSpec,
+		TagVersionSpec tag) throws InvalidInputException {
 		checkNotNull(versionSpec, tag);
 		AddTagOperation op = OperationFactory.eINSTANCE.createAddTagOperation();
 		op.setProjectId(projectId.getId());
@@ -73,23 +79,19 @@ public class StaticOperationFactory {
 		return op;
 	}
 
-	public static RemoveTagOperation createRemoveTagOperation(
-			ProjectId projectId, PrimaryVersionSpec versionSpec,
-			TagVersionSpec tag) throws InvalidInputException {
+	public static RemoveTagOperation createRemoveTagOperation(ProjectId projectId, PrimaryVersionSpec versionSpec,
+		TagVersionSpec tag) throws InvalidInputException {
 		checkNotNull(tag, projectId);
-		RemoveTagOperation op = OperationFactory.eINSTANCE
-				.createRemoveTagOperation();
+		RemoveTagOperation op = OperationFactory.eINSTANCE.createRemoveTagOperation();
 		op.setTag(EcoreUtil.copy(tag));
 		op.setProjectId(projectId.getId());
 		return op;
 	}
 
-	public static CreateProjectOperation createCreateProjectOperation(
-			String name, String description, LogMessage logMessage,
-			Project project) throws InvalidInputException {
+	public static CreateProjectOperation createCreateProjectOperation(String name, String description,
+		LogMessage logMessage, Project project) throws InvalidInputException {
 		checkNotNull(logMessage, name);
-		CreateProjectOperation op = OperationFactory.eINSTANCE
-				.createCreateProjectOperation();
+		CreateProjectOperation op = OperationFactory.eINSTANCE.createCreateProjectOperation();
 		op.setProject(project);
 		op.setLogMessage(logMessage);
 		op.setDescription(description);
@@ -97,33 +99,28 @@ public class StaticOperationFactory {
 		return op;
 	}
 
-	public static DeleteProjectOperation createDeleteProjectOperation(
-			ProjectId projectId, boolean deleteFiles)
-			throws InvalidInputException {
+	public static DeleteProjectOperation createDeleteProjectOperation(ProjectId projectId, boolean deleteFiles)
+		throws InvalidInputException {
 		checkNotNull(projectId);
-		DeleteProjectOperation op = OperationFactory.eINSTANCE
-				.createDeleteProjectOperation();
+		DeleteProjectOperation op = OperationFactory.eINSTANCE.createDeleteProjectOperation();
 		op.setProjectId(projectId.getId());
 		op.setDeleteFiles(deleteFiles);
 		return op;
 	}
 
-	public static Operation<?> createReadProjectOperation(ProjectId projectId,
-			VersionSpec target) throws InvalidInputException {
+	public static Operation<?> createReadProjectOperation(ProjectId projectId, VersionSpec target)
+		throws InvalidInputException {
 		checkNotNull(target, projectId);
-		ReadProjectOperation op = OperationFactory.eINSTANCE
-				.createReadProjectOperation();
+		ReadProjectOperation op = OperationFactory.eINSTANCE.createReadProjectOperation();
 		op.setProjectId(projectId.getId());
 		return op;
 	}
 
-	public static CreateVersionOperation createCreateVersionOperation(
-			ProjectId projectId, PrimaryVersionSpec baseVersionSpec,
-			ChangePackage changePackage, LogMessage logMessage)
-			throws InvalidInputException {
+	public static CreateVersionOperation createCreateVersionOperation(ProjectId projectId,
+		PrimaryVersionSpec baseVersionSpec, ChangePackage changePackage, LogMessage logMessage)
+		throws InvalidInputException {
 		checkNotNull(baseVersionSpec, changePackage, logMessage, projectId);
-		CreateVersionOperation op = OperationFactory.eINSTANCE
-				.createCreateVersionOperation();
+		CreateVersionOperation op = OperationFactory.eINSTANCE.createCreateVersionOperation();
 		op.setBaseVersion(baseVersionSpec);
 		op.setChangePackage(changePackage);
 		op.setLogMessage(logMessage);
@@ -131,72 +128,59 @@ public class StaticOperationFactory {
 		return op;
 	}
 
-	public static CreateProjectByImportOperation createCreateProjectByImportOperation(
-			ProjectHistory projectHistory) throws InvalidInputException {
+	public static CreateProjectByImportOperation createCreateProjectByImportOperation(ProjectHistory projectHistory)
+		throws InvalidInputException {
 		checkNotNull(projectHistory);
-		CreateProjectByImportOperation op = OperationFactory.eINSTANCE
-				.createCreateProjectByImportOperation();
+		CreateProjectByImportOperation op = OperationFactory.eINSTANCE.createCreateProjectByImportOperation();
 		op.setProjectHistory(projectHistory);
 		return op;
 	}
 
-	public static ReadOrgUnitOperation createReadOrgUnitOperation(String id)
-			throws InvalidInputException {
+	public static ReadOrgUnitOperation createReadOrgUnitOperation(String id) throws InvalidInputException {
 		checkNotNull(id);
-		ReadOrgUnitOperation op = OperationFactory.eINSTANCE
-				.createReadOrgUnitOperation();
+		ReadOrgUnitOperation op = OperationFactory.eINSTANCE.createReadOrgUnitOperation();
 		op.setOrgUnitId(id);
 		return op;
 	}
 
-	public static Operation<?> createFileDownloadOperation(ProjectId projectId,
-			FileTransferInformation fileInformation)
-			throws InvalidInputException {
+	public static Operation<?> createFileDownloadOperation(ProjectId projectId, FileTransferInformation fileInformation)
+		throws InvalidInputException {
 		checkNotNull(projectId, fileInformation);
-		FileDownloadOperation op = OperationFactory.eINSTANCE
-				.createFileDownloadOperation();
+		FileDownloadOperation op = OperationFactory.eINSTANCE.createFileDownloadOperation();
 		op.setFileInformation(fileInformation);
 		op.setProjectId(projectId.getId());
 		return op;
 	}
 
-	public static FileUploadOperation createFileUploadOperation(
-			ProjectId projectId, FileChunk fileChunk)
-			throws InvalidInputException {
+	public static FileUploadOperation createFileUploadOperation(ProjectId projectId, FileChunk fileChunk)
+		throws InvalidInputException {
 		checkNotNull(fileChunk, projectId);
-		FileUploadOperation op = OperationFactory.eINSTANCE
-				.createFileUploadOperation();
+		FileUploadOperation op = OperationFactory.eINSTANCE.createFileUploadOperation();
 		op.setProjectId(projectId.getId());
 		op.setFileChunk(fileChunk);
 		return op;
 	}
 
-	public static Operation<?> createReadPropertiesOperation(ProjectId projectId)
-			throws InvalidInputException {
+	public static Operation<?> createReadPropertiesOperation(ProjectId projectId) throws InvalidInputException {
 		checkNotNull(projectId);
-		ReadPropertiesOperation op = OperationFactory.eINSTANCE
-				.createReadPropertiesOperation();
+		ReadPropertiesOperation op = OperationFactory.eINSTANCE.createReadPropertiesOperation();
 		op.setProjectId(projectId.getId());
 		return op;
 	}
 
-	public static WritePropertiesOperation createWritePropertiesOperation(
-			ProjectId projectId, List<EMFStoreProperty> properties)
-			throws InvalidInputException {
+	public static WritePropertiesOperation createWritePropertiesOperation(ProjectId projectId,
+		List<EMFStoreProperty> properties) throws InvalidInputException {
 		checkNotNull(projectId, properties);
-		WritePropertiesOperation op = OperationFactory.eINSTANCE
-				.createWritePropertiesOperation();
+		WritePropertiesOperation op = OperationFactory.eINSTANCE.createWritePropertiesOperation();
 		op.setProjectId(projectId.getId());
 		op.getProperties().addAll(properties);
 		return op;
 	}
 
-	public static OrgUnitRoleOperation createAssignRoleOperation(
-			String orgUnitId, String roleId, String projectId)
-			throws InvalidInputException {
+	public static OrgUnitRoleOperation createAssignRoleOperation(String orgUnitId, String roleId, String projectId)
+		throws InvalidInputException {
 		checkNotNull(orgUnitId, roleId);
-		OrgUnitRoleOperation op = OperationFactory.eINSTANCE
-				.createOrgUnitRoleOperation();
+		OrgUnitRoleOperation op = OperationFactory.eINSTANCE.createOrgUnitRoleOperation();
 		op.setAssign(true);
 		op.setOrgUnitId(orgUnitId);
 		if (projectId != null) {
@@ -206,29 +190,22 @@ public class StaticOperationFactory {
 		return op;
 	}
 
-	public static OrgUnitRoleOperation createAssignRoleOperation(
-			String orgUnitId, String roleId, ProjectId projectId)
-			throws InvalidInputException {
+	public static OrgUnitRoleOperation createAssignRoleOperation(String orgUnitId, String roleId, ProjectId projectId)
+		throws InvalidInputException {
 		checkNotNull(orgUnitId, roleId);
-		return createAssignRoleOperation(orgUnitId, roleId,
-				projectId == null ? null : projectId.getId());
+		return createAssignRoleOperation(orgUnitId, roleId, projectId == null ? null : projectId.getId());
 	}
 
-	public static CreateOrUpdateRoleOperation createCreateOrUpdateRoleOperation(
-			String roleId, String roleName, String roleDescription,
-			PermissionSet permissionSet, String... permissionTypeIds)
-			throws InvalidInputException {
+	public static CreateOrUpdateRoleOperation createCreateOrUpdateRoleOperation(String roleId, String roleName,
+		String roleDescription, PermissionSet permissionSet, String... permissionTypeIds) throws InvalidInputException {
 		checkNotNull(roleId, roleName, permissionSet);
 
-		RoleContainer container = OperationFactory.eINSTANCE
-				.createRoleContainer();
+		RoleContainer container = OperationFactory.eINSTANCE.createRoleContainer();
 
 		for (String pType : permissionTypeIds) {
-			PermissionType permissionType = permissionSet
-					.getPermissionType(pType);
+			PermissionType permissionType = permissionSet.getPermissionType(pType);
 			if (permissionType == null) {
-				throw new RuntimeException("no such permission type '" + pType
-						+ "'");
+				throw new RuntimeException("no such permission type '" + pType + "'");
 			}
 			container.getPermissionTypes().add(EcoreUtil.copy(permissionType));
 		}
@@ -240,51 +217,57 @@ public class StaticOperationFactory {
 		role.setId(roleId);
 		role.getPermissionTypes().addAll(container.getPermissionTypes());
 
-		CreateOrUpdateRoleOperation op = OperationFactory.eINSTANCE
-				.createCreateOrUpdateRoleOperation();
+		CreateOrUpdateRoleOperation op = OperationFactory.eINSTANCE.createCreateOrUpdateRoleOperation();
 		op.setRole(container);
 		return op;
 	}
 
-	public static CreateUserOperation createCreateUserOperation(String username)
-			throws InvalidInputException {
+	public static CreateUserOperation createCreateUserOperation(String username) throws InvalidInputException {
 		checkNotNull(username);
-		CreateUserOperation op = OperationFactory.eINSTANCE
-				.createCreateUserOperation();
+		CreateUserOperation op = OperationFactory.eINSTANCE.createCreateUserOperation();
 		op.setName(username);
 		return op;
 	}
 
-	public static CreateGroupOperation createCreateGroupOperation(String name)
-			throws InvalidInputException {
+	public static CreateGroupOperation createCreateGroupOperation(String name) throws InvalidInputException {
 		checkNotNull(name);
-		CreateGroupOperation op = OperationFactory.eINSTANCE
-				.createCreateGroupOperation();
+		CreateGroupOperation op = OperationFactory.eINSTANCE.createCreateGroupOperation();
 		op.setName(name);
 		return op;
 	}
 
-	public static DeleteOrgUnitOperation createDeleteOrgUnitOperation(
-			ACOrgUnitId id) throws InvalidInputException {
+	public static DeleteOrgUnitOperation createDeleteOrgUnitOperation(ACOrgUnitId id) throws InvalidInputException {
 		checkNotNull(id);
-		DeleteOrgUnitOperation op = OperationFactory.eINSTANCE
-				.createDeleteOrgUnitOperation();
+		DeleteOrgUnitOperation op = OperationFactory.eINSTANCE.createDeleteOrgUnitOperation();
 		op.setOrgUnitId(id.getId());
 		return op;
 	}
 
-	public static OrgUnitRoleOperation createRemoveRoleOperation(
-			ACOrgUnitId orgUnitId, String roleId, ProjectId projectId)
-			throws InvalidInputException {
+	public static OrgUnitRoleOperation createRemoveRoleOperation(ACOrgUnitId orgUnitId, String roleId,
+		ProjectId projectId) throws InvalidInputException {
 		checkNotNull(roleId);
-		OrgUnitRoleOperation op = OperationFactory.eINSTANCE
-				.createOrgUnitRoleOperation();
+		OrgUnitRoleOperation op = OperationFactory.eINSTANCE.createOrgUnitRoleOperation();
 		op.setAssign(false);
 		op.setOrgUnitId(orgUnitId.getId());
 		op.setRoleId(roleId);
 		if (projectId != null) {
 			op.setProjectId(projectId.getId());
 		}
+		return op;
+	}
+
+	public static SetOrgUnitPropertyOperation createSetOrgUnitPropertiesOperation(ACOrgUnitId id,
+		Map<String, String> map) {
+		SetOrgUnitPropertyOperation op = OperationFactory.eINSTANCE.createSetOrgUnitPropertyOperation();
+		op.setProperties(map);
+		op.setOrgUnitId(id.getId());
+		return op;
+	}
+
+	public static AddGroupMemberOperation createAddGroupMemberOperation(ACOrgUnitId existGroup, String unitId) {
+		AddGroupMemberOperation op = OperationFactory.eINSTANCE.createAddGroupMemberOperation();
+		op.setMemberId(unitId);
+		op.setOrgUnitId(existGroup.getId());
 		return op;
 	}
 }
