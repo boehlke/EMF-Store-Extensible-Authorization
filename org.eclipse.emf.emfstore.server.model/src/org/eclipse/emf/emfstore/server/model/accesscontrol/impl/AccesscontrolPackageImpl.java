@@ -690,7 +690,8 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		   source, 
 		   new String[] {
 			 "priority", "0",
-			 "position", "bottom"
+			 "position", "bottom",
+			 "hidden", "true"
 		   });
 	}
 

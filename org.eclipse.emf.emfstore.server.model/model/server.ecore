@@ -467,6 +467,7 @@
         <eAnnotations source="org.eclipse.emf.ecp.editor">
           <details key="priority" value="0"/>
           <details key="position" value="bottom"/>
+          <details key="hidden" value="true"/>
         </eAnnotations>
       </eStructuralFeatures>
     </eClassifiers>

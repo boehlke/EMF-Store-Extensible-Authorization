@@ -85,7 +85,7 @@ public interface ACOrgUnit extends IdentifiableElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Groups</em>' reference list.
 	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getACOrgUnit_Groups()
-	 * @model annotation="org.eclipse.emf.ecp.editor priority='0' position='bottom'"
+	 * @model annotation="org.eclipse.emf.ecp.editor priority='0' position='bottom' hidden='true'"
 	 * @generated
 	 */
 	EList<ACGroup> getGroups();
