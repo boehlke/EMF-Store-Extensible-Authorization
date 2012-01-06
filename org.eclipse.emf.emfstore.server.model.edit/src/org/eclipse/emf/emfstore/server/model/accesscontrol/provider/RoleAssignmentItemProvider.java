@@ -13,7 +13,10 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -25,6 +28,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.emf.emfstore.common.model.provider.IdentifiableElementItemProvider;
 import org.eclipse.emf.emfstore.server.model.ModelFactory;
+import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.emf.emfstore.server.model.provider.ServerEditPlugin;
@@ -138,10 +142,35 @@ public class RoleAssignmentItemProvider extends IdentifiableElementItemProvider 
 		RoleAssignment assignment = (RoleAssignment) object;
 		String projectString = "";
 		if (assignment.getProjectId() != null) {
-			projectString = " " + getString("_UI_RoleAssignment_infix") + " " + assignment.getProjectId().getId();
+			projectString = " " + getString("_UI_RoleAssignment_infix") + " " + getProjectName(assignment);
 		}
 		String label = assignment.getRole().getName() + projectString;
 		return label.length() == 0 ? getString("_UI_RoleAssignment_type") : label;
+	}
+
+	private String getProjectName(RoleAssignment assignment) {
+		EObject container = assignment.getRole().eContainer().eContainer();
+		if (container.getClass().getName().contains("Usersession")) {
+			for (EReference ref : container.eClass().getEReferences()) {
+				if (ref.getName().equals("serverInfo")) {
+					Object serverInfoObj = container.eGet(ref);
+					if (serverInfoObj instanceof EObject) {
+						EObject serverInfo = (EObject) serverInfoObj;
+						for (EReference refInServerInfo : serverInfo.eClass().getEReferences()) {
+							if (refInServerInfo.getName().equals("projectInfos")) {
+								EList<ProjectInfo> projects = (EList<ProjectInfo>) serverInfo.eGet(refInServerInfo);
+								for (ProjectInfo projectInfo : projects) {
+									if (projectInfo.getProjectId().equals(assignment.getProjectId())) {
+										return projectInfo.getName();
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return assignment.getProjectId().getId();
 	}
 
 	/**
