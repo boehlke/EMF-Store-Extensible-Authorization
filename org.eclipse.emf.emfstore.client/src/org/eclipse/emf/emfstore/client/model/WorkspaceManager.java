@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -67,6 +68,8 @@ public final class WorkspaceManager {
 
 	private ECrossReferenceAdapter crossReferenceAdapter;
 	private ResourceSet resourceSet;
+
+	private AdapterFactoryEditingDomain editingDomain;
 
 	/**
 	 * Get an instance of the workspace manager. Will create an instance if no
@@ -170,7 +173,9 @@ public final class WorkspaceManager {
 	 * @generated NOT
 	 */
 	private Workspace initWorkSpace() {
-		resourceSet = new ResourceSetImpl();
+		this.editingDomain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE), new BasicCommandStack());
+		resourceSet = editingDomain.getResourceSet();
 		resourceSet.getLoadOptions().putAll(ModelUtil.getResourceLoadOptions());
 
 		IConfigurationElement[] elements = Platform.getExtensionRegistry().getConfigurationElementsFor(
@@ -569,5 +574,9 @@ public final class WorkspaceManager {
 	 */
 	public static ObserverBus getObserverBus() {
 		return getInstance().observerBus;
+	}
+
+	public EditingDomain getEditingDomain() {
+		return editingDomain;
 	}
 }
