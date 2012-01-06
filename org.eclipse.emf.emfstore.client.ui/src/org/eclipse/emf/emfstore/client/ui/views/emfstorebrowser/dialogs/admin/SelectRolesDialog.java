@@ -9,7 +9,6 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
-import org.eclipse.jface.internal.databinding.provisional.viewers.ViewerLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeViewerColumn;
@@ -27,6 +26,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
 import org.eclipse.ui.dialogs.SelectionDialog;
+import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 public class SelectRolesDialog extends SelectionDialog {
 
@@ -139,7 +139,7 @@ public class SelectRolesDialog extends SelectionDialog {
 		TreeColumn trclmnRolle = treeViewerColumn.getColumn();
 		trclmnRolle.setWidth(300);
 		trclmnRolle.setText("Rolle");
-		treeViewer.setLabelProvider(new ViewerLabelProvider());
+		treeViewer.setLabelProvider(new WorkbenchLabelProvider());
 		treeViewer.setContentProvider(new TreeContentProvider());
 
 		tree.addListener(SWT.Selection, new Listener() {

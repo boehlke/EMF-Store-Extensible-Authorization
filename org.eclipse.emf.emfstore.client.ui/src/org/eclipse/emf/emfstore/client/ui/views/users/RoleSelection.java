@@ -29,7 +29,8 @@ public class RoleSelection {
 	@Override
 	public int hashCode() {
 		int roleHash = role == null ? 0 : role.getId().hashCode();
-		int projectHash = projectInfo == null ? 0 : projectInfo.getProjectId().getId().hashCode();
+		int projectHash = projectInfo == null ? 0 : projectInfo.getProjectId() == null ? 0 : projectInfo.getProjectId()
+			.getId().hashCode();
 		return roleHash + projectHash;
 	}
 

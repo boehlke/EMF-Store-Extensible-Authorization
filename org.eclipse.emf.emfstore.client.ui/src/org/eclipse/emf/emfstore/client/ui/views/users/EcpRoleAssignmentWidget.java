@@ -12,8 +12,11 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.common.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MEMultiLinkControl;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.emfstore.server.model.ModelFactory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
@@ -21,10 +24,12 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.dialogs.CheckedTreeSelectionDialog;
@@ -72,7 +77,18 @@ public class EcpRoleAssignmentWidget extends MEMultiLinkControl {
 			}
 		});
 
+		Image image = new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE)).getImage(getModelElement());
+		String overlayString = "icons/link_overlay.png";
+		if (eReference.isContainment()) {
+			overlayString = "icons/containment_overlay.png";
+		}
+		ImageDescriptor addOverlay = org.eclipse.emf.ecp.common.Activator.getImageDescriptor(overlayString);
+		final OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
+			OverlayImageDescriptor.LOWER_RIGHT);
+
 		toolBarManager.add(new Action() {
+
 			@Override
 			public void run() {
 				CheckedTreeSelectionDialog checkedTreeSelectionDialog = new CheckedTreeRoleSelectionDialog(section
@@ -125,8 +141,8 @@ public class EcpRoleAssignmentWidget extends MEMultiLinkControl {
 					added.add(newAssignment);
 				}
 
-				for (RoleAssignment RoleAssignment : added) {
-					acOrgUnit.getRoles().add(RoleAssignment);
+				for (RoleAssignment roleAssignment : added) {
+					acOrgUnit.getRoles().add(roleAssignment);
 				}
 
 				for (RoleAssignment roleAssignment : removed) {
@@ -149,6 +165,12 @@ public class EcpRoleAssignmentWidget extends MEMultiLinkControl {
 
 				// return new BasicEList<Object>(assignments);
 			}
+
+			@Override
+			public ImageDescriptor getImageDescriptor() {
+				return imageDescriptor;
+			}
+
 		});
 		toolBarManager.update(true);
 		section.setTextClient(toolbar);

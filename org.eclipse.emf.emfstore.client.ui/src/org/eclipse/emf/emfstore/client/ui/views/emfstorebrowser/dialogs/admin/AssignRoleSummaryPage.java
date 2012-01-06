@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.AssignRolesWizard.RoleAssignmentData;
 import org.eclipse.jface.dialogs.IPageChangingListener;
 import org.eclipse.jface.dialogs.PageChangingEvent;
-import org.eclipse.jface.internal.databinding.provisional.viewers.ViewerLabelProvider;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -17,6 +17,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 public class AssignRoleSummaryPage extends WizardPage {
 	private static class ContentProvider implements ITreeContentProvider {
@@ -94,7 +95,7 @@ public class AssignRoleSummaryPage extends WizardPage {
 		newRoles.setLayoutData(gd_newRoles);
 		ContentProvider contentProvider = new ContentProvider();
 		newRolesViewer.setContentProvider(contentProvider);
-		ViewerLabelProvider labelProvider = new ViewerLabelProvider();
+		ILabelProvider labelProvider = new WorkbenchLabelProvider();
 		newRolesViewer.setLabelProvider(labelProvider);
 
 		Label lblNewLabel_1 = new Label(container, SWT.NONE);
