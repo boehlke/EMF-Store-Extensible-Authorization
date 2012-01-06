@@ -36,19 +36,23 @@ public class Permission implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return (getProjectId() == null ? getId().hashCode() : getId()
-				.hashCode() + getProjectId().hashCode())
-				+ (isProjectPermission() ? 1 : 0);
+		return (getProjectId() == null ? getId().hashCode() : getId().hashCode() + getProjectId().hashCode())
+			+ (isProjectPermission() ? 1 : 0);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Permission) {
 			Permission otherPermission = (Permission) obj;
-			boolean equalProjectId = otherPermission.getProjectId() == null ? getProjectId() == null
-					: otherPermission.getProjectId().equals(getProjectId());
+			boolean equalProjectId = otherPermission.getProjectId() == null ? getProjectId() == null : otherPermission
+				.getProjectId().equals(getProjectId());
 			return equalProjectId && otherPermission.getId().equals(getId());
 		}
 		return super.equals(obj);
+	}
+
+	@Override
+	public String toString() {
+		return id + (projectId == null ? "" : " in " + projectId);
 	}
 }

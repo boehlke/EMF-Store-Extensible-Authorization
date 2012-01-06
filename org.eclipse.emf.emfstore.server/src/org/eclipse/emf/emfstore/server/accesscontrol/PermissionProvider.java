@@ -63,7 +63,7 @@ public interface PermissionProvider {
 	 * @author boehlke
 	 * 
 	 */
-	public static class InternalPermission {
+	static class InternalPermission {
 		private PermissionType type;
 		private ProjectId projectId;
 
@@ -95,6 +95,11 @@ public interface PermissionProvider {
 		public int hashCode() {
 			return type.hashCode() + (projectId == null ? 0 : projectId.hashCode());
 		}
+
+		@Override
+		public String toString() {
+			return type.getId() + (projectId == null ? "" : " in " + projectId.getId());
+		}
 	}
 
 	/**
@@ -111,4 +116,5 @@ public interface PermissionProvider {
 	 * @return
 	 */
 	public Collection<InternalPermission> getPermissions(Operation<?> op, ACUser user, PermissionContext resolver);
+
 }

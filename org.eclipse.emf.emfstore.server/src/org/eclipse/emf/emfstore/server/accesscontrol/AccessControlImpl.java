@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -249,14 +250,28 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 	public void checkPermissions(SessionId sessionId, Collection<InternalPermission> permissions)
 		throws AccessControlException {
 		if (!hasPermissions(sessionId, permissions)) {
-			throw new AccessControlException();
+			List<Permission> missingPermissions = new ArrayList<Permission>();
+			for (InternalPermission permission : getMissingPermissions(sessionId, permissions)) {
+				ProjectId projectId = permission.getProjectId();
+				missingPermissions.add(new Permission(permission.getType().getId(), projectId == null ? null
+					: projectId.getId()));
+			}
+			throw new AccessControlException(missingPermissions.toArray(new Permission[0]));
 		}
 	}
 
 	public boolean hasPermissions(SessionId sessionId, Collection<InternalPermission> permissions) {
+		InternalPermission[] missingPermissions = getMissingPermissions(sessionId, permissions);
+		if (missingPermissions.length == 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public InternalPermission[] getMissingPermissions(SessionId sessionId, Collection<InternalPermission> permissions) {
 		ACUserContainer userContainer = sessionUserMap.get(sessionId);
 		if (userContainer == null) {
-			return false;
+			throw new IllegalArgumentException("user does not exist");
 		}
 		ACUser user = userContainer.getUser();
 
@@ -275,15 +290,12 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 			}
 
 			if (requiredPermissions.size() == 0) {
-				break;
+				return new InternalPermission[] {};
 			}
 		}
 
-		if (requiredPermissions.size() == 0) {
-			return true;
-		}
+		return requiredPermissions.toArray(new InternalPermission[0]);
 
-		return false;
 	}
 
 	private Set<InternalPermission> getPermissions(ACOrgUnit orgUnit) {
