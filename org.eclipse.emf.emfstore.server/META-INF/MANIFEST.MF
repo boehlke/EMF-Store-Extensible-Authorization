@@ -30,6 +30,7 @@ Export-Package:
  org.eclipse.emf.emfstore.server.accesscontrol,
  org.eclipse.emf.emfstore.server.accesscontrol.authentication,
  org.eclipse.emf.emfstore.server.accesscontrol.authentication.factory,
+ org.eclipse.emf.emfstore.server.accesscontrol.simple,
  org.eclipse.emf.emfstore.server.accesscontrol.util,
  org.eclipse.emf.emfstore.server.conflictDetection,
  org.eclipse.emf.emfstore.server.connection,
