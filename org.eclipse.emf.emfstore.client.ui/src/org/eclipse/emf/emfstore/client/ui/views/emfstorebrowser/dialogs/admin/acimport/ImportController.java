@@ -18,6 +18,7 @@ import java.util.List;
 import org.eclipse.emf.ecp.common.util.DialogHandler;
 import org.eclipse.emf.emfstore.client.model.util.EmfStoreInterface;
 import org.eclipse.emf.emfstore.client.model.util.WorkspaceUtil;
+import org.eclipse.emf.emfstore.server.connection.xmlrpc.util.StaticOperationFactory;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACGroup;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
@@ -32,7 +33,7 @@ public class ImportController {
 
 	private ImportSource importSource;
 
-	private Hashtable<ACOrgUnitId, ImportItemWrapper> importedUnits;
+	private Hashtable<String, ImportItemWrapper> importedUnits;
 
 	/**
 	 * @param adminBroker
@@ -40,7 +41,7 @@ public class ImportController {
 	 */
 	public ImportController(EmfStoreInterface adminBroker) {
 		this.adminBroker = adminBroker;
-		this.importedUnits = new Hashtable<ACOrgUnitId, ImportItemWrapper>();
+		this.importedUnits = new Hashtable<String, ImportItemWrapper>();
 	}
 
 	/**
@@ -67,7 +68,8 @@ public class ImportController {
 				try {
 					String username = wrappedOrgUnit.getOrgUnit().getName();
 					if (null == existUser(username)) {
-						this.importedUnits.put(adminBroker.createUser(username), wrappedOrgUnit);
+						adminBroker.executeOperation(StaticOperationFactory.createCreateUserOperation(username));
+						this.importedUnits.put(username, wrappedOrgUnit);
 					}
 				} catch (EmfStoreException e) {
 					WorkspaceUtil.logWarning(e.getMessage(), e);
@@ -85,7 +87,8 @@ public class ImportController {
 				try {
 					String groupname = wrappedOrgUnit.getOrgUnit().getName();
 					if (null == existGroup(groupname)) {
-						this.importedUnits.put(adminBroker.createGroup(groupname), wrappedOrgUnit);
+						adminBroker.executeOperation(StaticOperationFactory.createCreateGroupOperation(groupname));
+						this.importedUnits.put(groupname, wrappedOrgUnit);
 					}
 				} catch (EmfStoreException e) {
 					WorkspaceUtil.logWarning(e.getMessage(), e);
@@ -96,7 +99,7 @@ public class ImportController {
 	}
 
 	private void setAssociations() {
-		for (ACOrgUnitId unitId : importedUnits.keySet()) {
+		for (String unitId : importedUnits.keySet()) {
 			if (this.importedUnits.get(unitId).getParentOrgUnit() != null) {
 
 				ACOrgUnitId existGroup = existGroup(this.importedUnits.get(unitId).getParentOrgUnit().getOrgUnit()
@@ -105,7 +108,8 @@ public class ImportController {
 				// we do not want self-containment
 				if (existGroup != null && !existGroup.equals(unitId)) {
 					try {
-						adminBroker.addMember(existGroup, unitId);
+						adminBroker.executeOperation(StaticOperationFactory.createAddGroupMemberOperation(existGroup,
+							unitId));
 					} catch (EmfStoreException e) {
 						WorkspaceUtil.logWarning(e.getMessage(), e);
 						DialogHandler.showExceptionDialog(e);
@@ -123,7 +127,7 @@ public class ImportController {
 	private ACOrgUnitId existGroup(final String groupName) {
 		ACOrgUnitId exist = null;
 		try {
-			List<ACGroup> groups = getAdminBroker().getGroups();
+			List<ACGroup> groups = getAdminBroker().getPermissionSet().getGroups();
 			Iterator<ACGroup> iteratorGroup = groups.iterator();
 
 			while (iteratorGroup.hasNext()) {
@@ -146,7 +150,7 @@ public class ImportController {
 	private ACOrgUnitId existUser(final String userName) {
 		ACOrgUnitId exist = null;
 		try {
-			List<ACUser> users = getAdminBroker().getUsers();
+			List<ACUser> users = getAdminBroker().getPermissionSet().getUsers();
 			Iterator<ACUser> iteratorUser = users.iterator();
 
 			while (iteratorUser.hasNext()) {
