@@ -257,13 +257,31 @@ public interface ModelPackage extends EPackage {
 	int USERSESSION__CHANGED_PROPERTIES = 7;
 
 	/**
+	 * The feature id for the '<em><b>Permission Set Cache</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int USERSESSION__PERMISSION_SET_CACHE = 8;
+
+	/**
+	 * The feature id for the '<em><b>Project List Cache</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int USERSESSION__PROJECT_LIST_CACHE = 9;
+
+	/**
 	 * The number of structural features of the '<em>Usersession</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
 	 * -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int USERSESSION_FEATURE_COUNT = 8;
+	int USERSESSION_FEATURE_COUNT = 10;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.emfstore.client.model.impl.ProjectSpaceImpl <em>Project Space</em>}' class.
@@ -824,6 +842,28 @@ public interface ModelPackage extends EPackage {
 	EReference getUsersession_ChangedProperties();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.emfstore.client.model.Usersession#getPermissionSetCache <em>Permission Set Cache</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Permission Set Cache</em>'.
+	 * @see org.eclipse.emf.emfstore.client.model.Usersession#getPermissionSetCache()
+	 * @see #getUsersession()
+	 * @generated
+	 */
+	EReference getUsersession_PermissionSetCache();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.emfstore.client.model.Usersession#getProjectListCache <em>Project List Cache</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Project List Cache</em>'.
+	 * @see org.eclipse.emf.emfstore.client.model.Usersession#getProjectListCache()
+	 * @see #getUsersession()
+	 * @generated
+	 */
+	EReference getUsersession_ProjectListCache();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.client.model.ProjectSpace <em>Project Space</em>}'.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Project Space</em>'.
@@ -1365,6 +1405,22 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference USERSESSION__CHANGED_PROPERTIES = eINSTANCE.getUsersession_ChangedProperties();
+
+		/**
+		 * The meta object literal for the '<em><b>Permission Set Cache</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference USERSESSION__PERMISSION_SET_CACHE = eINSTANCE.getUsersession_PermissionSetCache();
+
+		/**
+		 * The meta object literal for the '<em><b>Project List Cache</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference USERSESSION__PROJECT_LIST_CACHE = eINSTANCE.getUsersession_ProjectListCache();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.emfstore.client.model.impl.ProjectSpaceImpl <em>Project Space</em>}' class.

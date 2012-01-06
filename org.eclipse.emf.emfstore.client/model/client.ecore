@@ -38,6 +38,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="changedProperties" upperBound="-1"
         eType="ecore:EClass ../../org.eclipse.emf.emfstore.server.model/model/server.ecore#//accesscontrol/OrgUnitProperty"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="permissionSetCache" eType="ecore:EClass ../../org.eclipse.emf.emfstore.server.model/model/server.ecore#//accesscontrol/PermissionSet"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="projectListCache" upperBound="-1"
+        eType="ecore:EClass ../../org.eclipse.emf.emfstore.server.model/model/server.ecore#//ProjectInfo"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProjectSpace" eSuperTypes="../../org.eclipse.emf.emfstore.common.model/model/common.ecore#//IdentifiableElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="project" eType="ecore:EClass ../../org.eclipse.emf.emfstore.common.model/model/common.ecore#//Project"
