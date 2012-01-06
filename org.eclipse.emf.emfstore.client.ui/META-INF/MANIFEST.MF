@@ -140,3 +140,4 @@ Bundle-Vendor: Eclipse Modeling Project
 Bundle-ClassPath: .,
  lib/dmp.jar,
  swing2swt.jar
+Bundle-ActivationPolicy: lazy
