@@ -366,11 +366,6 @@
                           property="org.eclipse.emf.emfstore.client.ui.commands.projectIsShared"
                           value="true">
                     </test>
-                    <test
-                          forcePluginActivation="true"
-                          property="org.eclipse.emf.emfstore.client.ui.commands.isAdmin"
-                          value="true">
-                    </test>
                  </iterate>
                  <count
                        value="1">
@@ -1101,7 +1096,7 @@
                       </test>
                       <test
                             forcePluginActivation="true"
-                            property="org.eclipse.emf.emfstore.client.ui.commands.historyBrowserAdminTester"
+                            property="org.eclipse.emf.emfstore.client.ui.commands.canAddTag"
                             value="true">
                       </test>
                    </iterate>
@@ -1124,7 +1119,7 @@
                       </test>
                       <test
                             forcePluginActivation="true"
-                            property="org.eclipse.emf.emfstore.client.ui.commands.historyBrowserAdminTester"
+                            property="org.eclipse.emf.emfstore.client.ui.commands.canRemoveTag"
                             value="true">
                       </test>
                    </iterate>
@@ -1169,7 +1164,7 @@
                       </test>
                       <test
                             forcePluginActivation="true"
-                            property="org.eclipse.emf.emfstore.client.ui.commands.historyBrowserAdminTester"
+                            property="org.eclipse.emf.emfstore.client.ui.commands.canRevert"
                             value="true">
                       </test>
                    </iterate>
@@ -1192,7 +1187,7 @@
                       </test>
                       <test
                             forcePluginActivation="true"
-                            property="org.eclipse.emf.emfstore.client.ui.commands.historyBrowserAdminTester"
+                            property="org.eclipse.emf.emfstore.client.ui.commands.canForceRevert"
                             value="true">
                       </test>
                    </iterate>
@@ -1302,22 +1297,15 @@
               class="org.eclipse.emf.emfstore.client.ui.commands.IsAdminTester"
               id="org.eclipse.emf.emfstore.client.ui.commands.isAdminTester"
               namespace="org.eclipse.emf.emfstore.client.ui.commands"
-              properties="isAdmin"
+              properties="canUpdateProject"
               type="org.eclipse.emf.emfstore.client.model.ProjectSpace">
         </propertyTester>
         <propertyTester
               class="org.eclipse.emf.emfstore.client.ui.views.historybrowserview.HistoryBrowserAdminTester"
               id="org.eclipse.emf.emfstore.client.ui.commands.historyBrowserAdminTester"
               namespace="org.eclipse.emf.emfstore.client.ui.commands"
-              properties="historyBrowserAdminTester"
+              properties="canRemoveTag,canAddTag,canRevert,canForceRevert"
               type="org.eclipse.emf.emfstore.client.ui.views.scm.SCMTreeNode">
-        </propertyTester>
-        <propertyTester
-              class="org.eclipse.emf.emfstore.client.ui.commands.IsACUserTester"
-              id="org.eclipse.emf.emfstore.client.ui.commands.isACUserTester"
-              namespace="org.eclipse.emf.emfstore.client.ui.commands"
-              properties="isACUser"
-              type="org.eclipse.emf.emfstore.client.model.ProjectSpace">
         </propertyTester>
         <propertyTester
               class="org.eclipse.emf.emfstore.client.ui.commands.IsServerAdminTester"
@@ -1462,7 +1450,7 @@
          </adapter>
       </factory>
       <factory
-            adaptableType="org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.SelectRolesPage.RoleBox"
+            adaptableType="org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.SelectRolesPage"
             class="org.eclipse.emf.emfstore.client.ui.views.AdpaterFactory">
          <adapter
                type="org.eclipse.ui.model.IWorkbenchAdapter">
