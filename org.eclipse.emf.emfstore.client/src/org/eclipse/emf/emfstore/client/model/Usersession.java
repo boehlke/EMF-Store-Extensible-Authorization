@@ -383,7 +383,7 @@ public interface Usersession extends EObject {
 	 * 
 	 * @throws EmfStoreException forwards any exception.
 	 */
-	void updateACUser() throws EmfStoreException;
+	void updatePermissionSet() throws EmfStoreException;
 
 	/**
 	 * Register a new login observer.

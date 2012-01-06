@@ -727,8 +727,8 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 		newSessionId = connectionManager.logIn(username, getPassword(), copy, Configuration.getClientVersion());
 
 		this.setSessionId(newSessionId);
-		connectionManager.getPermissionSet(newSessionId);
-		updateACUser();
+
+		updatePermissionSet();
 		updateProjectInfos();
 		if (loginObservers != null) {
 			for (LoginObserver observer : loginObservers) {
@@ -778,9 +778,26 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void updateACUser() throws EmfStoreException {
+	public void updatePermissionSet() throws EmfStoreException {
 		ConnectionManager connectionManager = this.getWorkspaceManager().getConnectionManager();
-		setACUser(connectionManager.resolveUser(getSessionId(), null));
+
+		PermissionSet permissionSet = connectionManager.getPermissionSet(getSessionId());
+		PermissionSet permissionSetCache = getPermissionSetCache();
+
+		if (permissionSetCache == null) {
+			this.setPermissionSetCache(permissionSet);
+		} else {
+			// copy data to avoid losing editing domain
+			permissionSetCache.getUsers().clear();
+			permissionSetCache.getGroups().clear();
+			permissionSetCache.getRoles().clear();
+
+			permissionSetCache.getUsers().addAll(permissionSet.getUsers());
+			permissionSetCache.getGroups().addAll(permissionSet.getGroups());
+			permissionSetCache.getRoles().addAll(permissionSet.getRoles());
+		}
+
+		setACUser((ACUser) getPermissionSetCache().getOrgUnit(getUsername()));
 	}
 
 	/**

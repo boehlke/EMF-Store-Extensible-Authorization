@@ -79,12 +79,12 @@ public final class LoginManager {
 	}
 
 	/**
-	 * @see Usersession#updateACUser()
+	 * @see Usersession#updatePermissionSet()
 	 * @param session the usersession
 	 * @throws EmfStoreException if thrown
 	 */
 	public static void updateACUser(Usersession session) throws EmfStoreException {
-		session.updateACUser();
+		session.updatePermissionSet();
 	}
 
 }
