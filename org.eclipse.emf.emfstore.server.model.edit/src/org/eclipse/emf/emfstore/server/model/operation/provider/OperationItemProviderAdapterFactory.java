@@ -643,6 +643,29 @@ public class OperationItemProviderAdapterFactory extends OperationAdapterFactory
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.emfstore.server.model.operation.SetOrgUnitPropertyOperation} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected SetOrgUnitPropertyOperationItemProvider setOrgUnitPropertyOperationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.emfstore.server.model.operation.SetOrgUnitPropertyOperation}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createSetOrgUnitPropertyOperationAdapter() {
+		if (setOrgUnitPropertyOperationItemProvider == null) {
+			setOrgUnitPropertyOperationItemProvider = new SetOrgUnitPropertyOperationItemProvider(this);
+		}
+
+		return setOrgUnitPropertyOperationItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -766,6 +789,7 @@ public class OperationItemProviderAdapterFactory extends OperationAdapterFactory
 		if (createProjectOperationItemProvider != null) createProjectOperationItemProvider.dispose();
 		if (roleContainerItemProvider != null) roleContainerItemProvider.dispose();
 		if (orgUnitRoleOperationItemProvider != null) orgUnitRoleOperationItemProvider.dispose();
+		if (setOrgUnitPropertyOperationItemProvider != null) setOrgUnitPropertyOperationItemProvider.dispose();
 	}
 
 }
