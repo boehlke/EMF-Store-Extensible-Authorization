@@ -40,6 +40,7 @@ public interface IdentifiableElement extends EObject {
 	 * @see #setIdentifier(String)
 	 * @see org.eclipse.emf.emfstore.common.model.ModelPackage#getIdentifiableElement_Identifier()
 	 * @model id="true" required="true"
+	 *        annotation="org.eclipse.emf.ecp.editor hidden='true'"
 	 * @generated
 	 */
 	String getIdentifier();

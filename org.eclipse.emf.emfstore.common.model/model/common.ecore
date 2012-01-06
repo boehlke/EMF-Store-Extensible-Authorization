@@ -16,7 +16,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IdentifiableElement" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="identifier" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" iD="true"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" iD="true">
+      <eAnnotations source="org.eclipse.emf.ecp.editor">
+        <details key="hidden" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelElementId" eSuperTypes="#//UniqueIdentifier"/>
   <eClassifiers xsi:type="ecore:EClass" name="ModelVersion">

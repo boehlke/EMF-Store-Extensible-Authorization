@@ -492,6 +492,21 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// org.eclipse.emf.ecp.editor
+		createOrgAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>org.eclipse.emf.ecp.editor</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createOrgAnnotations() {
+		String source = "org.eclipse.emf.ecp.editor";
+		addAnnotation(getIdentifiableElement_Identifier(), source, new String[] { "hidden", "true" });
 	}
 
 } // ModelPackageImpl
