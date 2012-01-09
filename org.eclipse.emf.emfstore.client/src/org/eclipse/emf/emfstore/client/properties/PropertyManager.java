@@ -203,7 +203,7 @@ public final class PropertyManager {
 
 		try {
 			new AccessControlHelper(projectSpace.getUsersession()).hasPermission(StaticOperationFactory
-				.createWritePropertiesOperation(projectSpace.getProjectId(), null));
+				.createUnvalidatedWritePropertiesOperation(projectSpace.getProjectId(), null));
 		} catch (AccessControlException e) {
 			// do not transmit properties if user is a reader
 			return;
