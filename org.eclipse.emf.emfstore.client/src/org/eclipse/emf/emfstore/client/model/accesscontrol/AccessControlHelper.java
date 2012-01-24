@@ -13,12 +13,12 @@ package org.eclipse.emf.emfstore.client.model.accesscontrol;
 import java.util.Arrays;
 
 import org.eclipse.emf.emfstore.client.model.Usersession;
-import org.eclipse.emf.emfstore.common.AuthConstants;
 import org.eclipse.emf.emfstore.server.accesscontrol.Permission;
 import org.eclipse.emf.emfstore.server.accesscontrol.util.PermissionUtil;
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.emf.emfstore.server.model.operation.Operation;
 
@@ -43,8 +43,10 @@ public class AccessControlHelper {
 	}
 
 	public boolean isServerAdmin() {
+		// TODO: this is not nice, relying on user contained in a permission set
+		PermissionSet permissionSet = (PermissionSet) user.eContainer();
 		for (RoleAssignment role : user.getRoles()) {
-			if (role.getRole().getId().equals(AuthConstants.SUPER_ADMIN_ROLE)) {
+			if (role.getRole() == permissionSet.getSuperUserRole()) {
 				return true;
 			}
 		}
