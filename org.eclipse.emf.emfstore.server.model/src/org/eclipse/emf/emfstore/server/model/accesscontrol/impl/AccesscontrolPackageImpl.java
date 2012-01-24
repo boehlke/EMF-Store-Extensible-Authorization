@@ -28,8 +28,6 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.emf.emfstore.server.model.impl.ModelPackageImpl;
-import org.eclipse.emf.emfstore.server.model.notification.NotificationPackage;
-import org.eclipse.emf.emfstore.server.model.notification.impl.NotificationPackageImpl;
 import org.eclipse.emf.emfstore.server.model.operation.OperationPackage;
 import org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl;
 import org.eclipse.emf.emfstore.server.model.url.UrlPackage;
@@ -161,7 +159,6 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		SemanticPackageImpl theSemanticPackage = (SemanticPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SemanticPackage.eNS_URI) instanceof SemanticPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SemanticPackage.eNS_URI) : SemanticPackage.eINSTANCE);
 		EventsPackageImpl theEventsPackage = (EventsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EventsPackage.eNS_URI) instanceof EventsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EventsPackage.eNS_URI) : EventsPackage.eINSTANCE);
 		ServerPackageImpl theServerPackage = (ServerPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ServerPackage.eNS_URI) instanceof ServerPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ServerPackage.eNS_URI) : ServerPackage.eINSTANCE);
-		NotificationPackageImpl theNotificationPackage = (NotificationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI) instanceof NotificationPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI) : NotificationPackage.eINSTANCE);
 		UrlPackageImpl theUrlPackage = (UrlPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UrlPackage.eNS_URI) instanceof UrlPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UrlPackage.eNS_URI) : UrlPackage.eINSTANCE);
 		OperationPackageImpl theOperationPackage = (OperationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(OperationPackage.eNS_URI) instanceof OperationPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(OperationPackage.eNS_URI) : OperationPackage.eINSTANCE);
 
@@ -173,7 +170,6 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		theSemanticPackage.createPackageContents();
 		theEventsPackage.createPackageContents();
 		theServerPackage.createPackageContents();
-		theNotificationPackage.createPackageContents();
 		theUrlPackage.createPackageContents();
 		theOperationPackage.createPackageContents();
 
@@ -185,7 +181,6 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		theSemanticPackage.initializePackageContents();
 		theEventsPackage.initializePackageContents();
 		theServerPackage.initializePackageContents();
-		theNotificationPackage.initializePackageContents();
 		theUrlPackage.initializePackageContents();
 		theOperationPackage.initializePackageContents();
 
@@ -386,7 +381,7 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getRole_Id() {
+	public EAttribute getRole_Name() {
 		return (EAttribute)roleEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -395,17 +390,8 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getRole_Name() {
-		return (EAttribute)roleEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getRole_SystemRole() {
-		return (EAttribute)roleEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)roleEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -490,6 +476,15 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPermissionSet_SuperUserRole() {
+		return (EReference)permissionSetEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -542,7 +537,6 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		roleEClass = createEClass(ROLE);
 		createEReference(roleEClass, ROLE__PERMISSION_TYPES);
 		createEAttribute(roleEClass, ROLE__DESCRIPTION);
-		createEAttribute(roleEClass, ROLE__ID);
 		createEAttribute(roleEClass, ROLE__NAME);
 		createEAttribute(roleEClass, ROLE__SYSTEM_ROLE);
 
@@ -556,6 +550,7 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		createEReference(permissionSetEClass, PERMISSION_SET__ROLES);
 		createEReference(permissionSetEClass, PERMISSION_SET__GROUPS);
 		createEReference(permissionSetEClass, PERMISSION_SET__USERS);
+		createEReference(permissionSetEClass, PERMISSION_SET__SUPER_USER_ROLE);
 	}
 
 	/**
@@ -629,7 +624,6 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		initEClass(roleEClass, Role.class, "Role", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRole_PermissionTypes(), this.getPermissionType(), this.getPermissionType_ReferingRoles(), "permissionTypes", null, 0, -1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRole_Description(), ecorePackage.getEString(), "description", null, 0, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRole_Id(), ecorePackage.getEString(), "id", null, 1, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRole_Name(), ecorePackage.getEString(), "name", null, 1, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRole_SystemRole(), ecorePackage.getEBoolean(), "systemRole", null, 0, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -643,6 +637,7 @@ public class AccesscontrolPackageImpl extends EPackageImpl implements Accesscont
 		initEReference(getPermissionSet_Roles(), this.getRole(), null, "roles", null, 0, -1, PermissionSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPermissionSet_Groups(), this.getACGroup(), null, "groups", null, 0, -1, PermissionSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPermissionSet_Users(), this.getACUser(), null, "users", null, 0, -1, PermissionSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPermissionSet_SuperUserRole(), this.getRole(), null, "superUserRole", null, 0, 1, PermissionSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create annotations
 		// org.eclipse.emf.ecp.editor

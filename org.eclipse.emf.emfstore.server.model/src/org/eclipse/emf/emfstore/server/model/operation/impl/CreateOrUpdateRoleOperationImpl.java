@@ -8,13 +8,9 @@ package org.eclipse.emf.emfstore.server.model.operation.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.operation.CreateOrUpdateRoleOperation;
 import org.eclipse.emf.emfstore.server.model.operation.OperationPackage;
 import org.eclipse.emf.emfstore.server.model.operation.RoleContainer;
@@ -32,7 +28,7 @@ import org.eclipse.emf.emfstore.server.model.operation.RoleContainer;
  *
  * @generated
  */
-public class CreateOrUpdateRoleOperationImpl extends UserManagementOperationImpl<Void> implements CreateOrUpdateRoleOperation {
+public class CreateOrUpdateRoleOperationImpl extends UserManagementOperationImpl<String> implements CreateOrUpdateRoleOperation {
 	/**
 	 * The cached value of the '{@link #getRole() <em>Role</em>}' containment reference.
 	 * <!-- begin-user-doc -->

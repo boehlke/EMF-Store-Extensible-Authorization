@@ -2,12 +2,14 @@ package org.eclipse.emf.emfstore.server.accesscontrol;
 
 import java.util.Collection;
 
+import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.server.model.ProjectHistory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.operation.Operation;
+import org.eclipse.emf.emfstore.server.model.versioning.PrimaryVersionSpec;
 
 /**
  * provides permissions for operations
@@ -24,23 +26,54 @@ public interface PermissionProvider {
 	 * 
 	 */
 	public interface PermissionContext {
+		/**
+		 * resolve a permission type by id
+		 * 
+		 * @param typeId
+		 * @return
+		 */
 		PermissionType resolvePermissionType(String typeId);
 
+		/**
+		 * resolve the whole project history. This is only possible on the server. So by using this, the permission
+		 * provider will work offline
+		 * 
+		 * @param projectId
+		 * @return
+		 */
 		ProjectHistory resolveProjectHistory(String projectId);
 
+		/**
+		 * resolve a project by id and version
+		 * 
+		 * @param projectId
+		 * @return
+		 */
+		Project resolveProject(String projectId, PrimaryVersionSpec version);
+
+		/**
+		 * resolve a projet id by id string, this can be used to see if a given project exists in die context
+		 * 
+		 * @param projectId
+		 * @return
+		 */
 		ProjectId resolveProjectId(String projectId);
 
+		/**
+		 * resolve an org unit by string
+		 * 
+		 * @param orgUnitId
+		 * @return
+		 */
 		ACOrgUnit resolveOrgUnit(String orgUnitId);
 	}
 
 	public static class PermissionTypeData {
 		private boolean projectPermission;
-		private String name;
 		private String id;
 
-		public PermissionTypeData(String id, String name, boolean projectPermission) {
+		public PermissionTypeData(String id, boolean projectPermission) {
 			this.id = id;
-			this.name = name;
 			this.projectPermission = projectPermission;
 		}
 
@@ -50,10 +83,6 @@ public interface PermissionProvider {
 
 		public boolean isProjectPermission() {
 			return projectPermission;
-		}
-
-		public String getName() {
-			return name;
 		}
 	}
 
@@ -116,5 +145,12 @@ public interface PermissionProvider {
 	 * @return
 	 */
 	public Collection<InternalPermission> getPermissions(Operation<?> op, ACUser user, PermissionContext resolver);
+
+	/**
+	 * gets the i18n name of the permission type
+	 * 
+	 * @return
+	 */
+	public String getPermissionTypeName(String type);
 
 }

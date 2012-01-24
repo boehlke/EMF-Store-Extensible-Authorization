@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getRoles <em>Roles</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getGroups <em>Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getUsers <em>Users</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getSuperUserRole <em>Super User Role</em>}</li>
  * </ul>
  * </p>
  *
@@ -98,6 +99,32 @@ public interface PermissionSet extends EObject {
 	EList<ACUser> getUsers();
 
 	/**
+	 * Returns the value of the '<em><b>Super User Role</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Super User Role</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Super User Role</em>' reference.
+	 * @see #setSuperUserRole(Role)
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getPermissionSet_SuperUserRole()
+	 * @model
+	 * @generated
+	 */
+	Role getSuperUserRole();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getSuperUserRole <em>Super User Role</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Super User Role</em>' reference.
+	 * @see #getSuperUserRole()
+	 * @generated
+	 */
+	void setSuperUserRole(Role value);
+
+	/**
 	 * get an org unit by name
 	 * 
 	 * @param name of the org unit
@@ -140,5 +167,5 @@ public interface PermissionSet extends EObject {
 	 * @generated NOT
 	 */
 	PermissionType getPermissionType(String id);
-
+	
 } // PermissionSet

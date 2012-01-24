@@ -9,7 +9,7 @@
 package org.eclipse.emf.emfstore.server.model.operation.impl;
 
 import java.util.Map;
-import java.util.HashMap;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -24,8 +24,6 @@ import org.eclipse.emf.emfstore.common.model.ModelPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.impl.AccesscontrolPackageImpl;
 import org.eclipse.emf.emfstore.server.model.impl.ModelPackageImpl;
-import org.eclipse.emf.emfstore.server.model.notification.NotificationPackage;
-import org.eclipse.emf.emfstore.server.model.notification.impl.NotificationPackageImpl;
 import org.eclipse.emf.emfstore.server.model.operation.AddGroupMemberOperation;
 import org.eclipse.emf.emfstore.server.model.operation.AddTagOperation;
 import org.eclipse.emf.emfstore.server.model.operation.CreateGroupOperation;
@@ -340,7 +338,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		EventsPackageImpl theEventsPackage = (EventsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EventsPackage.eNS_URI) instanceof EventsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EventsPackage.eNS_URI) : EventsPackage.eINSTANCE);
 		ServerPackageImpl theServerPackage = (ServerPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ServerPackage.eNS_URI) instanceof ServerPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ServerPackage.eNS_URI) : ServerPackage.eINSTANCE);
 		AccesscontrolPackageImpl theAccesscontrolPackage = (AccesscontrolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(AccesscontrolPackage.eNS_URI) instanceof AccesscontrolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(AccesscontrolPackage.eNS_URI) : AccesscontrolPackage.eINSTANCE);
-		NotificationPackageImpl theNotificationPackage = (NotificationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI) instanceof NotificationPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI) : NotificationPackage.eINSTANCE);
 		UrlPackageImpl theUrlPackage = (UrlPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UrlPackage.eNS_URI) instanceof UrlPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UrlPackage.eNS_URI) : UrlPackage.eINSTANCE);
 
 		// Create package meta-data objects
@@ -352,7 +349,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		theEventsPackage.createPackageContents();
 		theServerPackage.createPackageContents();
 		theAccesscontrolPackage.createPackageContents();
-		theNotificationPackage.createPackageContents();
 		theUrlPackage.createPackageContents();
 
 		// Initialize created meta-data
@@ -364,7 +360,6 @@ public class OperationPackageImpl extends EPackageImpl implements OperationPacka
 		theEventsPackage.initializePackageContents();
 		theServerPackage.initializePackageContents();
 		theAccesscontrolPackage.initializePackageContents();
-		theNotificationPackage.initializePackageContents();
 		theUrlPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed

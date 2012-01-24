@@ -20,7 +20,6 @@ import org.eclipse.emf.emfstore.common.model.IdentifiableElement;
  * <ul>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getPermissionTypes <em>Permission Types</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getDescription <em>Description</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#isSystemRole <em>System Role</em>}</li>
  * </ul>
@@ -74,32 +73,6 @@ public interface Role extends IdentifiableElement {
 	 * @generated
 	 */
 	void setDescription(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage#getRole_Id()
-	 * @model required="true"
-	 * @generated
-	 */
-	String getId();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getId <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
-	 * @generated
-	 */
-	void setId(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

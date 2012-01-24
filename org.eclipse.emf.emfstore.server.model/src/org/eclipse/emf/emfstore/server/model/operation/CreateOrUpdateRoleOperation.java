@@ -6,12 +6,11 @@
  */
 package org.eclipse.emf.emfstore.server.model.operation;
 
-import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Create Or Update Role Operation</b></em>'.
+ * Creates or updates a role and returns the role id
  * <!-- end-user-doc -->
  *
  * <p>
@@ -25,7 +24,7 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
  * @model superTypes="org.eclipse.emf.emfstore.server.model.operation.UserManagementOperation<org.eclipse.emf.emfstore.server.model.operation.Void>"
  * @generated
  */
-public interface CreateOrUpdateRoleOperation extends UserManagementOperation<Void> {
+public interface CreateOrUpdateRoleOperation extends UserManagementOperation<String> {
 	/**
 	 * Returns the value of the '<em><b>Role</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

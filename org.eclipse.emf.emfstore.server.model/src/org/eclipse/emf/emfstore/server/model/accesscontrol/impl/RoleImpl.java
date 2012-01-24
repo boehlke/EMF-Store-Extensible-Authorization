@@ -33,7 +33,6 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
  * <ul>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl#getPermissionTypes <em>Permission Types</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl#getDescription <em>Description</em>}</li>
- *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.RoleImpl#isSystemRole <em>System Role</em>}</li>
  * </ul>
@@ -71,26 +70,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 	 * @ordered
 	 */
 	protected String description = DESCRIPTION_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String ID_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String id = ID_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -189,27 +168,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, AccesscontrolPackage.ROLE__ID, oldId, id));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getName() {
 		return name;
 	}
@@ -288,8 +246,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 				return getPermissionTypes();
 			case AccesscontrolPackage.ROLE__DESCRIPTION:
 				return getDescription();
-			case AccesscontrolPackage.ROLE__ID:
-				return getId();
 			case AccesscontrolPackage.ROLE__NAME:
 				return getName();
 			case AccesscontrolPackage.ROLE__SYSTEM_ROLE:
@@ -313,9 +269,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 				return;
 			case AccesscontrolPackage.ROLE__DESCRIPTION:
 				setDescription((String)newValue);
-				return;
-			case AccesscontrolPackage.ROLE__ID:
-				setId((String)newValue);
 				return;
 			case AccesscontrolPackage.ROLE__NAME:
 				setName((String)newValue);
@@ -341,9 +294,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 			case AccesscontrolPackage.ROLE__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
-			case AccesscontrolPackage.ROLE__ID:
-				setId(ID_EDEFAULT);
-				return;
 			case AccesscontrolPackage.ROLE__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -366,8 +316,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 				return permissionTypes != null && !permissionTypes.isEmpty();
 			case AccesscontrolPackage.ROLE__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
-			case AccesscontrolPackage.ROLE__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case AccesscontrolPackage.ROLE__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case AccesscontrolPackage.ROLE__SYSTEM_ROLE:
@@ -388,8 +336,6 @@ public class RoleImpl extends IdentifiableElementImpl implements Role {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (description: ");
 		result.append(description);
-		result.append(", id: ");
-		result.append(id);
 		result.append(", name: ");
 		result.append(name);
 		result.append(", systemRole: ");

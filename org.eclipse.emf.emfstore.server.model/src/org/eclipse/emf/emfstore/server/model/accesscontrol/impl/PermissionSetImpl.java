@@ -10,6 +10,7 @@ package org.eclipse.emf.emfstore.server.model.accesscontrol.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import org.eclipse.emf.common.notify.Notification;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -40,6 +42,7 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl#getRoles <em>Roles</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl#getGroups <em>Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl#getUsers <em>Users</em>}</li>
+ *   <li>{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionSetImpl#getSuperUserRole <em>Super User Role</em>}</li>
  * </ul>
  * </p>
  *
@@ -85,6 +88,16 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	 * @ordered
 	 */
 	protected EList<ACUser> users;
+
+	/**
+	 * The cached value of the '{@link #getSuperUserRole() <em>Super User Role</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSuperUserRole()
+	 * @generated
+	 * @ordered
+	 */
+	protected Role superUserRole;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -158,6 +171,44 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Role getSuperUserRole() {
+		if (superUserRole != null && superUserRole.eIsProxy()) {
+			InternalEObject oldSuperUserRole = (InternalEObject)superUserRole;
+			superUserRole = (Role)eResolveProxy(oldSuperUserRole);
+			if (superUserRole != oldSuperUserRole) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, AccesscontrolPackage.PERMISSION_SET__SUPER_USER_ROLE, oldSuperUserRole, superUserRole));
+			}
+		}
+		return superUserRole;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Role basicGetSuperUserRole() {
+		return superUserRole;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSuperUserRole(Role newSuperUserRole) {
+		Role oldSuperUserRole = superUserRole;
+		superUserRole = newSuperUserRole;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, AccesscontrolPackage.PERMISSION_SET__SUPER_USER_ROLE, oldSuperUserRole, superUserRole));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -189,6 +240,9 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 				return getGroups();
 			case AccesscontrolPackage.PERMISSION_SET__USERS:
 				return getUsers();
+			case AccesscontrolPackage.PERMISSION_SET__SUPER_USER_ROLE:
+				if (resolve) return getSuperUserRole();
+				return basicGetSuperUserRole();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -218,6 +272,9 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 				getUsers().clear();
 				getUsers().addAll((Collection<? extends ACUser>)newValue);
 				return;
+			case AccesscontrolPackage.PERMISSION_SET__SUPER_USER_ROLE:
+				setSuperUserRole((Role)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -242,6 +299,9 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 			case AccesscontrolPackage.PERMISSION_SET__USERS:
 				getUsers().clear();
 				return;
+			case AccesscontrolPackage.PERMISSION_SET__SUPER_USER_ROLE:
+				setSuperUserRole((Role)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -262,6 +322,8 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 				return groups != null && !groups.isEmpty();
 			case AccesscontrolPackage.PERMISSION_SET__USERS:
 				return users != null && !users.isEmpty();
+			case AccesscontrolPackage.PERMISSION_SET__SUPER_USER_ROLE:
+				return superUserRole != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -294,9 +356,9 @@ public class PermissionSetImpl extends EObjectImpl implements PermissionSet {
 	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getRole(java.lang.String)
 	 * @generated NOT
 	 */
-	public Role getRole(String roleName) {
+	public Role getRole(String roleId) {
 		for (Role role : getRoles()) {
-			if (role.getId().equals(roleName)) {
+			if (role.getIdentifier().equals(roleId)) {
 				return role;
 			}
 		}

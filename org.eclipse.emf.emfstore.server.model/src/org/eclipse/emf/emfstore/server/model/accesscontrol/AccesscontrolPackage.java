@@ -440,22 +440,13 @@ public interface AccesscontrolPackage extends EPackage {
 	int ROLE__DESCRIPTION = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROLE__ID = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ROLE__NAME = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
+	int ROLE__NAME = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>System Role</b></em>' attribute.
@@ -464,7 +455,7 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROLE__SYSTEM_ROLE = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
+	int ROLE__SYSTEM_ROLE = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Role</em>' class.
@@ -473,7 +464,7 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROLE_FEATURE_COUNT = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 5;
+	int ROLE_FEATURE_COUNT = ModelPackage.IDENTIFIABLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.impl.PermissionTypeImpl <em>Permission Type</em>}' class.
@@ -577,13 +568,22 @@ public interface AccesscontrolPackage extends EPackage {
 	int PERMISSION_SET__USERS = 3;
 
 	/**
+	 * The feature id for the '<em><b>Super User Role</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PERMISSION_SET__SUPER_USER_ROLE = 4;
+
+	/**
 	 * The number of structural features of the '<em>Permission Set</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PERMISSION_SET_FEATURE_COUNT = 4;
+	int PERMISSION_SET_FEATURE_COUNT = 5;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser <em>AC User</em>}'.
@@ -816,17 +816,6 @@ public interface AccesscontrolPackage extends EPackage {
 	EAttribute getRole_Description();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getId()
-	 * @see #getRole()
-	 * @generated
-	 */
-	EAttribute getRole_Id();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.Role#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -944,6 +933,17 @@ public interface AccesscontrolPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getPermissionSet_Users();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getSuperUserRole <em>Super User Role</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Super User Role</em>'.
+	 * @see org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet#getSuperUserRole()
+	 * @see #getPermissionSet()
+	 * @generated
+	 */
+	EReference getPermissionSet_SuperUserRole();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1151,14 +1151,6 @@ public interface AccesscontrolPackage extends EPackage {
 		EAttribute ROLE__DESCRIPTION = eINSTANCE.getRole_Description();
 
 		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ROLE__ID = eINSTANCE.getRole_Id();
-
-		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1249,6 +1241,14 @@ public interface AccesscontrolPackage extends EPackage {
 		 * @generated
 		 */
 		EReference PERMISSION_SET__USERS = eINSTANCE.getPermissionSet_Users();
+
+		/**
+		 * The meta object literal for the '<em><b>Super User Role</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PERMISSION_SET__SUPER_USER_ROLE = eINSTANCE.getPermissionSet_SuperUserRole();
 
 	}
 

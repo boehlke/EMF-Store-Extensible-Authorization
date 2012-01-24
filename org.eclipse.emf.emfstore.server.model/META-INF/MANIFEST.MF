@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFStore Model  (Incubation)
 Bundle-SymbolicName: org.eclipse.emf.emfstore.server.model;singleton:=true
-Bundle-Version: 0.8.9.M911
+Bundle-Version: 0.8.9.M913
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-Localization: plugin
@@ -11,10 +11,7 @@ Export-Package: org.eclipse.emf.emfstore.server.model,
  org.eclipse.emf.emfstore.server.model.accesscontrol,
  org.eclipse.emf.emfstore.server.model.accesscontrol.impl,
  org.eclipse.emf.emfstore.server.model.accesscontrol.util,
- org.eclipse.emf.emfstore.server.model.impl,
- org.eclipse.emf.emfstore.server.model.notification,
- org.eclipse.emf.emfstore.server.model.notification.impl,
- org.eclipse.emf.emfstore.server.model.notification.util,
+ org.eclipse.emf.emfstore.server.model.impl, 
  org.eclipse.emf.emfstore.server.model.operation,
  org.eclipse.emf.emfstore.server.model.operation.util,
  org.eclipse.emf.emfstore.server.model.url,

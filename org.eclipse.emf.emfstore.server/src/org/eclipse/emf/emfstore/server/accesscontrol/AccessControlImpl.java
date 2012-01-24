@@ -22,6 +22,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.server.ServerConfiguration;
 import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider.InternalPermission;
 import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider.PermissionContext;
@@ -47,6 +48,8 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.emf.emfstore.server.model.operation.Operation;
+import org.eclipse.emf.emfstore.server.model.versioning.PrimaryVersionSpec;
+import org.eclipse.emf.emfstore.server.model.versioning.Version;
 
 /**
  * A simple implementation of Authentication and Authorization Control.
@@ -346,6 +349,19 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 				ACOrgUnitId id = AccesscontrolFactory.eINSTANCE.createACOrgUnitId();
 				id.setId(orgUnitId);
 				return permissionSet.getOrgUnit(id);
+			}
+
+			public Project resolveProject(String projectId, PrimaryVersionSpec version) {
+				ProjectHistory projectHistoryOrNull = Util.getProjectHistoryOrNull(projectId, serverSpace);
+				if (projectHistoryOrNull == null) {
+					return null;
+				}
+				for (Version _version : projectHistoryOrNull.getVersions()) {
+					if (version.getIdentifier() == _version.getPrimarySpec().getIdentifier()) {
+						return _version.getProjectState();
+					}
+				}
+				return null;
 			}
 		};
 	}

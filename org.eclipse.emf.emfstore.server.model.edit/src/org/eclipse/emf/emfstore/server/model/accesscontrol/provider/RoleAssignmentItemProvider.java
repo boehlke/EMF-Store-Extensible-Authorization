@@ -41,14 +41,18 @@ import org.eclipse.emf.emfstore.server.model.provider.ServerEditPlugin;
  */
 public class RoleAssignmentItemProvider extends IdentifiableElementItemProvider implements IEditingDomainItemProvider,
 	IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+	private RoleItemProvider roleItemProvider;
+
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * 
+	 * @generated NOT
 	 */
 	public RoleAssignmentItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
+		roleItemProvider = new RoleItemProvider(adapterFactory);
 	}
 
 	/**

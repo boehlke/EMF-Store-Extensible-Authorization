@@ -22,7 +22,8 @@ public class PermissionUtil {
 
 		for (RoleAssignment assignment : orgUnit.getRoles()) {
 			for (PermissionType permissionType : assignment.getRole().getPermissionTypes()) {
-				permissions.add(new Permission(permissionType.getId(), assignment.getProjectId().getId()));
+				permissions.add(new Permission(permissionType.getId(), assignment.getProjectId() == null ? null
+					: assignment.getProjectId().getId()));
 			}
 		}
 

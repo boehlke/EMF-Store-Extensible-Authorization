@@ -19,8 +19,6 @@ import org.eclipse.emf.emfstore.common.model.ModelPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.impl.AccesscontrolPackageImpl;
 import org.eclipse.emf.emfstore.server.model.impl.ModelPackageImpl;
-import org.eclipse.emf.emfstore.server.model.notification.NotificationPackage;
-import org.eclipse.emf.emfstore.server.model.notification.impl.NotificationPackageImpl;
 import org.eclipse.emf.emfstore.server.model.operation.OperationPackage;
 import org.eclipse.emf.emfstore.server.model.operation.impl.OperationPackageImpl;
 import org.eclipse.emf.emfstore.server.model.url.UrlPackage;
@@ -171,7 +169,6 @@ public class VersioningPackageImpl extends EPackageImpl implements VersioningPac
 		EventsPackageImpl theEventsPackage = (EventsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EventsPackage.eNS_URI) instanceof EventsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EventsPackage.eNS_URI) : EventsPackage.eINSTANCE);
 		ServerPackageImpl theServerPackage = (ServerPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ServerPackage.eNS_URI) instanceof ServerPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ServerPackage.eNS_URI) : ServerPackage.eINSTANCE);
 		AccesscontrolPackageImpl theAccesscontrolPackage = (AccesscontrolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(AccesscontrolPackage.eNS_URI) instanceof AccesscontrolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(AccesscontrolPackage.eNS_URI) : AccesscontrolPackage.eINSTANCE);
-		NotificationPackageImpl theNotificationPackage = (NotificationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI) instanceof NotificationPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI) : NotificationPackage.eINSTANCE);
 		UrlPackageImpl theUrlPackage = (UrlPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UrlPackage.eNS_URI) instanceof UrlPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UrlPackage.eNS_URI) : UrlPackage.eINSTANCE);
 		OperationPackageImpl theOperationPackage = (OperationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(OperationPackage.eNS_URI) instanceof OperationPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(OperationPackage.eNS_URI) : OperationPackage.eINSTANCE);
 
@@ -183,7 +180,6 @@ public class VersioningPackageImpl extends EPackageImpl implements VersioningPac
 		theEventsPackage.createPackageContents();
 		theServerPackage.createPackageContents();
 		theAccesscontrolPackage.createPackageContents();
-		theNotificationPackage.createPackageContents();
 		theUrlPackage.createPackageContents();
 		theOperationPackage.createPackageContents();
 
@@ -195,7 +191,6 @@ public class VersioningPackageImpl extends EPackageImpl implements VersioningPac
 		theEventsPackage.initializePackageContents();
 		theServerPackage.initializePackageContents();
 		theAccesscontrolPackage.initializePackageContents();
-		theNotificationPackage.initializePackageContents();
 		theUrlPackage.initializePackageContents();
 		theOperationPackage.initializePackageContents();
 
@@ -340,16 +335,8 @@ public class VersioningPackageImpl extends EPackageImpl implements VersioningPac
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getChangePackage_Notifications() {
-		return (EReference)changePackageEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getChangePackage_VersionProperties() {
-		return (EReference)changePackageEClass.getEStructuralFeatures().get(4);
+		return (EReference)changePackageEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -582,7 +569,6 @@ public class VersioningPackageImpl extends EPackageImpl implements VersioningPac
 		createEReference(changePackageEClass, CHANGE_PACKAGE__OPERATIONS);
 		createEReference(changePackageEClass, CHANGE_PACKAGE__EVENTS);
 		createEReference(changePackageEClass, CHANGE_PACKAGE__LOG_MESSAGE);
-		createEReference(changePackageEClass, CHANGE_PACKAGE__NOTIFICATIONS);
 		createEReference(changePackageEClass, CHANGE_PACKAGE__VERSION_PROPERTIES);
 
 		historyInfoEClass = createEClass(HISTORY_INFO);
@@ -638,7 +624,6 @@ public class VersioningPackageImpl extends EPackageImpl implements VersioningPac
 		// Obtain other dependent packages
 		OperationsPackage theOperationsPackage = (OperationsPackage)EPackage.Registry.INSTANCE.getEPackage(OperationsPackage.eNS_URI);
 		EventsPackage theEventsPackage = (EventsPackage)EPackage.Registry.INSTANCE.getEPackage(EventsPackage.eNS_URI);
-		NotificationPackage theNotificationPackage = (NotificationPackage)EPackage.Registry.INSTANCE.getEPackage(NotificationPackage.eNS_URI);
 		ModelPackage theModelPackage = (ModelPackage)EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI);
 
 		// Add subpackages
@@ -677,7 +662,6 @@ public class VersioningPackageImpl extends EPackageImpl implements VersioningPac
 		initEReference(getChangePackage_Operations(), theOperationsPackage.getAbstractOperation(), null, "operations", null, 0, -1, ChangePackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getChangePackage_Events(), theEventsPackage.getEvent(), null, "events", null, 0, -1, ChangePackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getChangePackage_LogMessage(), this.getLogMessage(), null, "logMessage", null, 0, 1, ChangePackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getChangePackage_Notifications(), theNotificationPackage.getESNotification(), null, "notifications", null, 0, -1, ChangePackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getChangePackage_VersionProperties(), this.getVersionProperty(), null, "versionProperties", null, 0, -1, ChangePackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(historyInfoEClass, HistoryInfo.class, "HistoryInfo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

@@ -31,7 +31,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.emfstore.common.AuthConstants;
 import org.eclipse.emf.emfstore.common.model.util.FileUtil;
 import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
 import org.eclipse.emf.emfstore.server.accesscontrol.AccessControlImpl;
@@ -142,8 +141,7 @@ public class EmfStoreController implements IApplication, Runnable {
 		connectionHandlers = initConnectionHandlers();
 
 		TaskManager taskManager = TaskManager.getInstance();
-		taskManager.addTask(new CleanMemoryTask(serverSpace.eResource()
-				.getResourceSet()));
+		taskManager.addTask(new CleanMemoryTask(serverSpace.eResource().getResourceSet()));
 		// taskManager.addTask(new MemoryPlotter(new Date(), 20 * 1000));
 		taskManager.start();
 
@@ -169,25 +167,16 @@ public class EmfStoreController implements IApplication, Runnable {
 
 		this.permissionProvider = config.getPermissionProvider();
 
-		if (getRole(AuthConstants.SUPER_ADMIN_ROLE) == null) {
+		if (serverSpace.getPermissionSet().getSuperUserRole() == null) {
 			Role superAdminRole = AccesscontrolFactory.eINSTANCE.createRole();
-			superAdminRole.setId(AuthConstants.SUPER_ADMIN_ROLE);
 			superAdminRole.setSystemRole(true);
 			superAdminRole.setName("System Administrator");
 			// super admin has all permissions without project binding (for all projects)
 			superAdminRole.getPermissionTypes().addAll(config.getPermissionSet().getPermissionTypes());
 			serverSpace.getPermissionSet().getRoles().add(superAdminRole);
+			serverSpace.getPermissionSet().setSuperUserRole(superAdminRole);
 		}
 		serverSpace.save();
-	}
-
-	private Role getRole(String id) {
-		for (Role role : serverSpace.getPermissionSet().getRoles()) {
-			if (role.getId().equals(id)) {
-				return role;
-			}
-		}
-		return null;
 	}
 
 	private PermissionProvider getPermissionProvider() {
@@ -399,7 +388,7 @@ public class EmfStoreController implements IApplication, Runnable {
 		superUser.setDescription("default server admin (superuser)");
 
 		RoleAssignment roleAssignment = AccesscontrolFactory.eINSTANCE.createRoleAssignment();
-		roleAssignment.setRole(getRole(AuthConstants.SUPER_ADMIN_ROLE));
+		roleAssignment.setRole(serverSpace.getPermissionSet().getSuperUserRole());
 		superUser.getRoles().add(roleAssignment);
 		serverSpace.getUsers().add(superUser);
 		try {

@@ -483,7 +483,8 @@ public final class ServerConfiguration {
 					.getConfigurationElementsFor("org.eclipse.emf.emfstore.server.accesscontrol"));
 			} catch (CoreException e) {
 				String message = "Error while instantiating permission provider!";
-				throw new FatalEmfStoreException(message);
+				e.printStackTrace();
+				throw new FatalEmfStoreException(message + " " + e.getMessage());
 			}
 
 			if (permissionSetConfiguration == null) {

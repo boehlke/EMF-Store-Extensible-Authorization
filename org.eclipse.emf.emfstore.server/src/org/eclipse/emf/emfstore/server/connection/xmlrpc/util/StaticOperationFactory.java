@@ -168,13 +168,20 @@ public class StaticOperationFactory {
 		return op;
 	}
 
+	public static WritePropertiesOperation createUnvalidatedWritePropertiesOperation(ProjectId projectId,
+		List<EMFStoreProperty> properties) {
+		WritePropertiesOperation op = OperationFactory.eINSTANCE.createWritePropertiesOperation();
+		op.setProjectId(projectId.getId());
+		if (properties != null) {
+			op.getProperties().addAll(properties);
+		}
+		return op;
+	}
+
 	public static WritePropertiesOperation createWritePropertiesOperation(ProjectId projectId,
 		List<EMFStoreProperty> properties) throws InvalidInputException {
 		checkNotNull(projectId, properties);
-		WritePropertiesOperation op = OperationFactory.eINSTANCE.createWritePropertiesOperation();
-		op.setProjectId(projectId.getId());
-		op.getProperties().addAll(properties);
-		return op;
+		return createUnvalidatedWritePropertiesOperation(projectId, properties);
 	}
 
 	public static OrgUnitRoleOperation createAssignRoleOperation(String orgUnitId, String roleId, String projectId)
@@ -196,9 +203,9 @@ public class StaticOperationFactory {
 		return createAssignRoleOperation(orgUnitId, roleId, projectId == null ? null : projectId.getId());
 	}
 
-	public static CreateOrUpdateRoleOperation createCreateOrUpdateRoleOperation(String roleId, String roleName,
+	public static CreateOrUpdateRoleOperation createCreateOrUpdateRoleOperation(String roleName,
 		String roleDescription, PermissionSet permissionSet, String... permissionTypeIds) throws InvalidInputException {
-		checkNotNull(roleId, roleName, permissionSet);
+		checkNotNull(roleName, permissionSet);
 
 		RoleContainer container = OperationFactory.eINSTANCE.createRoleContainer();
 
@@ -214,7 +221,6 @@ public class StaticOperationFactory {
 		container.setRole(role);
 		role.setDescription(roleDescription);
 		role.setName(roleName);
-		role.setId(roleId);
 		role.getPermissionTypes().addAll(container.getPermissionTypes());
 
 		CreateOrUpdateRoleOperation op = OperationFactory.eINSTANCE.createCreateOrUpdateRoleOperation();

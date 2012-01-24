@@ -17,7 +17,7 @@ public class Util {
 
 	public static Role getRoleOrNull(String roleId, ServerSpace serverSpace) {
 		for (Role role : serverSpace.getPermissionSet().getRoles()) {
-			if (role.getId().equals(roleId)) {
+			if (role.getIdentifier().equals(roleId)) {
 				return role;
 			}
 		}

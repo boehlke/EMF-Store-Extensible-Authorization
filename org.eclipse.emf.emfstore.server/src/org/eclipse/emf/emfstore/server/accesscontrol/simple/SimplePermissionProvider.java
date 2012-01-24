@@ -124,9 +124,13 @@ public class SimplePermissionProvider implements PermissionProvider {
 	 * @see org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider#getAllPermissionTypes()
 	 */
 	public PermissionTypeData[] getAllPermissionTypes() {
-		return new PermissionTypeData[] { new PermissionTypeData(PROJECT_READER_PERMISSION, "project read", true),
-			new PermissionTypeData(PROJECT_WRITER_PERMISSION, "project write", true),
-			new PermissionTypeData(PROJECT_ADMIN_PERMISSION, "project administrate", true),
-			new PermissionTypeData(SYSTEM_PERMISSION, "system administrate", false) };
+		return new PermissionTypeData[] { new PermissionTypeData(PROJECT_READER_PERMISSION, true),
+			new PermissionTypeData(PROJECT_WRITER_PERMISSION, true),
+			new PermissionTypeData(PROJECT_ADMIN_PERMISSION, true), new PermissionTypeData(SYSTEM_PERMISSION, false) };
+	}
+
+	public String getPermissionTypeName(String type) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

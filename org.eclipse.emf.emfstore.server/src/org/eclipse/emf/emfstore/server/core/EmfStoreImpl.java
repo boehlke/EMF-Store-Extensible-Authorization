@@ -41,8 +41,6 @@ import org.eclipse.emf.emfstore.server.core.subinterfaces.ProjectPropertiesSubIn
 import org.eclipse.emf.emfstore.server.core.subinterfaces.ProjectSubInterfaceImpl;
 import org.eclipse.emf.emfstore.server.core.subinterfaces.UserSubInterfaceImpl;
 import org.eclipse.emf.emfstore.server.core.subinterfaces.VersionSubInterfaceImpl;
-import org.eclipse.emf.emfstore.server.eventmanager.EventHelper;
-import org.eclipse.emf.emfstore.server.eventmanager.EventManager;
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.FatalEmfStoreException;
@@ -54,6 +52,8 @@ import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.ServerSpace;
 import org.eclipse.emf.emfstore.server.model.SessionId;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.ACGroup;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.OrgUnitProperty;
@@ -224,7 +224,6 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 		ACUser user = getAuthorizationControl().resolveUser(sessionId);
 		PrimaryVersionSpec newVersion = getSubInterface(VersionSubInterfaceImpl.class).createVersion(projectId,
 			baseVersionSpec, changePackage, logMessage, user);
-		EventManager.getInstance().sendEvent(EventHelper.createUpdatedProjectEvent(projectId, newVersion));
 
 		return newVersion;
 	}
@@ -380,45 +379,26 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	}
 
 	public PermissionSet getPermissionSet(SessionId sessionId) throws EmfStoreException {
-		// TODO
-		return getServerSpace().getPermissionSet();
+		PermissionSet set = EcoreUtil.copy(getServerSpace().getPermissionSet());
+		for (ACUser user : set.getUsers()) {
+			removeIfNotVisible(sessionId, user);
+		}
+		for (ACGroup group : set.getGroups()) {
+			removeIfNotVisible(sessionId, group);
+		}
+		return set;
+	}
+
+	private void removeIfNotVisible(SessionId sessionId, ACOrgUnit orgUnit) throws InvalidInputException {
+		if (!getAuthorizationControl().hasPermissions(sessionId,
+			StaticOperationFactory.createReadOrgUnitOperation(orgUnit.getId().getId()))) {
+			EcoreUtil.delete(orgUnit);
+		}
 	}
 
 	private void checkOperationPermission(SessionId sessionId, Operation<?> op) throws AccessControlException {
 		getAuthorizationControl().checkSession(sessionId);
 		getAuthorizationControl().checkPermissions(sessionId, op);
-	}
-
-	private ProjectId getProjectId(ProjectId projectId) throws EmfStoreException {
-		for (ProjectHistory projectHistory : getServerSpace().getProjects()) {
-			if (projectHistory.getProjectId().equals(projectId)) {
-				return projectHistory.getProjectId();
-			}
-		}
-		throw new EmfStoreException("Unknown ProjectId.");
-	}
-
-	private boolean canReadOrgUnit(SessionId sessionId, ACOrgUnitId id) throws InvalidInputException {
-		return getAuthorizationControl().hasPermissions(sessionId,
-			StaticOperationFactory.createReadOrgUnitOperation(id.getId()));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public List<ProjectInfo> getProjectInfos(SessionId sessionId) throws EmfStoreException {
-		if (sessionId == null) {
-			throw new InvalidInputException();
-		}
-		getAuthorizationControl().checkSession(sessionId);
-		List<ProjectInfo> result = new ArrayList<ProjectInfo>();
-		for (ProjectHistory ph : getServerSpace().getProjects()) {
-			if (getAuthorizationControl().hasPermissions(sessionId,
-				StaticOperationFactory.createReadProjectOperation(ph.getProjectId(), null))) {
-				result.add(getProjectInfo(ph));
-			}
-		}
-		return result;
 	}
 
 	private ProjectInfo getProjectInfo(ProjectHistory project) {
