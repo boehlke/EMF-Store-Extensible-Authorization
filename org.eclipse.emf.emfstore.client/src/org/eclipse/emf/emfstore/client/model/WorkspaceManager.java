@@ -36,6 +36,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.emfstore.client.model.changeTracking.commands.EMFStoreBasicCommandStack;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.ConnectionManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.KeyStoreManager;
+import org.eclipse.emf.emfstore.client.model.connectionmanager.SessionManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.xmlrpc.XmlRpcConnectionManager;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreCommand;
 import org.eclipse.emf.emfstore.client.model.util.EditingDomainProvider;
@@ -70,6 +71,8 @@ public final class WorkspaceManager {
 	private ResourceSet resourceSet;
 
 	private AdapterFactoryEditingDomain editingDomain;
+
+	private SessionManager sessionManager;
 
 	/**
 	 * Get an instance of the workspace manager. Will create an instance if no
@@ -122,6 +125,7 @@ public final class WorkspaceManager {
 		initializeObserverBus();
 		this.connectionManager = initConnectionManager();
 		this.currentWorkspace = initWorkSpace();
+		this.sessionManager = new SessionManager();
 	}
 
 	private void initializeObserverBus() {
@@ -574,6 +578,15 @@ public final class WorkspaceManager {
 	 */
 	public static ObserverBus getObserverBus() {
 		return getInstance().observerBus;
+	}
+
+	/**
+	 * Returns the {@link SessionManager}
+	 * 
+	 * @return session manager
+	 */
+	public SessionManager getSessionManager() {
+		return sessionManager;
 	}
 
 	public EditingDomain getEditingDomain() {
