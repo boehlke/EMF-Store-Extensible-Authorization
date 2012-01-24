@@ -123,7 +123,7 @@ public class EcpRoleAssignmentWidget extends MEMultiLinkControl {
 						ProjectId projectId2 = assignmentData.getProjectId();
 						if ((projectId2 == null && projectId == null)
 							|| (projectId2 != null && projectId2.equals(projectId))
-							&& assignmentData.getRole().getId().equals(sel.getRole().getId())) {
+							&& assignmentData.getRole().getIdentifier().equals(sel.getRole().getIdentifier())) {
 							removed.remove(assignmentData);
 							continue RESULT;
 						}

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -64,7 +63,7 @@ public class UserCreateRolesWizardPage extends WizardPage {
 
 	public Collection<RoleSelection> getRoleSelection() {
 		List<RoleSelection> selection = new ArrayList<RoleSelection>();
-		for (Object object : ((ITreeSelection) treeViewer.getSelection()).toList()) {
+		for (Object object : treeViewer.getCheckedElements()) {
 			if (((RoleSelection) object).getRole() != null) {
 				selection.add((RoleSelection) object);
 			}

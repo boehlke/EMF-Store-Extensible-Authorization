@@ -45,6 +45,9 @@ class RoleSelectionContentProvider implements ITreeContentProvider {
 		}
 
 		for (ProjectInfo projectInfo : controller.getProjects()) {
+			if (projectInfo.getProjectId() == null) {
+				throw new RuntimeException("project info with null project ID");
+			}
 			elements.add(new RoleSelection(null, projectInfo));
 		}
 

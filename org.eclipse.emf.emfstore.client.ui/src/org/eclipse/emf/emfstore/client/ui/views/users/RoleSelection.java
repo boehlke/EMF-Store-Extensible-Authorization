@@ -28,7 +28,7 @@ public class RoleSelection {
 
 	@Override
 	public int hashCode() {
-		int roleHash = role == null ? 0 : role.getId().hashCode();
+		int roleHash = role == null ? 0 : role.getIdentifier().hashCode();
 		int projectHash = projectInfo == null ? 0 : projectInfo.getProjectId() == null ? 0 : projectInfo.getProjectId()
 			.getId().hashCode();
 		return roleHash + projectHash;
@@ -39,10 +39,18 @@ public class RoleSelection {
 		if (obj instanceof RoleSelection) {
 			RoleSelection sel = (RoleSelection) obj;
 
-			boolean roleEquals = sel.getRole() == null ? getRole() == null : sel.getRole().getId()
-				.equals(getRole() == null ? null : getRole().getId());
-			boolean projectEquals = sel.getProject() == null ? getProject() == null : sel.getProject().getProjectId()
-				.getId().equals(getProject() == null ? null : getProject().getProjectId().getId());
+			boolean roleEquals = sel.getRole() == null ? getRole() == null : sel.getRole().getIdentifier()
+				.equals(getRole() == null ? null : getRole().getIdentifier());
+			boolean projectEquals = false;
+			if (sel.getProject() != null && sel.getProject().getProjectId() != null) {
+				if (getProject() != null && getProject().getProjectId() != null) {
+					projectEquals = sel.getProject().getProjectId().equals(getProject().getProjectId());
+				}
+			} else if (sel.getProject() == null) {
+				projectEquals = getProject() == null;
+			} else if (sel.getProject().getProjectId() == null) {
+				projectEquals = getProject() == null || getProject().getProjectId() == null;
+			}
 
 			return roleEquals && projectEquals;
 		}

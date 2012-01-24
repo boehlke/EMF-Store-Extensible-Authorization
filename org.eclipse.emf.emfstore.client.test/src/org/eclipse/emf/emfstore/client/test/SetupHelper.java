@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.emfstore.client.model.Configuration;
 import org.eclipse.emf.emfstore.client.model.ModelFactory;
@@ -26,7 +27,6 @@ import org.eclipse.emf.emfstore.client.model.Usersession;
 import org.eclipse.emf.emfstore.client.model.Workspace;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.ConnectionManager;
-import org.eclipse.emf.emfstore.client.model.exceptions.NoLocalChangesException;
 import org.eclipse.emf.emfstore.client.model.impl.WorkspaceImpl;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreCommand;
 import org.eclipse.emf.emfstore.client.test.integration.forward.IntegrationTestHelper;
@@ -54,7 +54,7 @@ import org.eclipse.emf.emfstore.server.model.versioning.VersioningFactory;
  */
 public class SetupHelper {
 
-	private static final Logger LOGGER = Logger.getLogger("org.unicase.workspace.test.SetupHelper");
+	private static final Logger LOGGER = Logger.getLogger("org.eclipse.emf.emfstore.client.test.SetupHelper");
 
 	private Workspace workSpace;
 	private ProjectSpace testProjectSpace;
@@ -500,7 +500,7 @@ public class SetupHelper {
 						usersession.logIn();
 					}
 
-					getTestProjectSpace().shareProject(usersession);
+					getTestProjectSpace().shareProject(usersession, new NullProgressMonitor());
 					LOGGER.log(Level.INFO, "project shared.");
 				} catch (EmfStoreException e) {
 					e.printStackTrace();
@@ -523,10 +523,8 @@ public class SetupHelper {
 					.getChangePackage(getTestProjectSpace().getOperations(), true, false).getOperations().size()
 					+ " operations.");
 				try {
-					getTestProjectSpace().commit(logMessage);
+					getTestProjectSpace().commit(logMessage, null, new NullProgressMonitor());
 					System.out.println("commit successful!");
-				} catch (NoLocalChangesException e) {
-					// do nothing
 				} catch (EmfStoreException e) {
 					e.printStackTrace();
 				}
@@ -670,7 +668,7 @@ public class SetupHelper {
 
 		ConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getConnectionManager();
 		adminConnectionManager.executeOperation(sessionId, StaticOperationFactory.createCreateOrUpdateRoleOperation(
-			name, name + " role", name, permissionSet, permissionTypes));
+			name + " role", name, permissionSet, permissionTypes));
 	}
 
 	public static PermissionSet updatePermissionSet(SessionId sessionId) throws EmfStoreException {

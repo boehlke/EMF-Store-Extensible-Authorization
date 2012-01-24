@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -25,6 +27,7 @@ import org.eclipse.emf.emfstore.server.exceptions.InvalidInputException;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
@@ -43,24 +46,78 @@ import org.eclipse.emf.emfstore.server.model.operation.OperationFactory;
 public class UserUiController {
 
 	private static UserUiController instance;
-	private Map<String, ProjectInfo> projectInfoMap = new HashMap<String, ProjectInfo>();
 	private PermissionSet permissionSet;
 	private List<Operation<?>> permittedOperationList = new ArrayList<Operation<?>>();
 	private List<Operation<?>> forbiddenOperationList = new ArrayList<Operation<?>>();
 
 	private EditingDomain editingDomain;
+	private Adapter permissionSetListenerstener;
+
+	private class ACUserServerSyncAdapater extends EContentAdapter {
+		@Override
+		public void notifyChanged(Notification notification) {
+			int eventType = notification.getEventType();
+
+			if (notification.getEventType() == Notification.SET) {
+				ACUser user = (ACUser) notification.getNotifier();
+				Map<String, String> map = new HashMap<String, String>();
+				map.put(((EAttribute) notification.getFeature()).getName(), notification.getNewStringValue());
+				try {
+					getEmfStoreProxy().executeOperation(
+						StaticOperationFactory.createSetOrgUnitPropertiesOperation(user.getId(), map));
+				} catch (EmfStoreException e) {
+					// TODO Auto-generated catch block
+				}
+			}
+
+			else if (notification.getFeatureID(ACUser.class) == AccesscontrolPackage.AC_ORG_UNIT__ROLES) {
+				Set<RoleAssignment> added = new HashSet<RoleAssignment>();
+				Set<RoleAssignment> removed = new HashSet<RoleAssignment>();
+
+				if (eventType == Notification.ADD_MANY) {
+					added.addAll((Collection<? extends RoleAssignment>) notification.getNewValue());
+				} else if (eventType == Notification.REMOVE) {
+					removed.add((RoleAssignment) notification.getOldValue());
+				} else if (eventType == Notification.REMOVE_MANY) {
+					removed.addAll((Collection<? extends RoleAssignment>) notification.getOldValue());
+				} else if (eventType == Notification.ADD) {
+					added.add((RoleAssignment) notification.getNewValue());
+				}
+
+				for (RoleAssignment roleAssignment : removed) {
+					try {
+						Role role = roleAssignment.getRole();
+						ACUser user = (ACUser) notification.getNotifier();
+						getEmfStoreProxy().executeOperation(
+							StaticOperationFactory.createRemoveRoleOperation(user.getId(), role.getIdentifier(),
+								roleAssignment.getProjectId()));
+					} catch (InvalidInputException e) {
+					} catch (EmfStoreException e) {
+						// TODO
+					}
+				}
+
+				for (RoleAssignment roleAssignment : added) {
+					try {
+						Role role = roleAssignment.getRole();
+						ACUser user = (ACUser) notification.getNotifier();
+						getEmfStoreProxy().executeOperation(
+							StaticOperationFactory.createAssignRoleOperation(user.getId().getId(),
+								role.getIdentifier(), roleAssignment.getProjectId()));
+					} catch (InvalidInputException e) {
+					} catch (EmfStoreException e) {
+						// TODO
+					}
+				}
+
+			}
+			super.notifyChanged(notification);
+		}
+	}
 
 	private UserUiController() {
-		try {
-			for (ProjectInfo project : getEmfStoreProxy().getProjectList()) {
-				projectInfoMap.put(project.getProjectId().getId(), project);
-			}
-		} catch (EmfStoreException e) {
-			// TODO: handle Input Errors
-			// TODO: handle this like all other server problems if server problem
-			e.printStackTrace();
-		}
 		editingDomain = WorkspaceManager.getInstance().getEditingDomain();
+		permissionSetListenerstener = new ACUserServerSyncAdapater();
 	}
 
 	public static UserUiController getInstance() {
@@ -99,67 +156,7 @@ public class UserUiController {
 				}
 			} catch (EmfStoreException e) {
 			}
-			permissionSet.eAdapters().add(new EContentAdapter() {
-				@Override
-				public void notifyChanged(Notification notification) {
-					int eventType = notification.getEventType();
-
-					if (notification.getEventType() == Notification.SET) {
-						ACUser user = (ACUser) notification.getNotifier();
-						Map<String, String> map = new HashMap<String, String>();
-						map.put(((EAttribute) notification.getFeature()).getName(), notification.getNewStringValue());
-						try {
-							getEmfStoreProxy().executeOperation(
-								StaticOperationFactory.createSetOrgUnitPropertiesOperation(user.getId(), map));
-						} catch (EmfStoreException e) {
-							// TODO Auto-generated catch block
-						}
-					}
-
-					if (notification.getFeatureID(ACUser.class) == AccesscontrolPackage.AC_ORG_UNIT__ROLES) {
-						Set<RoleAssignment> added = new HashSet<RoleAssignment>();
-						Set<RoleAssignment> removed = new HashSet<RoleAssignment>();
-
-						if (eventType == Notification.ADD_MANY) {
-							added.addAll((Collection<? extends RoleAssignment>) notification.getNewValue());
-						} else if (eventType == Notification.REMOVE) {
-							removed.add((RoleAssignment) notification.getOldValue());
-						} else if (eventType == Notification.REMOVE_MANY) {
-							removed.addAll((Collection<? extends RoleAssignment>) notification.getOldValue());
-						} else if (eventType == Notification.ADD) {
-							added.add((RoleAssignment) notification.getNewValue());
-						}
-
-						for (RoleAssignment roleAssignment : removed) {
-							try {
-								Role role = roleAssignment.getRole();
-								ACUser user = (ACUser) notification.getNotifier();
-								getEmfStoreProxy().executeOperation(
-									StaticOperationFactory.createRemoveRoleOperation(user.getId(), role.getId(),
-										roleAssignment.getProjectId()));
-							} catch (InvalidInputException e) {
-							} catch (EmfStoreException e) {
-								// TODO
-							}
-						}
-
-						for (RoleAssignment roleAssignment : added) {
-							try {
-								Role role = roleAssignment.getRole();
-								ACUser user = (ACUser) notification.getNotifier();
-								getEmfStoreProxy().executeOperation(
-									StaticOperationFactory.createAssignRoleOperation(user.getId().getId(),
-										role.getId(), roleAssignment.getProjectId()));
-							} catch (InvalidInputException e) {
-							} catch (EmfStoreException e) {
-								// TODO
-							}
-						}
-
-					}
-					super.notifyChanged(notification);
-				}
-			});
+			permissionSet.eAdapters().add(permissionSetListenerstener);
 		}
 
 		return permissionSet;
@@ -175,14 +172,20 @@ public class UserUiController {
 	}
 
 	public Collection<ProjectInfo> getProjects() {
-		return projectInfoMap.values();
+		return getSession().getServerInfo().getProjectInfos();
 	}
 
 	public ProjectInfo getProject(ProjectId projectId) {
-		return projectInfoMap.get(projectId.getId());
+		EList<ProjectInfo> projectInfos = getSession().getServerInfo().getProjectInfos();
+		for (ProjectInfo projectInfo : projectInfos) {
+			if (projectInfo.getProjectId().equals(projectId)) {
+				return projectInfo;
+			}
+		}
+		return null;
 	}
 
-	public void createUser(ACUser newUser) {
+	public void createUser(ACUser newUser, Collection<RoleSelection> collection) {
 		CreateUserOperation op = OperationFactory.eINSTANCE.createCreateUserOperation();
 		op.setName(newUser.getName());
 		try {
@@ -194,12 +197,16 @@ public class UserUiController {
 
 		updatePermissionSet();
 		ACUser createdUser = (ACUser) getPermissionSet().getOrgUnit(newUser.getName());
+		createdUser.setFirstName(newUser.getFirstName());
+		createdUser.setLastName(newUser.getLastName());
+		createdUser.setDescription(newUser.getDescription());
 
-		for (RoleAssignment assignment : newUser.getRoles()) {
+		for (RoleSelection roleSelection : collection) {
 			try {
 				getEmfStoreProxy().executeOperation(
-					StaticOperationFactory.createAssignRoleOperation(createdUser.getId().getId(), assignment.getRole()
-						.getId(), assignment.getProjectId()));
+					StaticOperationFactory.createAssignRoleOperation(createdUser.getId().getId(), roleSelection
+						.getRole().getIdentifier(), roleSelection.getProject() == null ? null : roleSelection
+						.getProject().getProjectId()));
 			} catch (EmfStoreException e) {
 				// TODO
 				ModelUtil.logException("YOUR MESSAGE HERE", e);
@@ -249,10 +256,24 @@ public class UserUiController {
 	}
 
 	public void updatePermissionSet() {
+		permissionSet.eAdapters().remove(permissionSetListenerstener);
 		try {
+			getSession().updateProjectInfos();
 			getSession().updatePermissionSet();
 		} catch (EmfStoreException e) {
 			// TODO Auto-generated catch block
 		}
+		permissionSet.eAdapters().add(permissionSetListenerstener);
+	}
+
+	public void deleteOrgUnit(ACOrgUnitId id) {
+		try {
+			getEmfStoreProxy().executeOperation(StaticOperationFactory.createDeleteOrgUnitOperation(id));
+		} catch (InvalidInputException e) {
+			// TODO Auto-generated catch
+		} catch (EmfStoreException e) {
+			// TODO Auto-generated catch block
+		}
+		updatePermissionSet();
 	}
 }

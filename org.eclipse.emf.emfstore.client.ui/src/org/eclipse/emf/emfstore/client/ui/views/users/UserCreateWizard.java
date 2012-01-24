@@ -1,9 +1,7 @@
 package org.eclipse.emf.emfstore.client.ui.views.users;
 
-import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.jface.wizard.Wizard;
 
 public class UserCreateWizard extends Wizard {
@@ -33,17 +31,7 @@ public class UserCreateWizard extends Wizard {
 		newUser.setDescription(dataPage.getUserDescription());
 		newUser.setName(dataPage.getLogin());
 
-		for (RoleSelection roleSelection : rolePage.getRoleSelection()) {
-			RoleAssignment roleAssignment = AccesscontrolFactory.eINSTANCE.createRoleAssignment();
-			roleAssignment.setRole(roleSelection.getRole());
-			ProjectInfo project = roleSelection.getProject();
-			if (project != null) {
-				roleAssignment.setProjectId(project.getProjectId());
-			}
-			newUser.getRoles().add(roleAssignment);
-		}
-
-		controller.createUser(newUser);
+		controller.createUser(newUser, rolePage.getRoleSelection());
 
 		return true;
 	}

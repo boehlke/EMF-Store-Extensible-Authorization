@@ -8,7 +8,7 @@ package org.eclipse.emf.emfstore.client.ui.views.users.command;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.emfstore.client.ui.views.users.UserUiController;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
@@ -35,7 +35,7 @@ public class UserDeleteCommandHandler extends AbstractHandler {
 			Object selectedObject = treeSelection.getFirstElement();
 			if (selectedObject instanceof ACOrgUnit) {
 				ACOrgUnit orgUnit = (ACOrgUnit) selectedObject;
-				EcoreUtil.delete(orgUnit);
+				UserUiController.getInstance().deleteOrgUnit(orgUnit.getId());
 			}
 		}
 		return null;

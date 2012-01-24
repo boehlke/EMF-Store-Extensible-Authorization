@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.emfstore.client.model.util.EmfStoreInterface;
 import org.eclipse.emf.emfstore.server.model.ModelFactory;
@@ -134,7 +133,7 @@ public class UserRoleEditComposite extends Composite {
 		this.projectInfoMap = projectInfoMap;
 
 		for (Role role : permissionSet.getRoles()) {
-			roleMap.put(role.getId(), role);
+			roleMap.put(role.getIdentifier(), role);
 		}
 
 		setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -272,7 +271,7 @@ public class UserRoleEditComposite extends Composite {
 			@Override
 			public String getText(Object element) {
 				RoleAssignment assignment = (RoleAssignment) element;
-				return getRoleName(assignment.getRole().getId());
+				return getRoleName(assignment.getRole().getIdentifier());
 			}
 		});
 
@@ -349,12 +348,6 @@ public class UserRoleEditComposite extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
-	}
-
-	protected DataBindingContext initDataBindings() {
-		DataBindingContext bindingContext = new DataBindingContext();
-		//
-		return bindingContext;
 	}
 
 	public void setUser(ACUser user) {

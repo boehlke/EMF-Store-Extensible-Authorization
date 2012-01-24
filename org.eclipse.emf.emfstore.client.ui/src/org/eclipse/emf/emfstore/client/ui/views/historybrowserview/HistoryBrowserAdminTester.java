@@ -11,9 +11,10 @@
 package org.eclipse.emf.emfstore.client.ui.views.historybrowserview;
 
 import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
-import org.eclipse.emf.emfstore.client.ui.views.scm.SCMTreeNode;
 import org.eclipse.emf.emfstore.client.ui.views.users.UserUiController;
+import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
 import org.eclipse.emf.emfstore.server.connection.xmlrpc.util.StaticOperationFactory;
 import org.eclipse.emf.emfstore.server.exceptions.InvalidInputException;
 import org.eclipse.emf.emfstore.server.model.versioning.TagVersionSpec;
@@ -38,9 +39,10 @@ public class HistoryBrowserAdminTester extends PropertyTester {
 	 *      java.lang.Object)
 	 */
 	public boolean test(Object receiver, String property, Object[] args, final Object expectedValue) {
-		if (receiver instanceof SCMTreeNode && expectedValue instanceof Boolean) {
-			SCMTreeNode node = (SCMTreeNode) receiver;
-			final ProjectSpace projectSpace = node.getProjectSpace();
+		if (receiver instanceof EObject && ModelUtil.getParent(ProjectSpace.class, (EObject) receiver) != null
+			&& expectedValue instanceof Boolean) {
+			final ProjectSpace projectSpace = (ProjectSpace) ModelUtil
+				.getParent(ProjectSpace.class, (EObject) receiver);
 			if (projectSpace == null) {
 				return false;
 			}

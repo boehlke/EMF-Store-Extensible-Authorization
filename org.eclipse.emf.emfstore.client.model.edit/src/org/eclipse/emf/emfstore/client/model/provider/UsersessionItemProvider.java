@@ -30,6 +30,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.emf.emfstore.client.model.ModelPackage;
 import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.model.Usersession;
+import org.eclipse.emf.emfstore.server.model.ModelFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 
 /**
@@ -177,6 +178,8 @@ public class UsersessionItemProvider extends ItemProviderAdapter implements IEdi
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ModelPackage.Literals.USERSESSION__AC_USER);
 			childrenFeatures.add(ModelPackage.Literals.USERSESSION__CHANGED_PROPERTIES);
+			childrenFeatures.add(ModelPackage.Literals.USERSESSION__PERMISSION_SET_CACHE);
+			childrenFeatures.add(ModelPackage.Literals.USERSESSION__PROJECT_LIST_CACHE);
 		}
 		return childrenFeatures;
 	}
@@ -237,6 +240,8 @@ public class UsersessionItemProvider extends ItemProviderAdapter implements IEdi
 			return;
 		case ModelPackage.USERSESSION__AC_USER:
 		case ModelPackage.USERSESSION__CHANGED_PROPERTIES:
+		case ModelPackage.USERSESSION__PERMISSION_SET_CACHE:
+		case ModelPackage.USERSESSION__PROJECT_LIST_CACHE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -258,6 +263,12 @@ public class UsersessionItemProvider extends ItemProviderAdapter implements IEdi
 
 		newChildDescriptors.add(createChildParameter(ModelPackage.Literals.USERSESSION__CHANGED_PROPERTIES,
 			AccesscontrolFactory.eINSTANCE.createOrgUnitProperty()));
+
+		newChildDescriptors.add(createChildParameter(ModelPackage.Literals.USERSESSION__PERMISSION_SET_CACHE,
+			AccesscontrolFactory.eINSTANCE.createPermissionSet()));
+
+		newChildDescriptors.add(createChildParameter(ModelPackage.Literals.USERSESSION__PROJECT_LIST_CACHE,
+			ModelFactory.eINSTANCE.createProjectInfo()));
 	}
 
 	/**

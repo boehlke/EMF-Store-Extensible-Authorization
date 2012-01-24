@@ -11,7 +11,6 @@
 package org.eclipse.emf.emfstore.client.ui.views.changes;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.common.util.UiUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.emfstore.server.model.provider.AbstractOperationCustomLabelProvider;
@@ -37,13 +36,14 @@ public class DefaultOperationLabelProvider extends AbstractOperationCustomLabelP
 	protected static final int MAX_NAME_LENGTH = 30;
 
 	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
+	private ComposedAdapterFactory adapterFactory;
 
 	/**
 	 * Constructor.
 	 */
 	public DefaultOperationLabelProvider() {
-		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
+		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class DefaultOperationLabelProvider extends AbstractOperationCustomLabelP
 			}
 		}
 
-		return UiUtil.getNameForModelElement(operation);
+		return operation.getName();
 	}
 
 	/**
@@ -101,7 +101,8 @@ public class DefaultOperationLabelProvider extends AbstractOperationCustomLabelP
 			return UNKOWN_ELEMENT;
 		}
 
-		return " \"" + trim(UiUtil.getNameForModelElement(modelElement)) + "\"";
+		// TODO: provide sensible label for given model element
+		return " \"" + trim(adapterFactoryLabelProvider.getText(modelElement)) + "\"";
 	}
 
 	private String trim(Object object) {
@@ -117,5 +118,14 @@ public class DefaultOperationLabelProvider extends AbstractOperationCustomLabelP
 		}
 
 		return result;
+	}
+
+	public void dispose() {
+		if (adapterFactory != null) {
+			adapterFactory.dispose();
+		}
+		if (adapterFactoryLabelProvider != null) {
+			adapterFactoryLabelProvider.dispose();
+		}
 	}
 }

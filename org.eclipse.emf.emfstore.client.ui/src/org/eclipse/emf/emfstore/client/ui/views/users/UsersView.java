@@ -8,8 +8,9 @@ import org.eclipse.emf.ecp.navigator.commands.AltKeyDoubleClickAction;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.emfstore.client.ui.Activator;
+import org.eclipse.emf.emfstore.client.ui.views.users.UsersView.AdministrationNavigatorRootNode.Type;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.IMenuManager;
@@ -22,7 +23,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.commands.ICommandImageService;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
-import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.ViewPart;
 
@@ -39,37 +39,33 @@ public class UsersView extends ViewPart {
 
 	public static final String ID = "org.eclipse.emf.emfstore.client.ui.views.users.UsersView"; //$NON-NLS-1$
 
-	private static class UsersTreeContentProvider extends BaseWorkbenchContentProvider {
-		@Override
-		public Object[] getElements(Object inputElement) {
-			return getChildren(inputElement);
-		}
-
-		@Override
-		public Object[] getChildren(Object parentElement) {
-			if (parentElement instanceof PermissionSet) {
-				PermissionSet set = (PermissionSet) parentElement;
-				return set.getUsers().toArray();
-			}
-			return new Object[] {};
-		}
-
-		@Override
-		public Object getParent(Object element) {
-			return null;
-		}
-
-		@Override
-		public boolean hasChildren(Object element) {
-			return getChildren(element).length > 0;
-		}
-	}
-
 	private UserUiController contoller;
 	private TreeViewer userTreeViewer;
 
 	public UsersView() {
 		this.contoller = UserUiController.getInstance();
+	}
+
+	public static class AdministrationNavigatorRootNode {
+		public enum Type {
+			Users, Groups, SystemRoles, ProjectRoles
+		}
+
+		private Type type;
+		private Object content;
+
+		public AdministrationNavigatorRootNode(Type type, Object object) {
+			this.type = type;
+			this.content = object;
+		}
+
+		public Type getType() {
+			return type;
+		}
+
+		public Object getContent() {
+			return content;
+		}
 	}
 
 	/**
@@ -99,14 +95,43 @@ public class UsersView extends ViewPart {
 
 			@Override
 			public Object[] getElements(Object object) {
-				List<ACUser> users = new ArrayList<ACUser>();
-				for (Object obj : super.getChildren(object)) {
-					if (obj instanceof ACUser) {
-						ACUser user = (ACUser) obj;
-						users.add(user);
-					}
+				return new Object[] { new AdministrationNavigatorRootNode(Type.Users, object),
+					new AdministrationNavigatorRootNode(Type.Groups, object),
+					new AdministrationNavigatorRootNode(Type.SystemRoles, object),
+					new AdministrationNavigatorRootNode(Type.ProjectRoles, object) };
+			}
+
+			@Override
+			public boolean hasChildren(Object object) {
+				if (object instanceof AdministrationNavigatorRootNode) {
+					return true;
 				}
-				return users.toArray();
+				return super.hasChildren(object);
+			}
+
+			@Override
+			public Object[] getChildren(Object object) {
+				List<Object> children = new ArrayList<Object>();
+				if (object instanceof AdministrationNavigatorRootNode) {
+					AdministrationNavigatorRootNode node = (AdministrationNavigatorRootNode) object;
+					for (Object obj : super.getChildren(node.getContent())) {
+						if (obj instanceof ACUser && node.getType() == Type.Users) {
+							ACUser user = (ACUser) obj;
+							children.add(user);
+						}
+						if (obj instanceof Role) {
+							Role role = (Role) obj;
+							if (role.isSystemRole() && node.getType() == Type.SystemRoles) {
+								children.add(role);
+							} else if (!role.isSystemRole() && node.getType() == Type.ProjectRoles) {
+								children.add(role);
+							}
+						}
+					}
+					return children.toArray();
+				}
+
+				return super.getChildren(object);
 			}
 
 		});
@@ -121,23 +146,6 @@ public class UsersView extends ViewPart {
 		IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
 
 		toolbarManager.add(createCommandContributionItem(COMMANDID_CREATEUSER));
-		// toolbarManager.add(new Action() {
-		//
-		// @Override
-		// public boolean isEnabled() {
-		// return true;
-		// }
-		//
-		// @Override
-		// public String getText() {
-		// return "Create Enco Roles";
-		// }
-		//
-		// @Override
-		// public void run() {
-		// contoller.createStandardEnCoRoles();
-		// }
-		// });
 
 		toolbarManager.add(new Action() {
 
