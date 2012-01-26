@@ -2,14 +2,10 @@ package org.eclipse.emf.emfstore.server.accesscontrol;
 
 import java.util.Collection;
 
-import org.eclipse.emf.emfstore.common.model.Project;
-import org.eclipse.emf.emfstore.server.model.ProjectHistory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.operation.Operation;
-import org.eclipse.emf.emfstore.server.model.versioning.PrimaryVersionSpec;
 
 /**
  * provides permissions for operations
@@ -17,56 +13,7 @@ import org.eclipse.emf.emfstore.server.model.versioning.PrimaryVersionSpec;
  * @author boehlke
  * 
  */
-public interface PermissionProvider {
-
-	/**
-	 * resolves permission type id to permission type objects
-	 * 
-	 * @author boehlke
-	 * 
-	 */
-	public interface PermissionContext {
-		/**
-		 * resolve a permission type by id
-		 * 
-		 * @param typeId
-		 * @return
-		 */
-		PermissionType resolvePermissionType(String typeId);
-
-		/**
-		 * resolve the whole project history. This is only possible on the server. So by using this, the permission
-		 * provider will work offline
-		 * 
-		 * @param projectId
-		 * @return
-		 */
-		ProjectHistory resolveProjectHistory(String projectId);
-
-		/**
-		 * resolve a project by id and version
-		 * 
-		 * @param projectId
-		 * @return
-		 */
-		Project resolveProject(String projectId, PrimaryVersionSpec version);
-
-		/**
-		 * resolve a projet id by id string, this can be used to see if a given project exists in die context
-		 * 
-		 * @param projectId
-		 * @return
-		 */
-		ProjectId resolveProjectId(String projectId);
-
-		/**
-		 * resolve an org unit by string
-		 * 
-		 * @param orgUnitId
-		 * @return
-		 */
-		ACOrgUnit resolveOrgUnit(String orgUnitId);
-	}
+public abstract class PermissionProvider {
 
 	public static class PermissionTypeData {
 		private boolean projectPermission;
@@ -92,7 +39,7 @@ public interface PermissionProvider {
 	 * @author boehlke
 	 * 
 	 */
-	static class InternalPermission {
+	public static class InternalPermission {
 		private PermissionType type;
 		private ProjectId projectId;
 
@@ -131,12 +78,25 @@ public interface PermissionProvider {
 		}
 	}
 
+	private PermissionContext permissionContext;
+
+	public PermissionContext getPermissionContext() {
+		if (permissionContext == null) {
+			throw new IllegalStateException("permission context must be set");
+		}
+		return this.permissionContext;
+	}
+
+	public void setPermissionContext(PermissionContext permissionContext) {
+		this.permissionContext = permissionContext;
+	}
+
 	/**
 	 * returns the permission types used by the permission provider
 	 * 
 	 * @return
 	 */
-	public PermissionTypeData[] getAllPermissionTypes();
+	public abstract PermissionTypeData[] getAllPermissionTypes();
 
 	/**
 	 * get the permissions needed by the user to execute the operation
@@ -144,13 +104,13 @@ public interface PermissionProvider {
 	 * @param op
 	 * @return
 	 */
-	public Collection<InternalPermission> getPermissions(Operation<?> op, ACUser user, PermissionContext resolver);
+	public abstract Collection<InternalPermission> getPermissions(Operation<?> op, ACUser user);
 
 	/**
 	 * gets the i18n name of the permission type
 	 * 
 	 * @return
 	 */
-	public String getPermissionTypeName(String type);
+	public abstract String getPermissionTypeName(String type);
 
 }

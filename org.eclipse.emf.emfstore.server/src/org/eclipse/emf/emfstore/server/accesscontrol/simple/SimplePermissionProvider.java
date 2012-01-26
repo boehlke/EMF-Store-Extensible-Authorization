@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.emf.emfstore.server.accesscontrol.PermissionContext;
 import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
@@ -29,7 +30,7 @@ import org.eclipse.emf.emfstore.server.model.operation.WritePropertiesOperation;
  * @author boehlke
  * 
  */
-public class SimplePermissionProvider implements PermissionProvider {
+public class SimplePermissionProvider extends PermissionProvider {
 
 	public final static String PROJECT_ADMIN_PERMISSION = "org.eclipse.emf.emfstore.server.simple.projectadmin";
 	public final static String PROJECT_READER_PERMISSION = "org.eclipse.emf.emfstore.server.simple.projectread";
@@ -76,7 +77,10 @@ public class SimplePermissionProvider implements PermissionProvider {
 	 *      org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser,
 	 *      org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider.PermissionContext)
 	 */
-	public Collection<InternalPermission> getPermissions(Operation<?> op, ACUser user, PermissionContext resolver) {
+	@Override
+	public Collection<InternalPermission> getPermissions(Operation<?> op, ACUser user) {
+
+		PermissionContext resolver = getPermissionContext();
 
 		if (op instanceof ProjectOperation) {
 			ProjectOperation<?> projectOperation = (ProjectOperation<?>) op;
@@ -123,12 +127,14 @@ public class SimplePermissionProvider implements PermissionProvider {
 	 * 
 	 * @see org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider#getAllPermissionTypes()
 	 */
+	@Override
 	public PermissionTypeData[] getAllPermissionTypes() {
 		return new PermissionTypeData[] { new PermissionTypeData(PROJECT_READER_PERMISSION, true),
 			new PermissionTypeData(PROJECT_WRITER_PERMISSION, true),
 			new PermissionTypeData(PROJECT_ADMIN_PERMISSION, true), new PermissionTypeData(SYSTEM_PERMISSION, false) };
 	}
 
+	@Override
 	public String getPermissionTypeName(String type) {
 		// TODO Auto-generated method stub
 		return null;

@@ -35,6 +35,7 @@ import org.eclipse.emf.emfstore.common.model.util.FileUtil;
 import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
 import org.eclipse.emf.emfstore.server.accesscontrol.AccessControlImpl;
 import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider;
+import org.eclipse.emf.emfstore.server.accesscontrol.ServerPermissionContext;
 import org.eclipse.emf.emfstore.server.connection.ConnectionHandler;
 import org.eclipse.emf.emfstore.server.connection.xmlrpc.XmlRpcConnectionHandler;
 import org.eclipse.emf.emfstore.server.core.EmfStoreImpl;
@@ -166,6 +167,7 @@ public class EmfStoreController implements IApplication, Runnable {
 		}
 
 		this.permissionProvider = config.getPermissionProvider();
+		permissionProvider.setPermissionContext(new ServerPermissionContext(serverSpace));
 
 		if (serverSpace.getPermissionSet().getSuperUserRole() == null) {
 			Role superAdminRole = AccesscontrolFactory.eINSTANCE.createRole();

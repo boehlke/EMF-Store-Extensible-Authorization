@@ -22,20 +22,16 @@ import java.util.Set;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.server.ServerConfiguration;
 import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider.InternalPermission;
-import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider.PermissionContext;
 import org.eclipse.emf.emfstore.server.accesscontrol.authentication.AbstractAuthenticationControl;
 import org.eclipse.emf.emfstore.server.accesscontrol.authentication.factory.AuthenticationControlFactory;
 import org.eclipse.emf.emfstore.server.accesscontrol.authentication.factory.AuthenticationControlFactoryImpl;
 import org.eclipse.emf.emfstore.server.core.MonitorProvider;
-import org.eclipse.emf.emfstore.server.core.helper.Util;
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.FatalEmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.SessionTimedOutException;
 import org.eclipse.emf.emfstore.server.model.ClientVersionInfo;
-import org.eclipse.emf.emfstore.server.model.ProjectHistory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ServerSpace;
 import org.eclipse.emf.emfstore.server.model.SessionId;
@@ -43,13 +39,10 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.ACGroup;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.emf.emfstore.server.model.operation.Operation;
-import org.eclipse.emf.emfstore.server.model.versioning.PrimaryVersionSpec;
-import org.eclipse.emf.emfstore.server.model.versioning.Version;
 
 /**
  * A simple implementation of Authentication and Authorization Control.
@@ -321,58 +314,13 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 		return hasPermissions(sessionId, getPermissions(sessionId, operation));
 	}
 
-	private PermissionContext getPermissionTypeResolver() {
-		return new PermissionContext() {
-
-			public PermissionType resolvePermissionType(String typeId) {
-				for (PermissionType type : permissionSet.getPermissionTypes()) {
-					if (type.getId().equals(typeId)) {
-						return type;
-					}
-				}
-				return null;
-			}
-
-			public ProjectHistory resolveProjectHistory(String projectId) {
-				return Util.getProjectHistoryOrNull(projectId, serverSpace);
-			}
-
-			public ProjectId resolveProjectId(String projectId) {
-				ProjectHistory projectHistoryOrNull = Util.getProjectHistoryOrNull(projectId, serverSpace);
-				if (projectHistoryOrNull == null) {
-					return null;
-				}
-				return projectHistoryOrNull.getProjectId();
-			}
-
-			public ACOrgUnit resolveOrgUnit(String orgUnitId) {
-				ACOrgUnitId id = AccesscontrolFactory.eINSTANCE.createACOrgUnitId();
-				id.setId(orgUnitId);
-				return permissionSet.getOrgUnit(id);
-			}
-
-			public Project resolveProject(String projectId, PrimaryVersionSpec version) {
-				ProjectHistory projectHistoryOrNull = Util.getProjectHistoryOrNull(projectId, serverSpace);
-				if (projectHistoryOrNull == null) {
-					return null;
-				}
-				for (Version _version : projectHistoryOrNull.getVersions()) {
-					if (version.getIdentifier() == _version.getPrimarySpec().getIdentifier()) {
-						return _version.getProjectState();
-					}
-				}
-				return null;
-			}
-		};
-	}
-
 	public Collection<InternalPermission> getPermissions(SessionId sessionId, Operation<?> op) {
 		ACUserContainer userContainer = sessionUserMap.get(sessionId);
 		if (userContainer == null) {
 			throw new RuntimeException();
 		}
 		ACUser user = userContainer.getUser();
-		return getPermissionProvider().getPermissions(op, user, getPermissionTypeResolver());
+		return getPermissionProvider().getPermissions(op, user);
 	}
 
 	public void checkPermissions(SessionId sessionId, Operation<?> op) throws AccessControlException {
