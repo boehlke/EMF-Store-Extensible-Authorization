@@ -13,10 +13,13 @@ package org.eclipse.emf.emfstore.client.model.accesscontrol;
 import java.util.Arrays;
 
 import org.eclipse.emf.emfstore.client.model.Usersession;
+import org.eclipse.emf.emfstore.server.ServerConfiguration;
 import org.eclipse.emf.emfstore.server.accesscontrol.Permission;
+import org.eclipse.emf.emfstore.server.accesscontrol.PermissionProvider;
 import org.eclipse.emf.emfstore.server.accesscontrol.util.PermissionUtil;
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
+import org.eclipse.emf.emfstore.server.exceptions.FatalEmfStoreException;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
@@ -31,6 +34,7 @@ public class AccessControlHelper {
 
 	private ACUser user;
 	private Usersession usersession;
+	private PermissionProvider permissionProvider;
 
 	/**
 	 * Default constructor.
@@ -40,6 +44,15 @@ public class AccessControlHelper {
 	public AccessControlHelper(Usersession usersession) {
 		this.usersession = usersession;
 		this.user = usersession.getACUser();
+		try {
+			this.permissionProvider = ServerConfiguration.getPermissionSetConfiguration().getPermissionProvider();
+		} catch (FatalEmfStoreException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void hasPermission() {
+		this.permissionProvider.setPermissionContext(new ClientPermissionContext(null));
 	}
 
 	public boolean isServerAdmin() {
