@@ -20,6 +20,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -53,6 +54,7 @@ import org.eclipse.emf.emfstore.server.model.versioning.ChangePackage;
 import org.eclipse.emf.emfstore.server.model.versioning.PrimaryVersionSpec;
 import org.eclipse.emf.emfstore.server.model.versioning.VersioningFactory;
 import org.eclipse.emf.emfstore.server.model.versioning.operations.AbstractOperation;
+import org.junit.Assert;
 
 /**
  * Helper class for testing.
@@ -914,7 +916,21 @@ public final class IntegrationTestHelper {
 		LOGGER.log(Level.INFO, "examining the equlity of test project and the checked out compare project...");
 		String strTestProj = eObjectToString(testProject, testName + "-test", true);
 		String strCompareProj = eObjectToString(compareProject, testName + "-compare", true);
-		return strTestProj.equals(strCompareProj);
+		Assert.assertNotNull(strCompareProj);
+		Assert.assertNotNull(strTestProj);
+		Assert.assertNotSame(strCompareProj, "");
+		Assert.assertNotSame(strTestProj, "");
+		boolean equal = strTestProj.equals(strCompareProj);
+		if (!equal) {
+			File f1 = new File(System.getProperty("user.home") + "/p1");
+			File f2 = new File(System.getProperty("user.home") + "/p2");
+			try {
+				FileUtils.writeStringToFile(f1, strTestProj);
+				FileUtils.writeStringToFile(f2, strCompareProj);
+			} catch (IOException e) {
+			}
+		}
+		return equal;
 	}
 
 	/**

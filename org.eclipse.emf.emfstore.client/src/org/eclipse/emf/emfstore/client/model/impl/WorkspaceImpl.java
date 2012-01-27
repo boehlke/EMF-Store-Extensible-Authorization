@@ -56,6 +56,7 @@ import org.eclipse.emf.emfstore.client.model.util.ResourceHelper;
 import org.eclipse.emf.emfstore.client.model.util.WorkspaceUtil;
 import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.common.model.util.FileUtil;
+import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.InvalidVersionSpecException;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
@@ -537,7 +538,7 @@ public class WorkspaceImpl extends EObjectImpl implements Workspace {
 	/**
 	 * 
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.emfstore.client.model.Workspace#exportWorkSpace(java.io.File,
 	 *      org.eclipse.core.runtime.IProgressMonitor)
 	 */
@@ -869,38 +870,6 @@ public class WorkspaceImpl extends EObjectImpl implements Workspace {
 	 */
 	public void setWorkspaceResourceSet(ResourceSet resourceSet) {
 		this.workspaceResourceSet = resourceSet;
-	}
-
-	/**
-	 * 
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.emfstore.client.model.Workspace#updateACUser(org.eclipse.emf.emfstore.client.model.ServerInfo)
-	 */
-	public void updateACUser(ServerInfo serverInfo) throws EmfStoreException {
-		new ServerCall<Void>(serverInfo) {
-			@Override
-			protected Void run() throws EmfStoreException {
-				getUsersession().setACUser(getConnectionManager().resolveUser(getSessionId(), null));
-				return null;
-			}
-		}.execute();
-	}
-
-	/**
-	 * 
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.emfstore.client.model.Workspace#updateACUser(org.eclipse.emf.emfstore.client.model.Usersession)
-	 */
-	public void updateACUser(Usersession usersession) throws EmfStoreException {
-		new ServerCall<Void>(usersession) {
-			@Override
-			protected Void run() throws EmfStoreException {
-				getUsersession().setACUser(getConnectionManager().resolveUser(getSessionId(), null));
-				return null;
-			}
-		}.execute();
 	}
 
 	/**

@@ -49,7 +49,7 @@ public class ProjectListUpdater implements PostWorkspaceInitiator, ShareObserver
 			// fail silently
 			WorkspaceUtil.logException("Couldn't project infos upon loginCompleted.", e);
 		}
-		updateACUser(session);
+		updatePermissionSet(session);
 	}
 
 	/**
@@ -67,9 +67,9 @@ public class ProjectListUpdater implements PostWorkspaceInitiator, ShareObserver
 		}
 	}
 
-	private void updateACUser(Usersession session) {
+	private void updatePermissionSet(Usersession session) {
 		try {
-			workspace.updateACUser(session);
+			session.updatePermissionSet();
 		} catch (EmfStoreException e) {
 			// fail silently
 			WorkspaceUtil.logException("Couldn't update ACUser.", e);

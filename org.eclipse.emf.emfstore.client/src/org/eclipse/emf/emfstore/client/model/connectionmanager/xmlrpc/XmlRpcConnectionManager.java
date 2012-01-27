@@ -231,7 +231,7 @@ public class XmlRpcConnectionManager extends AbstractConnectionManager<XmlRpcCli
 		return getConnectionProxy(sessionId).callWithListResult("getEMFProperties", EMFStoreProperty.class, sessionId,
 			projectId);
 	}
-	
+
 	/**
 	 * 
 	 * {@inheritDoc}

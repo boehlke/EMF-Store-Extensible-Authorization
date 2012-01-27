@@ -483,27 +483,6 @@ public interface Workspace extends EObject, IAdaptable {
 	void setWorkspaceResourceSet(ResourceSet resourceSet);
 
 	/**
-	 * Updates the ACUser and it roles.
-	 * 
-	 * @param serverInfo
-	 *            The {@link ServerInfo} that is used to update the ACUser.
-	 * @throws EmfStoreException
-	 *             if an error occurs while updating the ACUser
-	 */
-	void updateACUser(ServerInfo serverInfo) throws EmfStoreException;
-
-	/**
-	 * Updates the ACUser and it roles.
-	 * 
-	 * @param session
-	 *            The {@link Usersession} that should be used to update the ACUser.
-	 *            If <code>null</code>, the session manager will search for a session.
-	 * @throws EmfStoreException
-	 *             if an error occurs while updating the ACUser
-	 */
-	void updateACUser(Usersession session) throws EmfStoreException;
-
-	/**
 	 * Updates the ProjectInfos for the given {@link ServerInfo}.
 	 * 
 	 * @param serverInfo

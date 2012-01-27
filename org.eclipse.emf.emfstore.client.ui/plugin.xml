@@ -60,7 +60,7 @@
          </adapter>
       </factory>
    </extension>
-   <extension
+  <extension
          id="id1"
          point="org.eclipse.core.runtime.applications">
       <application

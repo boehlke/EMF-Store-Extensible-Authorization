@@ -389,6 +389,11 @@ public final class ServerConfiguration {
 	 */
 	public static final String EMFSTORE_HOME = "-EMFStoreHome";
 
+	/**
+	 * Whether user names should be matched case insensitively.
+	 */
+	public static final String AUTHENTICATION_MATCH_USERS_IGNORE_CASE = "emfstore.accesscontrol.authentication.matchusers.ignorecase";
+
 	private static boolean testing;
 
 	private static Properties properties;
