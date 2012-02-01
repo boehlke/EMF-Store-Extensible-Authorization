@@ -70,11 +70,12 @@ public interface AuthorizationControl {
 	 */
 	ACUser resolveUser(ACOrgUnitId orgUnitId) throws AccessControlException;
 
-	boolean hasPermissions(SessionId sessionId, Collection<InternalPermission> readOperationPermissions);
+	boolean hasPermissions(SessionId sessionId, Collection<InternalPermission> readOperationPermissions)
+		throws AccessControlException;
 
-	boolean hasPermissions(SessionId sessionId, Operation<?> operation);
+	boolean hasPermissions(SessionId sessionId, Operation<?> operation) throws AccessControlException;
 
-	Collection<InternalPermission> getPermissions(SessionId sessionId, Operation<?> op);
+	Collection<InternalPermission> getPermissions(SessionId sessionId, Operation<?> op) throws AccessControlException;
 
 	void checkPermissions(SessionId sessionId, Operation<?> op) throws AccessControlException;
 }

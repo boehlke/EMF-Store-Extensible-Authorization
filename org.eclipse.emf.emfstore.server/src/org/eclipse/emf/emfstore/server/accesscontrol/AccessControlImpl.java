@@ -39,7 +39,6 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.ACGroup;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
-import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionType;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.emf.emfstore.server.model.operation.Operation;
@@ -56,7 +55,6 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 	private ServerSpace serverSpace;
 	private AbstractAuthenticationControl authenticationControl;
 	private PermissionProvider permissionProvider;
-	private PermissionSet permissionSet;
 
 	/**
 	 * Default constructor.
@@ -70,7 +68,6 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 		throws FatalEmfStoreException {
 		this.sessionUserMap = new HashMap<SessionId, ACUserContainer>();
 		this.serverSpace = serverSpace;
-		this.permissionSet = serverSpace.getPermissionSet();
 		this.permissionProvider = permissionProvider;
 
 		authenticationControl = getAuthenticationFactory().createAuthenticationControl();
@@ -266,7 +263,8 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 		}
 	}
 
-	public boolean hasPermissions(SessionId sessionId, Collection<InternalPermission> permissions) {
+	public boolean hasPermissions(SessionId sessionId, Collection<InternalPermission> permissions)
+		throws AccessControlException {
 		InternalPermission[] missingPermissions = getMissingPermissions(sessionId, permissions);
 		if (missingPermissions.length == 0) {
 			return true;
@@ -274,11 +272,10 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 		return false;
 	}
 
-	public InternalPermission[] getMissingPermissions(SessionId sessionId, Collection<InternalPermission> permissions) {
+	public InternalPermission[] getMissingPermissions(SessionId sessionId, Collection<InternalPermission> permissions)
+		throws AccessControlException {
+		checkSession(sessionId);
 		ACUserContainer userContainer = sessionUserMap.get(sessionId);
-		if (userContainer == null) {
-			throw new IllegalArgumentException("user does not exist");
-		}
 		ACUser user = userContainer.getUser();
 
 		Set<InternalPermission> requiredPermissions = new HashSet<PermissionProvider.InternalPermission>();
@@ -320,11 +317,13 @@ public class AccessControlImpl implements AuthenticationControl, AuthorizationCo
 		return permissions;
 	}
 
-	public boolean hasPermissions(SessionId sessionId, Operation<?> operation) {
+	public boolean hasPermissions(SessionId sessionId, Operation<?> operation) throws AccessControlException {
 		return hasPermissions(sessionId, getPermissions(sessionId, operation));
 	}
 
-	public Collection<InternalPermission> getPermissions(SessionId sessionId, Operation<?> op) {
+	public Collection<InternalPermission> getPermissions(SessionId sessionId, Operation<?> op)
+		throws AccessControlException {
+		checkSession(sessionId);
 		ACUserContainer userContainer = sessionUserMap.get(sessionId);
 		if (userContainer == null) {
 			throw new RuntimeException();

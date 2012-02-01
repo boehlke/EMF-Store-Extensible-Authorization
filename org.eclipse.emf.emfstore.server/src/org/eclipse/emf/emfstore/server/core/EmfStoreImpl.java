@@ -46,7 +46,6 @@ import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.FatalEmfStoreException;
 import org.eclipse.emf.emfstore.server.exceptions.InvalidInputException;
 import org.eclipse.emf.emfstore.server.exceptions.InvalidVersionSpecException;
-import org.eclipse.emf.emfstore.server.model.ModelFactory;
 import org.eclipse.emf.emfstore.server.model.ProjectHistory;
 import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
@@ -389,7 +388,8 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 		return set;
 	}
 
-	private void removeIfNotVisible(SessionId sessionId, ACOrgUnit orgUnit) throws InvalidInputException {
+	private void removeIfNotVisible(SessionId sessionId, ACOrgUnit orgUnit) throws InvalidInputException,
+		AccessControlException {
 		if (!getAuthorizationControl().hasPermissions(sessionId,
 			StaticOperationFactory.createReadOrgUnitOperation(orgUnit.getId().getId()))) {
 			EcoreUtil.delete(orgUnit);
@@ -399,15 +399,6 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 	private void checkOperationPermission(SessionId sessionId, Operation<?> op) throws AccessControlException {
 		getAuthorizationControl().checkSession(sessionId);
 		getAuthorizationControl().checkPermissions(sessionId, op);
-	}
-
-	private ProjectInfo getProjectInfo(ProjectHistory project) {
-		ProjectInfo info = ModelFactory.eINSTANCE.createProjectInfo();
-		info.setName(project.getProjectName());
-		info.setDescription(project.getProjectDescription());
-		info.setProjectId(EcoreUtil.copy(project.getProjectId()));
-		info.setVersion(project.getLastVersion().getPrimarySpec());
-		return info;
 	}
 
 	public <T> T executeOperation(final SessionId sessionId, Operation<T> op) throws EmfStoreException {
@@ -465,7 +456,8 @@ public class EmfStoreImpl extends AbstractEmfstoreInterface implements EmfStore 
 		throw new EmfStoreException("no handler for operation:" + execution.getOperation().getClass().getName());
 	}
 
-	public List<Permission[]> getOperationPermissions(SessionId sessionId, Operation<?>[] operations) {
+	public List<Permission[]> getOperationPermissions(SessionId sessionId, Operation<?>[] operations)
+		throws AccessControlException {
 		List<Permission[]> permissions = new ArrayList<Permission[]>();
 
 		for (Operation<?> op : operations) {
