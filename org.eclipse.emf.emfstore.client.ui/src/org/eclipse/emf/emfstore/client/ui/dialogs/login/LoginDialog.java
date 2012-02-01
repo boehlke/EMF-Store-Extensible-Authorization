@@ -120,6 +120,7 @@ public class LoginDialog extends TitleAreaDialog {
 		} else {
 			loadUsersession(controller.getUsersession());
 		}
+
 		return area;
 	}
 
@@ -242,7 +243,7 @@ public class LoginDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(400, 250);
+		return new Point(400, 280);
 	}
 
 	/**

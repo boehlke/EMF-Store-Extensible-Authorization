@@ -384,7 +384,7 @@ public class ACOrgUnitImpl extends IdentifiableElementImpl implements ACOrgUnit 
 
 	public boolean hasProjectRole(Role role, ProjectId projectId) {
 		for (RoleAssignment assignment : getRoles()) {
-			if (assignment.getRole() == role && assignment.getProjectId().equals(projectId)) {
+			if (assignment.getRole() == role && assignment.getProjectId() != null && assignment.getProjectId().equals(projectId)) {
 				return true;
 			}
 		}

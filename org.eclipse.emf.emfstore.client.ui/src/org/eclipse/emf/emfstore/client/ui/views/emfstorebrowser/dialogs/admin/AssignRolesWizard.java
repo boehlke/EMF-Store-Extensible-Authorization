@@ -13,29 +13,16 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.RoleAssignment;
 import org.eclipse.jface.wizard.Wizard;
 
+/**
+ * assign project roles for a specific project to users
+ * 
+ * @author boehlke
+ */
 public class AssignRolesWizard extends Wizard {
 
 	private ProjectInfo projectInfo;
 	private PermissionSet permissionSet;
 	private SelectRolesPage selectRolesPage;
-
-	static class RoleAssignmentData {
-		private Role role;
-		private ACOrgUnit orgUnit;
-
-		public RoleAssignmentData(Role role, ACOrgUnit orgUnit) {
-			this.role = role;
-			this.orgUnit = orgUnit;
-		}
-
-		public ACOrgUnit getOrgUnit() {
-			return orgUnit;
-		}
-
-		public Role getRole() {
-			return role;
-		}
-	}
 
 	/**
 	 * will be filled by ChooseUsersPage
@@ -121,12 +108,12 @@ public class AssignRolesWizard extends Wizard {
 	 * @return
 	 */
 	public boolean roleAssignmentsChanged() {
-		removedAssignments = new ArrayList<AssignRolesWizard.RoleAssignmentData>();
-		addedAssignments = new ArrayList<AssignRolesWizard.RoleAssignmentData>();
+		removedAssignments = new ArrayList<RoleAssignmentData>();
+		addedAssignments = new ArrayList<RoleAssignmentData>();
 
 		for (ACOrgUnit orgUnit : getSelectedUsers()) {
 			for (RoleAssignment role : orgUnit.getRoles()) {
-				if (!role.getProjectId().equals(projectInfo.getProjectId())) {
+				if (role.getProjectId() == null || !role.getProjectId().equals(projectInfo.getProjectId())) {
 					continue;
 				}
 				if (!selectRolesPage.isSelected(orgUnit, role.getRole())) {

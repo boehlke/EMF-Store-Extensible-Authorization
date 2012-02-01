@@ -179,7 +179,6 @@ public class UsersessionItemProvider extends ItemProviderAdapter implements IEdi
 			childrenFeatures.add(ModelPackage.Literals.USERSESSION__AC_USER);
 			childrenFeatures.add(ModelPackage.Literals.USERSESSION__CHANGED_PROPERTIES);
 			childrenFeatures.add(ModelPackage.Literals.USERSESSION__PERMISSION_SET_CACHE);
-			childrenFeatures.add(ModelPackage.Literals.USERSESSION__PROJECT_LIST_CACHE);
 		}
 		return childrenFeatures;
 	}
@@ -241,7 +240,6 @@ public class UsersessionItemProvider extends ItemProviderAdapter implements IEdi
 		case ModelPackage.USERSESSION__AC_USER:
 		case ModelPackage.USERSESSION__CHANGED_PROPERTIES:
 		case ModelPackage.USERSESSION__PERMISSION_SET_CACHE:
-		case ModelPackage.USERSESSION__PROJECT_LIST_CACHE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -266,9 +264,6 @@ public class UsersessionItemProvider extends ItemProviderAdapter implements IEdi
 
 		newChildDescriptors.add(createChildParameter(ModelPackage.Literals.USERSESSION__PERMISSION_SET_CACHE,
 			AccesscontrolFactory.eINSTANCE.createPermissionSet()));
-
-		newChildDescriptors.add(createChildParameter(ModelPackage.Literals.USERSESSION__PROJECT_LIST_CACHE,
-			ModelFactory.eINSTANCE.createProjectInfo()));
 	}
 
 	/**

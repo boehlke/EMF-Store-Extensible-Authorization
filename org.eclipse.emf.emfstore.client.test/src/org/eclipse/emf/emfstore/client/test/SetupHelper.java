@@ -27,6 +27,7 @@ import org.eclipse.emf.emfstore.client.model.Usersession;
 import org.eclipse.emf.emfstore.client.model.Workspace;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.ConnectionManager;
+import org.eclipse.emf.emfstore.client.model.connectionmanager.KeyStoreManager;
 import org.eclipse.emf.emfstore.client.model.impl.WorkspaceImpl;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreCommand;
 import org.eclipse.emf.emfstore.client.test.integration.forward.IntegrationTestHelper;
@@ -42,6 +43,7 @@ import org.eclipse.emf.emfstore.server.model.ProjectId;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.SessionId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.versioning.LogMessage;
 import org.eclipse.emf.emfstore.server.model.versioning.PrimaryVersionSpec;
@@ -141,11 +143,16 @@ public class SetupHelper {
 	 * @return acorgunitid
 	 * @throws EmfStoreException in case of failure
 	 */
-	public static ACOrgUnitId createUserOnServer(SessionId sessionId, String username) throws EmfStoreException {
+	public static ACUser createUserOnServer(SessionId sessionId, String username) throws EmfStoreException {
 		ConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getConnectionManager();
 		adminConnectionManager.executeOperation(sessionId, StaticOperationFactory.createCreateUserOperation(username));
-		PermissionSet set = updatePermissionSet(sessionId);
-		return set.getOrgUnit(username).getId();
+		return (ACUser) updatePermissionSet(sessionId).getOrgUnit(username);
+	}
+
+	public static void deleteUserOnServer(SessionId sessionId, ACOrgUnitId userId) throws EmfStoreException {
+		ConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getConnectionManager();
+		adminConnectionManager.executeOperation(sessionId, StaticOperationFactory.createDeleteOrgUnitOperation(userId));
+		updatePermissionSet(sessionId);
 	}
 
 	/**
@@ -155,7 +162,7 @@ public class SetupHelper {
 	 * @param projectId projectid, can be null, if role is serveradmin
 	 * @throws EmfStoreException in case of failure
 	 */
-	public static void setUsersRole(SessionId sessionId, String orgUnitId, String roleId, ProjectId projectId)
+	public static void addUsersRole(SessionId sessionId, String orgUnitId, String roleId, ProjectId projectId)
 		throws EmfStoreException {
 		ConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getConnectionManager();
 		adminConnectionManager.executeOperation(sessionId,
@@ -243,7 +250,7 @@ public class SetupHelper {
 		serverInfo.setPort(8080);
 		// serverInfo.setUrl("127.0.0.1");
 		serverInfo.setUrl("localhost");
-		serverInfo.setCertificateAlias("emfstore test certificate (do not use in production!)");
+		serverInfo.setCertificateAlias(KeyStoreManager.DEFAULT_CERTIFICATE);
 
 		return serverInfo;
 	}
@@ -652,23 +659,36 @@ public class SetupHelper {
 		}.run(false);
 	}
 
-	public static void removeServerTestProfile() {
+	/**
+	 * Delete client and server test profile.
+	 * 
+	 * @throws IOException if deletion fails
+	 */
+	public static void removeServerTestProfile() throws IOException {
 		String serverPath = ServerConfiguration.getServerHome();
 		File serverDirectory = new File(serverPath);
-		try {
-			FileUtil.deleteFolder(serverDirectory);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		FileUtil.deleteFolder(serverDirectory);
+		String clientPath = Configuration.getWorkspaceDirectory();
+		File clientDirectory = new File(clientPath);
+		FileUtil.deleteFolder(clientDirectory);
 
 	}
 
-	public static void addRole(SessionId sessionId, PermissionSet permissionSet, String name, String... permissionTypes)
-		throws InvalidInputException, EmfStoreException {
+	/**
+	 * @param sessionId
+	 * @param permissionSet
+	 * @param name
+	 * @param permissionTypes
+	 * @return role id
+	 * @throws InvalidInputException
+	 * @throws EmfStoreException
+	 */
+	public static String addRole(SessionId sessionId, PermissionSet permissionSet, String name,
+		String... permissionTypes) throws InvalidInputException, EmfStoreException {
 
 		ConnectionManager adminConnectionManager = WorkspaceManager.getInstance().getConnectionManager();
-		adminConnectionManager.executeOperation(sessionId, StaticOperationFactory.createCreateOrUpdateRoleOperation(
-			name + " role", name, permissionSet, permissionTypes));
+		return adminConnectionManager.executeOperation(sessionId, StaticOperationFactory
+			.createCreateOrUpdateRoleOperation(name + " role", name, permissionSet, permissionTypes));
 	}
 
 	public static PermissionSet updatePermissionSet(SessionId sessionId) throws EmfStoreException {

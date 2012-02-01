@@ -20,7 +20,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -70,7 +69,7 @@ public final class WorkspaceManager {
 	private ECrossReferenceAdapter crossReferenceAdapter;
 	private ResourceSet resourceSet;
 
-	private AdapterFactoryEditingDomain editingDomain;
+	private EditingDomain editingDomain;
 
 	private SessionManager sessionManager;
 
@@ -177,9 +176,7 @@ public final class WorkspaceManager {
 	 * @generated NOT
 	 */
 	private Workspace initWorkSpace() {
-		this.editingDomain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE), new BasicCommandStack());
-		resourceSet = editingDomain.getResourceSet();
+		resourceSet = new ResourceSetImpl();
 		resourceSet.getLoadOptions().putAll(ModelUtil.getResourceLoadOptions());
 
 		IConfigurationElement[] elements = Platform.getExtensionRegistry().getConfigurationElementsFor(
@@ -198,7 +195,8 @@ public final class WorkspaceManager {
 		}
 
 		// register an editing domain on the resource
-		Configuration.setEditingDomain(createEditingDomain(resourceSet));
+		editingDomain = createEditingDomain(resourceSet);
+		Configuration.setEditingDomain(editingDomain);
 
 		URI fileURI = URI.createFileURI(Configuration.getWorkspacePath());
 		File workspaceFile = new File(Configuration.getWorkspacePath());

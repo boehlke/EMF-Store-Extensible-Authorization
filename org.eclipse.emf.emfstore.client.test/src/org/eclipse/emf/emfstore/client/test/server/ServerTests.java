@@ -5,16 +5,19 @@
  */
 package org.eclipse.emf.emfstore.client.test.server;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.emfstore.client.model.Configuration;
 import org.eclipse.emf.emfstore.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.client.model.Usersession;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.ConnectionManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.KeyStoreManager;
+import org.eclipse.emf.emfstore.client.model.util.EMFStoreCommand;
 import org.eclipse.emf.emfstore.client.test.SetupHelper;
-import org.eclipse.emf.emfstore.client.test.testmodel.TestmodelFactory;
+import org.eclipse.emf.emfstore.client.test.WorkspaceTest;
 import org.eclipse.emf.emfstore.common.model.ModelFactory;
 import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
@@ -37,6 +40,7 @@ import org.eclipse.emf.emfstore.server.model.versioning.VersionSpec;
 import org.eclipse.emf.emfstore.server.model.versioning.VersioningFactory;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
@@ -46,17 +50,34 @@ import org.junit.BeforeClass;
  * @author wesendon
  */
 
-public class ServerTests {
+public class ServerTests extends WorkspaceTest {
 
-	private static final String ROLE_READER = "reader";
-	private static final String ROLE_WRITER = "writer";
-	private static final String ROLE_ADMIN = "admin";
+	private static SessionId sessionId;
+	private static ConnectionManager connectionManager;
+	private int projectsOnServerBeforeTest;
+	private String writerRoleId;
+	private String readerRoleId;
+	private String adminRoleId;
+	private static HashMap<Class<?>, Object> arguments;
+	private static ServerInfo serverInfo;
+
+	public static void setServerInfo(ServerInfo server_Info) {
+		serverInfo = server_Info;
+	}
+
+	public static ServerInfo getServerInfo() {
+		return serverInfo;
+	}
 
 	/**
 	 * @return the sessionId
 	 */
 	public static SessionId getSessionId() {
 		return sessionId;
+	}
+
+	public static void setSessionId(SessionId session_id) {
+		sessionId = session_id;
 	}
 
 	/**
@@ -66,64 +87,44 @@ public class ServerTests {
 		return connectionManager;
 	}
 
-	/**
-	 * @return the generatedProject
-	 */
-	public static Project getGeneratedProject() {
-		return generatedProject;
+	public ProjectInfo getProjectInfo() {
+		return getProjectSpace().getProjectInfo();
 	}
 
-	/**
-	 * @return the generatedProjectId
-	 */
-	public static ProjectId getGeneratedProjectId() {
-		return generatedProjectId;
+	public ProjectId getProjectId() {
+		return getProjectSpace().getProjectId();
 	}
 
-	public static ProjectInfo getProjectInfo() {
-		return projectInfo;
+	public PrimaryVersionSpec getProjectVersion() {
+		return getProjectInfo().getVersion();
 	}
 
 	/**
 	 * @return the projectsOnServerBeforeTest
 	 */
-	public static int getProjectsOnServerBeforeTest() {
+	public int getProjectsOnServerBeforeTest() {
 		return projectsOnServerBeforeTest;
 	}
-
-	/**
-	 * @return the generatedProjectVersion
-	 */
-	public static PrimaryVersionSpec getGeneratedProjectVersion() {
-		return generatedProjectVersion;
-	}
-
-	private static SessionId sessionId;
-	private static ConnectionManager connectionManager;
-	private static Project generatedProject;
-	private static ProjectId generatedProjectId;
-	private static ProjectInfo projectInfo;
-	private static int projectsOnServerBeforeTest;
-	private static PrimaryVersionSpec generatedProjectVersion;
-	private static HashMap<Class<?>, Object> arguments;
 
 	/**
 	 * Start server and gain sessionid.
 	 * 
 	 * @throws EmfStoreException in case of failure
+	 * @throws IOException
 	 */
 	@BeforeClass
-	public static void setUpBeforeClass() throws EmfStoreException {
+	public static void setUpBeforeClass() throws EmfStoreException, IOException {
 		ServerConfiguration.setTesting(true);
+		Configuration.setTesting(true);
+
+		// delete all data before test start
+		SetupHelper.removeServerTestProfile();
+
 		SetupHelper.addUserFileToServer(false);
 		SetupHelper.startSever();
-		connectionManager = WorkspaceManager.getInstance().getConnectionManager();
-		login(SetupHelper.getServerInfo());
-		// FIXME: readd when new project generator is available
-		generatedProject = ModelFactory.eINSTANCE.createProject();
-		generatedProject.addModelElement(TestmodelFactory.eINSTANCE.createTestElement());
-		generatedProject.initCaches();
-		projectsOnServerBeforeTest = 1;
+		setConnectionManager(WorkspaceManager.getInstance().getConnectionManager());
+		setServerInfo(SetupHelper.getServerInfo());
+		// login();
 		initArguments();
 	}
 
@@ -133,27 +134,28 @@ public class ServerTests {
 	 * @throws EmfStoreException in case of failure
 	 */
 
-	public static void setupUsersAndRoles() throws EmfStoreException {
+	public void setupUsersAndRoles() throws EmfStoreException {
 		PermissionSet set = SetupHelper.updatePermissionSet(getSessionId());
-		if (set.getRole(ROLE_READER) == null) {
-			SetupHelper.addRole(getSessionId(), set, ROLE_WRITER, SimplePermissionProvider.PROJECT_WRITER_PERMISSION,
+		if (set.getRole("Project Reader") == null) {
+			writerRoleId = SetupHelper.addRole(getSessionId(), set, "Project Writer",
+				SimplePermissionProvider.PROJECT_WRITER_PERMISSION, SimplePermissionProvider.PROJECT_READER_PERMISSION);
+			readerRoleId = SetupHelper.addRole(getSessionId(), set, "Project Reader",
 				SimplePermissionProvider.PROJECT_READER_PERMISSION);
-			SetupHelper.addRole(getSessionId(), set, ROLE_READER, SimplePermissionProvider.PROJECT_READER_PERMISSION);
-			SetupHelper.addRole(getSessionId(), set, ROLE_ADMIN, SimplePermissionProvider.PROJECT_WRITER_PERMISSION,
-				SimplePermissionProvider.PROJECT_READER_PERMISSION, SimplePermissionProvider.PROJECT_ADMIN_PERMISSION);
-		}
-		if (set.getOrgUnit("reader") == null) {
-			ACOrgUnitId orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "reader");
-			SetupHelper.setUsersRole(getSessionId(), orgUnitId.getId(), ROLE_READER, getGeneratedProjectId());
+			adminRoleId = SetupHelper.addRole(getSessionId(), set, "Project Admin",
+				SimplePermissionProvider.PROJECT_WRITER_PERMISSION, SimplePermissionProvider.PROJECT_READER_PERMISSION,
+				SimplePermissionProvider.PROJECT_ADMIN_PERMISSION);
+			ACOrgUnitId orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "reader").getId();
+			SetupHelper.addUsersRole(getSessionId(), orgUnitId.getId(), readerRoleId, getProjectId());
 
-			orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "writer1");
-			SetupHelper.setUsersRole(getSessionId(), orgUnitId.getId(), ROLE_WRITER, getGeneratedProjectId());
+			orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "writer1").getId();
+			SetupHelper.addUsersRole(getSessionId(), orgUnitId.getId(), writerRoleId, getProjectId());
 
-			orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "writer2");
-			SetupHelper.setUsersRole(getSessionId(), orgUnitId.getId(), ROLE_WRITER, getGeneratedProjectId());
+			orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "writer2").getId();
+			SetupHelper.addUsersRole(getSessionId(), orgUnitId.getId(), writerRoleId, getProjectId());
 
-			orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "projectadmin");
-			SetupHelper.setUsersRole(getSessionId(), orgUnitId.getId(), ROLE_ADMIN, getGeneratedProjectId());
+			orgUnitId = SetupHelper.createUserOnServer(getSessionId(), "projectadmin").getId();
+			SetupHelper.addUsersRole(getSessionId(), orgUnitId.getId(), adminRoleId, getProjectId());
+
 		}
 	}
 
@@ -170,8 +172,9 @@ public class ServerTests {
 	 * @param serverInfo serverinfo
 	 * @throws EmfStoreException in case of failure
 	 */
-	protected static void login(ServerInfo serverInfo) throws EmfStoreException {
-		sessionId = login(serverInfo, "super", "super");
+	protected static void login() throws EmfStoreException {
+		SessionId sessionId = login(getServerInfo(), "super", "super");
+		setSessionId(sessionId);
 	}
 
 	/**
@@ -182,73 +185,8 @@ public class ServerTests {
 	 * @throws EmfStoreException in case of failure
 	 */
 	protected static SessionId login(ServerInfo serverInfo, String username, String password) throws EmfStoreException {
-		return connectionManager.logIn(username, KeyStoreManager.getInstance().encrypt(password, serverInfo),
+		return getConnectionManager().logIn(username, KeyStoreManager.getInstance().encrypt(password, serverInfo),
 			serverInfo, Configuration.getClientVersion());
-	}
-
-	/**
-	 * Shuts down server after testing.
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() {
-		SetupHelper.stopServer();
-		// SetupHelper.cleanupServer();
-	}
-
-	/**
-	 * Compares two projects.
-	 * 
-	 * @param expected expected
-	 * @param compare to be compared
-	 */
-	public static void assertEqual(Project expected, Project compare) {
-		try {
-			if (!ModelUtil.eObjectToString(expected).equals(ModelUtil.eObjectToString(compare))) {
-				throw new AssertionError("Projects are not equal.");
-			}
-		} catch (SerializationException e) {
-			throw new AssertionError("Couldn't compare projects.");
-		}
-	}
-
-	/**
-	 * Adds a project to the server before test.
-	 * 
-	 * @throws EmfStoreException in case of failure
-	 */
-	@Before
-	public void beforeTest() throws EmfStoreException {
-		projectInfo = connectionManager.createProject(sessionId, "initialProject", "TestProject",
-			SetupHelper.createLogMessage("super", "a logmessage"), generatedProject);
-		generatedProjectId = projectInfo.getProjectId();
-		generatedProjectVersion = projectInfo.getVersion();
-		setupUsersAndRoles();
-	}
-
-	/**
-	 * Removes all projects from server after test.
-	 * 
-	 * @throws EmfStoreException in case of failure
-	 */
-	@After
-	public void afterTest() throws EmfStoreException {
-		for (ProjectInfo info : connectionManager.getProjectList(sessionId)) {
-			connectionManager.deleteProject(sessionId, info.getProjectId(), true);
-		}
-	}
-
-	/**
-	 * Creates a historyquery.
-	 * 
-	 * @param ver1 source
-	 * @param ver2 target
-	 * @return historyquery
-	 */
-	public static HistoryQuery createHistoryQuery(PrimaryVersionSpec ver1, PrimaryVersionSpec ver2) {
-		HistoryQuery historyQuery = VersioningFactory.eINSTANCE.createHistoryQuery();
-		historyQuery.setSource(EcoreUtil.copy(ver1));
-		historyQuery.setTarget(EcoreUtil.copy(ver2));
-		return historyQuery;
 	}
 
 	private static void initArguments() {
@@ -269,6 +207,106 @@ public class ServerTests {
 	}
 
 	/**
+	 * Shuts down server after testing.
+	 */
+	@AfterClass
+	public static void tearDownAfterClass() {
+		SetupHelper.stopServer();
+
+	}
+
+	/**
+	 * Adds a project to the server before test.
+	 * 
+	 * @throws EmfStoreException in case of failure
+	 */
+	@Before
+	public void beforeTest() throws EmfStoreException {
+		new EMFStoreCommand() {
+			@Override
+			protected void doRun() {
+				try {
+					getProjectSpace().shareProject();
+					setupUsersAndRoles();
+				} catch (EmfStoreException e) {
+					Assert.fail();
+				}
+			}
+		}.run(false);
+		// setProjectInfo(getConnectionManager().createProject(getSessionId(), "initialProject", "TestProject",
+		// SetupHelper.createLogMessage("super", "a logmessage"), getProject()));
+		this.projectsOnServerBeforeTest = 1;
+	}
+
+	/**
+	 * Removes all projects from server after test.
+	 * 
+	 * @throws EmfStoreException in case of failure
+	 */
+	@After
+	public void afterTest() throws EmfStoreException {
+		for (ProjectInfo info : WorkspaceManager.getInstance().getCurrentWorkspace()
+			.getRemoteProjectList(getServerInfo())) {
+			WorkspaceManager.getInstance().getCurrentWorkspace()
+				.deleteRemoteProject(getServerInfo(), info.getProjectId(), true);
+		}
+		SetupHelper.cleanupServer();
+	}
+
+	/**
+	 * Sets up user on server.
+	 * 
+	 * @param name name of the user (must be specified in users.properties)
+	 * @param role of type RolesPackage.eINSTANCE.getWriterRole() or RolesPackage.eINSTANCE.getReaderRole() ....
+	 * @throws EmfStoreException in case of failure
+	 */
+
+	/**
+	 * Sets up usersession.
+	 * 
+	 * @param name of the user (must be specified in users.properties)
+	 * @param password of the user (must be specified in users.properties)
+	 * @return established usersession
+	 */
+	public Usersession setUpUsersession(String username, String password) {
+		Usersession usersession = org.eclipse.emf.emfstore.client.model.ModelFactory.eINSTANCE.createUsersession();
+		usersession.setServerInfo(getServerInfo());
+		usersession.setUsername(username);
+		usersession.setPassword(password);
+		return usersession;
+	}
+
+	/**
+	 * Compares two projects.
+	 * 
+	 * @param expected expected
+	 * @param compare to be compared
+	 */
+	public static void assertEqual(Project expected, Project compare) {
+		try {
+			if (!ModelUtil.eObjectToString(expected).equals(ModelUtil.eObjectToString(compare))) {
+				throw new AssertionError("Projects are not equal.");
+			}
+		} catch (SerializationException e) {
+			throw new AssertionError("Couldn't compare projects.");
+		}
+	}
+
+	/**
+	 * Creates a historyquery.
+	 * 
+	 * @param ver1 source
+	 * @param ver2 target
+	 * @return historyquery
+	 */
+	public static HistoryQuery createHistoryQuery(PrimaryVersionSpec ver1, PrimaryVersionSpec ver2) {
+		HistoryQuery historyQuery = VersioningFactory.eINSTANCE.createHistoryQuery();
+		historyQuery.setSource(EcoreUtil.copy(ver1));
+		historyQuery.setTarget(EcoreUtil.copy(ver2));
+		return historyQuery;
+	}
+
+	/**
 	 * Get a default Parameter.
 	 * 
 	 * @param clazz parameter type
@@ -280,5 +318,17 @@ public class ServerTests {
 			return false;
 		}
 		return (b) ? arguments.get(clazz) : null;
+	}
+
+	public String getReaderRoleId() {
+		return readerRoleId;
+	}
+
+	public String getWriterRoleId() {
+		return writerRoleId;
+	}
+
+	public String getAdminRoleId() {
+		return adminRoleId;
 	}
 }

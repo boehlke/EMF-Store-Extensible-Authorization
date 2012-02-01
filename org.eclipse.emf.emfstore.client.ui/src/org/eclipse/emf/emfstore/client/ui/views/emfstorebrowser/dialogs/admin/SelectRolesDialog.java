@@ -30,37 +30,6 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 public class SelectRolesDialog extends SelectionDialog {
 
-	/**
-	 * Hack: Tree Path logic cannot handle equivalence, so we need to box the roles
-	 * 
-	 * @author boehlke
-	 */
-	public class RoleBox {
-		private Role role;
-
-		public RoleBox(Role role) {
-			this.role = role;
-		}
-
-		public Role getRole() {
-			return role;
-		}
-
-		@Override
-		public int hashCode() {
-			return getRole().hashCode();
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (obj instanceof RoleBox) {
-				RoleBox box = (RoleBox) obj;
-				return box.getRole().equals(getRole());
-			}
-			return super.equals(obj);
-		}
-	}
-
 	private class TreeContentProvider implements ITreeContentProvider {
 
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
@@ -75,7 +44,7 @@ public class SelectRolesDialog extends SelectionDialog {
 
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof ACUser) {
-				List<RoleBox> boxes = new ArrayList<SelectRolesDialog.RoleBox>();
+				List<RoleBox> boxes = new ArrayList<RoleBox>();
 				for (Role role : controller.getPermissionSet().getProjectRoles()) {
 					boxes.add(new RoleBox(role));
 				}

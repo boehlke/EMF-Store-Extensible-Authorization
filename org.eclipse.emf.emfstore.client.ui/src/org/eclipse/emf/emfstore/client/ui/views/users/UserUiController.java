@@ -258,7 +258,6 @@ public class UserUiController {
 	public void updatePermissionSet() {
 		permissionSet.eAdapters().remove(permissionSetListenerstener);
 		try {
-			getSession().updateProjectInfos();
 			getSession().updatePermissionSet();
 		} catch (EmfStoreException e) {
 			// TODO Auto-generated catch block

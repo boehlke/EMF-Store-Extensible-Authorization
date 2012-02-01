@@ -2,7 +2,6 @@ package org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin;
 
 import java.util.Collection;
 
-import org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.AssignRolesWizard.RoleAssignmentData;
 import org.eclipse.jface.dialogs.IPageChangingListener;
 import org.eclipse.jface.dialogs.PageChangingEvent;
 import org.eclipse.jface.viewers.ILabelProvider;

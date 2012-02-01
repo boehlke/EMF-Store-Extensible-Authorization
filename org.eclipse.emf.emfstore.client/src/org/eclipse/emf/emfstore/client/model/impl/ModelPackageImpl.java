@@ -334,15 +334,6 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getUsersession_ProjectListCache() {
-		return (EReference) usersessionEClass.getEStructuralFeatures().get(9);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getProjectSpace() {
 		return projectSpaceEClass;
 	}
@@ -615,7 +606,6 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		createEReference(usersessionEClass, USERSESSION__AC_USER);
 		createEReference(usersessionEClass, USERSESSION__CHANGED_PROPERTIES);
 		createEReference(usersessionEClass, USERSESSION__PERMISSION_SET_CACHE);
-		createEReference(usersessionEClass, USERSESSION__PROJECT_LIST_CACHE);
 
 		projectSpaceEClass = createEClass(PROJECT_SPACE);
 		createEReference(projectSpaceEClass, PROJECT_SPACE__PROJECT);
@@ -748,9 +738,6 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		initEReference(getUsersession_PermissionSetCache(), theAccesscontrolPackage.getPermissionSet(), null,
 			"permissionSetCache", null, 0, 1, Usersession.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
 			IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUsersession_ProjectListCache(), theModelPackage_1.getProjectInfo(), null, "projectListCache",
-			null, 0, -1, Usersession.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(projectSpaceEClass, ProjectSpace.class, "ProjectSpace", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);

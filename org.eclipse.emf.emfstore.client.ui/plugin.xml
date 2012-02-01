@@ -32,7 +32,14 @@
          </adapter>
       </factory>
       <factory
-            adaptableType="org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.SelectRolesPage"
+            adaptableType="org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.RoleAssignmentData"
+            class="org.eclipse.emf.emfstore.client.ui.views.LabelProviderAdpaterFactory">
+         <adapter
+               type="org.eclipse.ui.model.IWorkbenchAdapter">
+         </adapter>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.RoleBox"
             class="org.eclipse.emf.emfstore.client.ui.views.LabelProviderAdpaterFactory">
          <adapter
                type="org.eclipse.ui.model.IWorkbenchAdapter">
@@ -699,7 +706,7 @@
          point="org.eclipse.ui.commands">
       <command
             defaultHandler="org.eclipse.emf.emfstore.client.ui.handlers.CheckoutHandler"
-            id="org.eclipse.emf.emfstore.client.ui.historybrowserview.checkout"
+            id="org.eclipse.emf.emfstore.client.ui.views.users.UsersView"
             name="CheckoutRevision">
       </command>
       <command
@@ -807,16 +814,75 @@
               class="org.eclipse.emf.emfstore.client.ui.testers.PermissionTester"
               id="org.eclipse.emf.emfstore.client.ui.testers.PermissionTester"
               namespace="org.eclipse.emf.emfstore.client.ui.permissions"
-              properties="canUpdate,canForcedRevert,canRevert,canAddTag,canRemoveTag,canDeleteProject,canImportProjectHistory,canExportProjectHistory,canCreateProject"
+              properties="canAssignProjectRoles,canUpdate,canForcedRevert,canRevert,canAddTag,canRemoveTag,canDeleteProject,canImportProjectHistory,canExportProjectHistory,canCreateProject"
               type="org.eclipse.emf.emfstore.client.model.ProjectSpace">
         </propertyTester>
          <propertyTester
                class="org.eclipse.emf.emfstore.client.ui.testers.PermissionTester"
                id="org.eclipse.emf.emfstore.client.ui.testers.PermissionTester"
                namespace="org.eclipse.emf.emfstore.client.ui.permissions"
-               properties="canUpdate,canForcedRevert,canRevert,canAddTag,canRemoveTag,canDeleteProject,canImportProjectHistory,canExportProjectHistory,canCreateProject"
+               properties="canAssignProjectRoles,canUpdate,canForcedRevert,canRevert,canAddTag,canRemoveTag,canDeleteProject,canImportProjectHistory,canExportProjectHistory,canCreateProject"
                type="org.eclipse.emf.emfstore.server.model.ProjectInfo">
          </propertyTester>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="enco.sox2.admin.ui"
+            class="org.eclipse.emf.emfstore.client.ui.views.users.UsersView"
+            icon="icons/user.png"
+            id="org.eclipse.emf.emfstore.client.ui.views.users.UsersView"
+            name="Admin Browser"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.emf.emfstore.client.ui.views.users.command.UserCreateCommandHandler"
+            id="org.eclipse.emf.emfstore.client.ui.admin.CreateUser"
+            name="Create User">
+      </command>
+      <command
+            defaultHandler="org.eclipse.emf.emfstore.client.ui.views.users.command.UserDeleteCommandHandler"
+            id="org.eclipse.emf.emfstore.client.ui.admin.DeleteUser"
+            name="Delete User">
+      </command>
+      <command
+            defaultHandler="org.eclipse.emf.emfstore.client.ui.views.users.command.AssignProjectRolesCommandHandler"
+            id="org.eclipse.emf.emfstore.client.ui.admin.AssignProjectRoles"
+            name="Assign Roles">
+           <visibleWhen
+           		checkEnabled="false">
+				<iterate
+	               ifEmpty="false"
+	               operator="and">
+                 <test
+                       forcePluginActivation="true"
+                       property="org.eclipse.emf.emfstore.client.ui.permissions.canAssignProjectRoles"
+                       value="true">
+                 </test>
+                 <test
+                       forcePluginActivation="true"
+                       property="org.eclipse.emf.emfstore.client.ui.testers.serverInfoIsLoggedIn"
+                       value="true">
+                 </test>
+                 </iterate>
+           </visibleWhen>
+
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.emf.emfstore.client.ui.views.RepositoryView?after=additions">
+         <command
+               commandId="org.eclipse.emf.emfstore.client.ui.admin.AssignProjectRoles"
+               label="Assign Roles"
+               style="push">
+         </command>
+      </menuContribution>
    </extension>
 
 </plugin>

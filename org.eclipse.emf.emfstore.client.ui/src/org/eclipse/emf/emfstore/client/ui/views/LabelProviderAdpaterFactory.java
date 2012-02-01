@@ -7,7 +7,8 @@ package org.eclipse.emf.emfstore.client.ui.views;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.SelectRolesDialog.RoleBox;
+import org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.RoleAssignmentData;
+import org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.RoleBox;
 import org.eclipse.emf.emfstore.client.ui.views.users.RoleSelection;
 import org.eclipse.emf.emfstore.client.ui.views.users.UsersView.AdministrationNavigatorRootNode;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
@@ -19,7 +20,9 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
 /**
- * this adapter factory knows objects used in the UI views
+ * this adapter factory knows objects used in the UI views and provides adaptation to LabelProvider, this is registered
+ * in plugin.xml and used by the WorkspaceLabelProvider. The ContentProvider part of the WorkbenchAdapter is not
+ * implemented
  * 
  * @author boehlke
  * 
@@ -40,16 +43,17 @@ public class LabelProviderAdpaterFactory implements IAdapterFactory {
 				if (element instanceof RoleBox) {
 					RoleBox role = (RoleBox) element;
 					return role.getRole().getName();
-				}
-				if (element instanceof RoleSelection) {
+				} else if (element instanceof RoleSelection) {
 					RoleSelection roleSelection = (RoleSelection) element;
 					Role role = roleSelection.getRole();
 					if (role == null) {
 						return roleSelection.getProject().getName();
 					}
 					return role.getName();
-				}
-				if (element instanceof AdministrationNavigatorRootNode) {
+				} else if (element instanceof RoleAssignmentData) {
+					RoleAssignmentData data = (RoleAssignmentData) element;
+					return data.getRole().getName() + " for " + data.getOrgUnit().getName();
+				} else if (element instanceof AdministrationNavigatorRootNode) {
 					AdministrationNavigatorRootNode node = (AdministrationNavigatorRootNode) element;
 					switch (node.getType()) {
 					case Users:
@@ -79,8 +83,7 @@ public class LabelProviderAdpaterFactory implements IAdapterFactory {
 		};
 
 		public Object[] getChildren(Object o) {
-			// TODO Auto-generated method stub
-			return null;
+			throw new UnsupportedOperationException();
 		}
 
 		public ImageDescriptor getImageDescriptor(Object object) {
@@ -96,8 +99,7 @@ public class LabelProviderAdpaterFactory implements IAdapterFactory {
 		}
 
 		public Object getParent(Object o) {
-			// TODO Auto-generated method stub
-			return null;
+			throw new UnsupportedOperationException();
 		}
 
 	}

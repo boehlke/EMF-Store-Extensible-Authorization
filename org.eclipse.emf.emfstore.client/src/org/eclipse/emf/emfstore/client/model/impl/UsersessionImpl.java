@@ -39,12 +39,10 @@ import org.eclipse.emf.emfstore.client.model.observers.LoginObserver;
 import org.eclipse.emf.emfstore.client.model.observers.LogoutObserver;
 import org.eclipse.emf.emfstore.client.model.util.EmfStoreInterface;
 import org.eclipse.emf.emfstore.client.model.util.PermissionHelper;
-import org.eclipse.emf.emfstore.client.model.util.WorkspaceUtil;
 import org.eclipse.emf.emfstore.server.EmfStore;
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.ConnectionException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
-import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.SessionId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.OrgUnitProperty;
@@ -66,8 +64,6 @@ import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
  * <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getChangedProperties <em>Changed Properties
  * </em>}</li>
  * <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getPermissionSetCache <em>Permission Set Cache
- * </em>}</li>
- * <li>{@link org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl#getProjectListCache <em>Project List Cache
  * </em>}</li>
  * </ul>
  * </p>
@@ -260,17 +256,6 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 	 * @ordered
 	 */
 	protected PermissionSet permissionSetCache;
-
-	/**
-	 * The cached value of the '{@link #getProjectListCache() <em>Project List Cache</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #getProjectListCache()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ProjectInfo> projectListCache;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -699,20 +684,6 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 				newPermissionSetCache, newPermissionSetCache));
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EList<ProjectInfo> getProjectListCache() {
-		if (projectListCache == null) {
-			projectListCache = new EObjectContainmentEList.Resolving<ProjectInfo>(ProjectInfo.class, this,
-				ModelPackage.USERSESSION__PROJECT_LIST_CACHE);
-		}
-		return projectListCache;
-	}
-
 	// begin of custom code
 	/**
 	 * <!-- begin-user-doc --> Return whether session is logged in.
@@ -754,7 +725,6 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 		this.setSessionId(newSessionId);
 
 		updatePermissionSet();
-		updateProjectInfos();
 
 		WorkspaceManager.getObserverBus().notify(LoginObserver.class).loginCompleted(this);
 	}
@@ -766,7 +736,6 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 		ConnectionManager connectionManager = WorkspaceManager.getInstance().getConnectionManager();
 		connectionManager.logout(sessionId);
 		setSessionId(null);
-		updateProjectInfos();
 		WorkspaceManager.getObserverBus().notify(LogoutObserver.class).logoutCompleted(this);
 	}
 
@@ -784,8 +753,6 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 			return ((InternalEList<?>) getChangedProperties()).basicRemove(otherEnd, msgs);
 		case ModelPackage.USERSESSION__PERMISSION_SET_CACHE:
 			return basicSetPermissionSetCache(null, msgs);
-		case ModelPackage.USERSESSION__PROJECT_LIST_CACHE:
-			return ((InternalEList<?>) getProjectListCache()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -825,8 +792,6 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 			if (resolve)
 				return getPermissionSetCache();
 			return basicGetPermissionSetCache();
-		case ModelPackage.USERSESSION__PROJECT_LIST_CACHE:
-			return getProjectListCache();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -868,10 +833,6 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 		case ModelPackage.USERSESSION__PERMISSION_SET_CACHE:
 			setPermissionSetCache((PermissionSet) newValue);
 			return;
-		case ModelPackage.USERSESSION__PROJECT_LIST_CACHE:
-			getProjectListCache().clear();
-			getProjectListCache().addAll((Collection<? extends ProjectInfo>) newValue);
-			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -911,9 +872,6 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 		case ModelPackage.USERSESSION__PERMISSION_SET_CACHE:
 			setPermissionSetCache((PermissionSet) null);
 			return;
-		case ModelPackage.USERSESSION__PROJECT_LIST_CACHE:
-			getProjectListCache().clear();
-			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -945,8 +903,6 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 			return changedProperties != null && !changedProperties.isEmpty();
 		case ModelPackage.USERSESSION__PERMISSION_SET_CACHE:
 			return permissionSetCache != null;
-		case ModelPackage.USERSESSION__PROJECT_LIST_CACHE:
-			return projectListCache != null && !projectListCache.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -992,26 +948,6 @@ public class UsersessionImpl extends EObjectImpl implements Usersession {
 		return (EmfStoreInterface) Proxy.newProxyInstance(PermissionHelper.class.getClassLoader(),
 			new Class[] { EmfStoreInterface.class }, new UsersessionImpl.Handler(WorkspaceManager.getInstance()
 				.getConnectionManager(), sessionId));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void updateProjectInfos() {
-		// BEGIN SUPRESS CATCH EXCEPTION
-		try {
-			getServerInfo().getProjectInfos().clear();
-			// TODO MK: is this correct?
-			if (isLoggedIn()) {
-				getServerInfo().getProjectInfos().addAll(getEmfStoreProxy().getProjectList());
-			}
-			WorkspaceManager.getInstance().getCurrentWorkspace().save();
-		} catch (EmfStoreException e) {
-			WorkspaceUtil.logException(e.getMessage(), e);
-		} catch (RuntimeException e) {
-			WorkspaceUtil.logException(e.getMessage(), e);
-		}
-		// END SUPRESS CATCH EXCEPTION
 	}
 
 	/**
