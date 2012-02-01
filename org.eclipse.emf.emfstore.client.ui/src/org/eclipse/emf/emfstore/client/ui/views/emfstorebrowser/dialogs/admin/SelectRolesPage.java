@@ -74,9 +74,10 @@ public class SelectRolesPage extends WizardPage {
 	 */
 	public SelectRolesPage(Shell parentShell, AssignRolesWizard assignRolesWizard) {
 		super("");
-		// setTitle("Select Roles");
+		setTitle("Select Roles");
 		this.wizard = assignRolesWizard;
-		// setDescription("Select roles which the users should have in project " + wizard.getProjectInfo().getName());
+		setDescription("Select roles which the users should have in project "
+			+ assignRolesWizard.getProjectInfo().getName());
 	}
 
 	/**
@@ -142,7 +143,9 @@ public class SelectRolesPage extends WizardPage {
 				treeViewer.setGrayChecked(new TreePath(new Object[] { orgUnit }), true);
 			}
 			for (RoleAssignment role : orgUnit.getRoles()) {
-				treeViewer.setChecked(new TreePath(new Object[] { orgUnit, new RoleBox(role.getRole()) }), true);
+				if (wizard.getProjectInfo().getProjectId().equals(role.getProjectId())) {
+					treeViewer.setChecked(new TreePath(new Object[] { orgUnit, new RoleBox(role.getRole()) }), true);
+				}
 			}
 		}
 	}

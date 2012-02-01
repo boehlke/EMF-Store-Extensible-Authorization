@@ -19,6 +19,7 @@ import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl;
 import org.eclipse.emf.emfstore.client.model.util.EmfStoreInterface;
 import org.eclipse.emf.emfstore.client.model.util.PermissionHelper;
+import org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.RoleAssignmentData;
 import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
 import org.eclipse.emf.emfstore.server.accesscontrol.Permission;
 import org.eclipse.emf.emfstore.server.connection.xmlrpc.util.StaticOperationFactory;
@@ -29,6 +30,7 @@ import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnitId;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
+import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolFactory;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.AccesscontrolPackage;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.PermissionSet;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.Role;
@@ -52,6 +54,7 @@ public class UserUiController {
 
 	private EditingDomain editingDomain;
 	private Adapter permissionSetListenerstener;
+	private boolean registered;
 
 	private class ACUserServerSyncAdapater extends EContentAdapter {
 		@Override
@@ -131,6 +134,16 @@ public class UserUiController {
 		return UsersessionImpl.getEmfStoreProxy(getSession().getSessionId());
 	}
 
+	public void registerPermissionSetListener() {
+		if (!registered) {
+			if (permissionSet == null) {
+				permissionSet = getSession().getPermissionSetCache();
+			}
+			permissionSet.eAdapters().add(permissionSetListenerstener);
+		}
+		registered = true;
+	}
+
 	public PermissionSet getPermissionSet() {
 		if (permissionSet == null) {
 			permissionSet = getSession().getPermissionSetCache();
@@ -156,7 +169,7 @@ public class UserUiController {
 				}
 			} catch (EmfStoreException e) {
 			}
-			permissionSet.eAdapters().add(permissionSetListenerstener);
+			registerPermissionSetListener();
 		}
 
 		return permissionSet;
@@ -274,5 +287,16 @@ public class UserUiController {
 			// TODO Auto-generated catch block
 		}
 		updatePermissionSet();
+	}
+
+	public void assignAndRemoveRoles(ProjectId projectId, Collection<RoleAssignmentData> addedAssignments,
+		Collection<RoleAssignmentData> removedAssignments) {
+		for (RoleAssignmentData roleAssignmentData : addedAssignments) {
+			ACOrgUnit orgUnit = roleAssignmentData.getOrgUnit();
+			RoleAssignment assignment = AccesscontrolFactory.eINSTANCE.createRoleAssignment();
+			assignment.setRole(roleAssignmentData.getRole());
+			assignment.setProjectId(projectId);
+			orgUnit.getRoles().add(assignment);
+		}
 	}
 }

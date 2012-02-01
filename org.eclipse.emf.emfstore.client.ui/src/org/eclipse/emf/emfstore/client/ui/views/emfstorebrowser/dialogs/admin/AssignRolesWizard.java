@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.emf.emfstore.client.ui.views.users.UserUiController;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACUser;
@@ -55,11 +56,14 @@ public class AssignRolesWizard extends Wizard {
 	private AssignRoleSummaryPage summaryPage;
 	private ArrayList<RoleAssignmentData> addedAssignments;
 	private ArrayList<RoleAssignmentData> removedAssignments;
+	private UserUiController controller;
 
 	public AssignRolesWizard(ProjectInfo projectInfo, PermissionSet permissionSet) {
 		setWindowTitle("Assign project roles");
 		this.projectInfo = projectInfo;
 		this.permissionSet = permissionSet;
+		controller = UserUiController.getInstance();
+		controller.registerPermissionSetListener();
 	}
 
 	void update() {
@@ -79,7 +83,8 @@ public class AssignRolesWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		return false;
+		controller.assignAndRemoveRoles(projectInfo.getProjectId(), addedAssignments, removedAssignments);
+		return true;
 	}
 
 	public ProjectInfo getProjectInfo() {
@@ -124,6 +129,7 @@ public class AssignRolesWizard extends Wizard {
 			for (Role role : getPermissionSet().getRoles()) {
 				boolean selected = selectRolesPage.isSelected(orgUnit, role);
 				boolean hasProjectRole = orgUnit.hasProjectRole(role, projectInfo.getProjectId());
+
 				if (selected && !hasProjectRole) {
 					addedAssignments.add(new RoleAssignmentData(role, orgUnit));
 				}
