@@ -14,11 +14,13 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.model.Usersession;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl;
 import org.eclipse.emf.emfstore.client.model.util.EmfStoreInterface;
 import org.eclipse.emf.emfstore.client.model.util.PermissionHelper;
+import org.eclipse.emf.emfstore.client.ui.dialogs.login.BasicUISessionProvider;
 import org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.RoleAssignmentData;
 import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
 import org.eclipse.emf.emfstore.server.accesscontrol.Permission;
@@ -55,6 +57,7 @@ public class UserUiController {
 	private EditingDomain editingDomain;
 	private Adapter permissionSetListenerstener;
 	private boolean registered;
+	private ServerInfo serverInfo;
 
 	private class ACUserServerSyncAdapater extends EContentAdapter {
 		@Override
@@ -121,6 +124,8 @@ public class UserUiController {
 	private UserUiController() {
 		editingDomain = WorkspaceManager.getInstance().getEditingDomain();
 		permissionSetListenerstener = new ACUserServerSyncAdapater();
+		// TODO: make server info configurable
+		serverInfo = WorkspaceManager.getInstance().getCurrentWorkspace().getServerInfos().get(0);
 	}
 
 	public static UserUiController getInstance() {
@@ -231,12 +236,13 @@ public class UserUiController {
 	}
 
 	public Usersession getSession() {
-		for (Usersession session : WorkspaceManager.getInstance().getCurrentWorkspace().getUsersessions()) {
-			if (session.isLoggedIn()) {
-				return session;
-			}
+		BasicUISessionProvider sessionProvider = new BasicUISessionProvider();
+		try {
+			return sessionProvider.provideUsersession(serverInfo);
+		} catch (EmfStoreException e) {
+			ModelUtil.logException(e);
+			return null;
 		}
-		return null;
 	}
 
 	public boolean canExecute(Operation<?> op) {
