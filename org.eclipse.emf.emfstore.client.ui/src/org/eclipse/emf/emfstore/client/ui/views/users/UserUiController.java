@@ -17,10 +17,10 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.model.Usersession;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
+import org.eclipse.emf.emfstore.client.model.connectionmanager.AbstractSessionProvider;
 import org.eclipse.emf.emfstore.client.model.impl.UsersessionImpl;
 import org.eclipse.emf.emfstore.client.model.util.EmfStoreInterface;
 import org.eclipse.emf.emfstore.client.model.util.PermissionHelper;
-import org.eclipse.emf.emfstore.client.ui.dialogs.login.BasicUISessionProvider;
 import org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.dialogs.admin.RoleAssignmentData;
 import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
 import org.eclipse.emf.emfstore.server.accesscontrol.Permission;
@@ -236,7 +236,7 @@ public class UserUiController {
 	}
 
 	public Usersession getSession() {
-		BasicUISessionProvider sessionProvider = new BasicUISessionProvider();
+		AbstractSessionProvider sessionProvider = new AdminUiSessionProvider();
 		try {
 			return sessionProvider.provideUsersession(serverInfo);
 		} catch (EmfStoreException e) {
