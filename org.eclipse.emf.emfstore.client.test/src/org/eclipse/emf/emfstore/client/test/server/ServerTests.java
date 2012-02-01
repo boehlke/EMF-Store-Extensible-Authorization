@@ -226,10 +226,10 @@ public class ServerTests extends WorkspaceTest {
 			@Override
 			protected void doRun() {
 				try {
-					getProjectSpace().shareProject();
-					setupUsersAndRoles();
+					getProjectSpace().shareProject(TestSessionProvider.getInstance().getDefaultUsersession(), null);
+					// setupUsersAndRoles();
 				} catch (EmfStoreException e) {
-					Assert.fail();
+					Assert.fail(e.getMessage());
 				}
 			}
 		}.run(false);

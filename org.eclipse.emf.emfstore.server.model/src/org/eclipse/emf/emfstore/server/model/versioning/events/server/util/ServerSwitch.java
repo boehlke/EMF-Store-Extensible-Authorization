@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.emfstore.server.model.versioning.events.Event;
-import org.eclipse.emf.emfstore.server.model.versioning.events.server.*;
 import org.eclipse.emf.emfstore.server.model.versioning.events.server.ProjectUpdatedEvent;
 import org.eclipse.emf.emfstore.server.model.versioning.events.server.ServerEvent;
 import org.eclipse.emf.emfstore.server.model.versioning.events.server.ServerPackage;

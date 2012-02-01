@@ -37,7 +37,7 @@ public class BasicUISessionProvider extends AbstractSessionProvider {
 		}
 
 		// TODO Review this
-		// if (serverInfo.getLastUsersession() != null) {
+		// if (serverInfo.getLastUsersession() != null && serverInfo.getLastUsersession().isLoggedIn()) {
 		// return serverInfo.getLastUsersession();
 		// }
 

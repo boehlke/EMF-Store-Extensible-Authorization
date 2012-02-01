@@ -500,11 +500,9 @@
                    <iterate
                          ifEmpty="true"
                          operator="and">
-                      <test
-                            forcePluginActivation="true"
-                            property="org.eclipse.emf.emfstore.client.ui.commands.treeNodeClassTester"
+                      <instanceof
                             value="org.eclipse.emf.emfstore.server.model.versioning.HistoryInfo">
-                      </test>
+                      </instanceof>
                       <test
                             forcePluginActivation="true"
                             property="org.eclipse.emf.emfstore.client.ui.permissions.canAddTag"
@@ -523,11 +521,9 @@
                    <iterate
                          ifEmpty="false"
                          operator="and">
-                      <test
-                            forcePluginActivation="true"
-                            property="org.eclipse.emf.emfstore.client.ui.commands.treeNodeClassTester"
+                      <instanceof
                             value="org.eclipse.emf.emfstore.server.model.versioning.HistoryInfo">
-                      </test>
+                      </instanceof>
                       <test
                             forcePluginActivation="true"
                             property="org.eclipse.emf.emfstore.client.ui.permissions.canRemoveTag"
@@ -545,18 +541,6 @@
                    label="Checkout this revision"
                    style="push"
                    tooltip="Checkout this revision of the project">
-                <visibleWhen
-                      checkEnabled="false">
-                   <iterate
-                         ifEmpty="false"
-                         operator="and">
-                      <test
-                            forcePluginActivation="true"
-                            property="org.eclipse.emf.emfstore.client.ui.commands.treeNodeClassTester"
-                            value="org.eclipse.emf.emfstore.server.model.versioning.HistoryInfo">
-                      </test>
-                   </iterate>
-                </visibleWhen>
              </command>
              <command
                    commandId="org.eclipse.emf.emfstore.client.ui.historybrowserview.revert"
@@ -705,8 +689,8 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="org.eclipse.emf.emfstore.client.ui.handlers.CheckoutHandler"
-            id="org.eclipse.emf.emfstore.client.ui.views.users.UsersView"
+            defaultHandler="org.eclipse.emf.emfstore.client.ui.handlers.CheckoutRevisionHandler"
+            id="org.eclipse.emf.emfstore.client.ui.historybrowserview.checkout"
             name="CheckoutRevision">
       </command>
       <command

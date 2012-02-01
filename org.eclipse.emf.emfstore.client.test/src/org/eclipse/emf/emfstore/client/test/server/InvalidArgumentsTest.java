@@ -38,11 +38,9 @@ public class InvalidArgumentsTest extends ServerTests {
 	 * {@inheritDoc}
 	 * 
 	 * @throws EmfStoreException in case of failure
-	 * @throws IOException
 	 */
 	@BeforeClass
-	public static void setUpBeforeClass() throws EmfStoreException, IOException {
-		ServerTests.setUpBeforeClass();
+	public static void setUpBeforeClass() throws EmfStoreException {
 		setConnectionManager(new XmlRpcConnectionManager() {
 			@Override
 			protected XmlRpcClientManager getConnectionProxy(SessionId sessionId) throws UnknownSessionException {
