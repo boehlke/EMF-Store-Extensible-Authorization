@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.emfstore.client.ui.views.users.UserUiController;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.accesscontrol.ACOrgUnit;
@@ -83,7 +84,8 @@ public class AssignRolesWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		controller.assignAndRemoveRoles(projectInfo.getProjectId(), addedAssignments, removedAssignments);
+		controller.assignAndRemoveRoles(EcoreUtil.copy(projectInfo.getProjectId()), addedAssignments,
+			removedAssignments);
 		return true;
 	}
 
