@@ -23,6 +23,7 @@ Import-Package: org.eclipse.emf.ecp.common,
  org.eclipse.emf.ecp.common.model,
  org.eclipse.emf.ecp.common.util,
  org.eclipse.emf.ecp.common.utilities,
+ org.eclipse.emf.ecp.editor,
  org.eclipse.emf.ecp.editor.mecontrols,
  org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol,
  org.eclipse.emf.ecp.navigator.commands
